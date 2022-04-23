@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.a2022_q2_osovskoy">
 
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
+        android:name=".presentation.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,14 +13,53 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.2022_q2_osovskoy">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".presentation.MainActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.nav_by_fragments.FragmentsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
+
+        <activity
+            android:name=".presentation.service.ServiceActivity"
+            android:exported="false"
+            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
+
+        <activity
+            android:name=".presentation.content_provider.ContentProviderActivity"
+            android:exported="false"
+            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
+
+        <activity
+            android:name=".presentation.nav_by_activity.ActivityA"
+            android:exported="false"
+            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
+
+        <activity
+            android:name=".presentation.nav_by_activity.ActivityB"
+            android:exported="false"
+            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
+
+        <activity
+            android:name=".presentation.nav_by_activity.ActivityC"
+            android:exported="false"
+            android:label="@string/title_activity_c"
+            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
+
+        <service
+            android:name=".presentation.service.TimerService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

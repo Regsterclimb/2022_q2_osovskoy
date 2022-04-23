@@ -1,0 +1,6 @@
+<resources>
+
+    <style name="Widget.Theme.2022_q2_osovskoy.MyView" parent="">
+        <item name="android:background">@color/gray_600</item>
+    </style>
+</resources>
