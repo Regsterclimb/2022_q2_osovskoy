@@ -3,6 +3,7 @@
     package="com.example.a2022_q2_osovskoy">
 
     <application
+        android:name=".presentation.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,10 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.2022_q2_osovskoy">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".presentation.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

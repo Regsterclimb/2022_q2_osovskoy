@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/backgroundBanner"
+    android:layout_width="match_parent"
+    android:layout_height="166dp"
+    android:layout_margin="8dp"
+    android:elevation="3dp">
+
+    <ImageView
+        android:id="@+id/bannerContainer"
+        style="@style/backgroundBanner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/banner_rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bannerImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_card_image"
+        app:layout_constraintEnd_toEndOf="@id/bannerContainer"
+        app:layout_constraintTop_toTopOf="@id/bannerContainer" />
+
+    <TextView
+        android:id="@+id/newReq"
+        style="@style/bannerHolder"
+        android:layout_width="0dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@id/imageStartBarrier"
+        app:layout_constraintStart_toStartOf="@id/bannerContainer"
+        app:layout_constraintTop_toTopOf="@id/bannerContainer"
+        tools:text="@tools:sample/full_names" />
+
+    <TextView
+        android:id="@+id/textReq"
+        style="@style/secondaryTextHolder"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/buttonsBarrier"
+        app:layout_constraintEnd_toEndOf="@id/imageStartBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/newReq"
+        tools:text="@tools:sample/backgrounds/scenic" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/acceptButton"
+        style="@style/acceptButton"
+        android:layout_width="100dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="11dp"
+        android:text="@string/acceptButtonText"
+        app:layout_constraintBottom_toBottomOf="@id/bannerContainer"
+        app:layout_constraintStart_toStartOf="@id/bannerContainer" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/declineButton"
+        style="@style/declineButton"
+        android:layout_width="108dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="11dp"
+        android:text="@string/declineButtonText"
+        app:layout_constraintBottom_toBottomOf="@id/bannerContainer"
+        app:layout_constraintStart_toEndOf="@id/acceptButton" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/imageStartBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:barrierMargin="-16dp"
+        app:constraint_referenced_ids="bannerImage" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/buttonsBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:barrierMargin="-8dp"
+        app:constraint_referenced_ids="acceptButton,declineButton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

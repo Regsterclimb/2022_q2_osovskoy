@@ -1,16 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.2022_q2_osovskoy" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+
+        <item name="colorPrimary">@color/primary_white</item>
+        <item name="colorPrimaryVariant">@color/primary_white_90</item>
+        <item name="colorOnPrimary">@color/primary_black</item>
+
+        <item name="backgroundColor">@color/mirage</item>
+        <item name="dividerColor">@color/blue_diane</item>
+        <item name="colorSurface">@color/mirage</item>
+        <item name="colorSecondary">@color/red_damask</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/backgroundColor</item>
     </style>
 </resources>
