@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/personName"
-        style="@style/studentHolderName"
+        style="@style/StudentHolderName"
         android:layout_width="0dp"
         android:layout_height="24dp"
         app:layout_constraintBottom_toTopOf="@id/personText"
@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/personText"
-        style="@style/secondaryTextHolder"
+        style="@style/SecondaryTextHolder"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginBottom="7dp"

@@ -3,18 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable-v24/banner_rectangle.xml" value="0.1245" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1125" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/back_rectangle.xml" value="0.1" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/banner_rectangle.xml" value="0.1895" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/devider.xml" value="0.1895" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/ic_arrow.xml" value="0.1895" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/ic_card_image.xml" value="0.1245" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/ic_fill.xml" value="0.1165" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1125" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/ic_plus.xml" value="0.1895" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/ic_sl_history.xml" value="0.1245" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/drawable/rectangle.xml" value="0.1245" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/activity_a.xml" value="0.2" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/activity_b.xml" value="0.1" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/activity_c.xml" value="0.1" />
@@ -23,7 +13,6 @@
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/activity_second_main.xml" value="0.18802083333333333" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/activity_service.xml" value="0.2" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/fragment.xml" value="0.49230769230769234" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/fragment_a.xml" value="0.1" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/fragment_b.xml" value="0.1" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/fragment_c.xml" value="0.15" />
@@ -32,8 +21,7 @@
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/fragments_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/person_view_holder.xml" value="0.1" />
         <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/sample_person_view_holder.xml" value="0.1" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/view_holder_banner.xml" value="0.1" />
-        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/view_holder_student.xml" value="0.25" />
+        <entry key="..\:/Android projects/2022_q2_osovskoy/app/src/main/res/layout/view_holder_student.xml" value="0.1" />
       </map>
     </option>
   </component>

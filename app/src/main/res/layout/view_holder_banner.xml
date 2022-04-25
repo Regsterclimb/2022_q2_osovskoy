@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/backgroundBanner"
+    style="@style/BackgroundBanner"
     android:layout_width="match_parent"
     android:layout_height="166dp"
     android:layout_margin="8dp"
@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/bannerContainer"
-        style="@style/backgroundBanner"
+        style="@style/BackgroundBanner"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
@@ -32,7 +32,7 @@
 
     <TextView
         android:id="@+id/newReq"
-        style="@style/bannerHolder"
+        style="@style/BannerHolder"
         android:layout_width="0dp"
         android:layout_height="29dp"
         android:layout_marginStart="16dp"
@@ -44,7 +44,7 @@
 
     <TextView
         android:id="@+id/textReq"
-        style="@style/secondaryTextHolder"
+        style="@style/SecondaryTextHolder"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
@@ -57,7 +57,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/acceptButton"
-        style="@style/acceptButton"
+        style="@style/AcceptButton"
         android:layout_width="100dp"
         android:layout_height="36dp"
         android:layout_marginStart="8dp"
@@ -68,7 +68,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/declineButton"
-        style="@style/declineButton"
+        style="@style/DeclineButton"
         android:layout_width="108dp"
         android:layout_height="36dp"
         android:layout_marginStart="8dp"

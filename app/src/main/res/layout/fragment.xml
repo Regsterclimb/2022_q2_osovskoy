@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/appbar"
-        style="@style/appTitle"
+        style="@style/AppTitle"
         app:fontWeight="500"
         tools:text="ШИФТ Курсы">
     </TextView>

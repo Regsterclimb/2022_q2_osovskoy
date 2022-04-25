@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="title">
+    <style name="MainTitle">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">?colorPrimary</item>
         <item name="lineHeight">24dp</item>
     </style>
 
-    <style name="bannerHolder" parent="title">
+    <style name="BannerHolder" parent="MainTitle">
         <item name="android:textSize">@dimen/text_24</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="appTitle" parent="title">
+    <style name="AppTitle" parent="MainTitle">
         <item name="android:textSize">@dimen/text_20</item>
         <item name="android:text">@string/appbar</item>
         <item name="android:padding">16dp</item>
     </style>
 
-    <style name="secondaryTextHolder">
+    <style name="SecondaryTextHolder">
         <item name="android:textSize">@dimen/text_14</item>
         <item name="android:textColor">?colorPrimaryVariant</item>
         <item name="android:maxLines">2</item>
@@ -26,11 +26,11 @@
         <item name="android:fontFamily">"sans-serif"</item>
     </style>
 
-    <style name="studentHolderName" parent="bannerHolder">
+    <style name="StudentHolderName" parent="BannerHolder">
         <item name="android:textSize">@dimen/text_16</item>
     </style>
 
-    <style name="Button" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="BannerButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:fontFamily">"sans-serif-medium"</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">@dimen/text_14</item>
@@ -41,19 +41,16 @@
         <item name="lineHeight">16dp</item>
     </style>
 
-    <style name="acceptButton" parent="Button">
+    <style name="AcceptButton" parent="BannerButton">
         <item name="android:text">@string/acceptButtonText</item>
     </style>
 
-    <style name="declineButton" parent="Button">
+    <style name="DeclineButton" parent="BannerButton">
         <item name="android:text">@string/declineButtonText</item>
     </style>
 
-    <style name="backgroundBanner">
+    <style name="BackgroundBanner">
         <item name="android:background">?backgroundColor</item>
-    </style>
-    <style name="elevationBanner">
-        <item name="android:elevation">3dp</item>
     </style>
 
 </resources>
