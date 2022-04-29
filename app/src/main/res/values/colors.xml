@@ -7,4 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    //background
+    <color name="background_black">#191926</color>
+    <color name="Violet">#EE82EE</color>
+    <color name="MediumPurple">#9370DB</color>
+    <color name="background_Mat">#6200EE</color>
+    <color name="background_floating">#BB86FC</color>
+
+    //text Colors
+    <color name="text_full_white">#FFFFFF</color>
+    <color name="text_white">#ECECEC</color>
+    <color name="text_gray">#6D6D80</color>
+    <color name="text_green">#7CFC00</color>
+
+    <color name="gray_gray">#6D6D80</color>
+    <color name="transparent">#0000ffff</color>
+    <color name="film_time">#565665</color>
+    //card
+    <color name="background_color">#191926</color>
+    <color name="background_card_color">#222232</color>
+    <color name="stroke_card_color">#636375</color>
+
+    <color name="tag_color_red">#FF3466</color>
 </resources>

@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">2022_q2_osovskoy</string>
+    <string name="app_name">CurrencyZ</string>
+    <string name="sum_rub">Сумма в рублях</string>
+    <string name="rub">РУБ</string>
+    <string name="back">Back</string>
+    <string name="kurs">Курс</string>
+    <string name="Valute">Валюта(Код)</string>
+    <string name="Unit">Единиц</string>
+    <string name="number">Номер</string>
+    <string name="refresh_recycler">refresh_recycler</string>
+    <string name="name">Название :</string>
+    <string name="kod">Код :</string>
+    <string name="numcod">Цифровой код :</string>
+    <string name="kyrs_1">Курс :</string>
+    <string name="title">Перевести рубли в валюту</string>
+    <string name="Change">Перевести</string>
+    <string name="Valutes">Валюта</string>
+    <string name="currencyLoadingError">Не получается загрузить валюту</string>
+    <string name="resultLoadingError">Ошибка при вычислении</string>
+    <string name="resultLoadingIsEmpty">Пустой результат</string>
+    <string name="currenciesLoadingError">Неполадки в загрузке</string>
+    <string name="inputFormat">формат ввода 1234.56</string>
+    <string name="require">*Required</string>
 </resources>
