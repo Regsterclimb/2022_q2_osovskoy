@@ -1,42 +1,24 @@
 <resources>
     <string name="app_name">2022_q2_osovskoy</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_c">ActivityC</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="activity_a">ActivityA</string>
-    <string name="open_activity_b">Open Activity B</string>
-    <string name="activity_b">ActivityB</string>
-    <string name="open_activity_c">Open Activity C</string>
-    <string name="activity_c">ActivityC</string>
-    <string name="back_to_activity_a">Back to activity A</string>
-    <string name="fragment_a">FragmentA</string>
-    <string name="open_fragment_b">Open Fragment B</string>
-    <string name="fragment_b">FragmentB</string>
-    <string name="open_fragment_c">Open Fragment C</string>
-    <string name="fragment_c">FragmentC</string>
-    <string name="back_to_fragment_a">Back to Fragment A</string>
-    <string name="activity_home_work">ДЗ Навигация на базе Activity</string>
-    <string name="fragment_home_work">ДЗ Навигация на базе Fragment</string>
-    //
-    <string name="granted">Получено</string>
-    <string name="not_granted">Не получено</string>
-    <string name="unknown">Не запрошено</string>
+    <string name="granted">Разрешение Получено</string>
+    <string name="not_granted">Разрешение не получено</string>
+    <string name="unknown">Разрешение не запрошено</string>
     <string name="request_permission">Запросить разрешение</string>
     <string name="request_data">Получить данные</string>
     <string name="errorText">Ошибка при загрузке</string>
     <string name="emptyText">Список контактов пуст</string>
-    <string name="service">ДЗ Сервис</string>
-    <string name="PhoneBook">ДЗ Список контактов</string>
-    <string name="service_start">start</string>
-    <string name="service_stop">stop</string>
-    <string name="service_bind">bind</string>
-    <string name="service_unbind">unbind</string>
+    <string name="database">Сохранить в DataBase</string>
+    <string name="file">Сохранить в файл</string>
+    <string name="mainFragMainTitle">Куда Желаете сохранить контакты?</string>
+    <string name="inputTextName">Введите имя</string>
+    <string name="inputTextPhone">Введите телефон</string>
+    <string name="back">назад</string>
+    <string name="accept">принять</string>
+    <string name="menuChange">Изменить</string>
+    <string name="menuDelete">Удалить</string>
+    <string name="menuHello">Привет</string>
+    <string name="addNewPerson">добавить нового чела</string>
+    <string name="deleteAllPersons">Очистить список контактов</string>
+    <string name="addNameOrphone">Введите имя или телефон</string>
 </resources>

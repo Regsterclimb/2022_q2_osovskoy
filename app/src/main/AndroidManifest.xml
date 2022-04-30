@@ -25,41 +25,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".presentation.nav_by_fragments.FragmentsActivity"
-            android:exported="false"
-            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
-
-        <activity
-            android:name=".presentation.service.ServiceActivity"
-            android:exported="false"
-            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
-
-        <activity
-            android:name=".presentation.content_provider.ContentProviderActivity"
-            android:exported="false"
-            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
-
-        <activity
-            android:name=".presentation.nav_by_activity.ActivityA"
-            android:exported="false"
-            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
-
-        <activity
-            android:name=".presentation.nav_by_activity.ActivityB"
-            android:exported="false"
-            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
-
-        <activity
-            android:name=".presentation.nav_by_activity.ActivityC"
-            android:exported="false"
-            android:label="@string/title_activity_c"
-            android:theme="@style/Theme.2022_q2_osovskoy.NoActionBar" />
-
-        <service
-            android:name=".presentation.service.TimerService"
-            android:enabled="true"
-            android:exported="false" />
     </application>
 
 </manifest>

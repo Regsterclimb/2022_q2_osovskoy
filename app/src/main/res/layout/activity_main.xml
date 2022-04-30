@@ -1,35 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="32dp"
     android:orientation="vertical"
-    tools:context=".presentation.MainActivity">
+    android:padding="16dp">
 
-    <Button
-        android:id="@+id/toNavByActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/activity_home_work" />
-
-    <Button
-        android:id="@+id/toNavByFragments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/fragment_home_work"
-        app:layout_constraintTop_toBottomOf="@+id/toNavByActivity" />
-
-    <Button
-        android:id="@+id/toService"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/service" />
-
-    <Button
-        android:id="@+id/toContentProvider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/PhoneBook" />
-</LinearLayout>
+</androidx.fragment.app.FragmentContainerView>

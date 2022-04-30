@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuActionUpdate"
+        android:title="@string/menuChange"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuActionDelete"
+        android:title="@string/menuDelete"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuActionHello"
+        android:title="@string/menuHello"
+        app:showAsAction="never"/>
+</menu>
