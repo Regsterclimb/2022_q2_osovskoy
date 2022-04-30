@@ -2,7 +2,9 @@ package com.example.a2022_q2_osovskoy.data.model
 
 import com.example.a2022_q2_osovskoy.data.storage.data_base.entity.PersonEntity
 import com.example.a2022_q2_osovskoy.domain.model.Person
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PersonDto(
     val id: Long,
     val name: String = "no name",

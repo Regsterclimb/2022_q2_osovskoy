@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.FragmentPhoneBookBinding
+import com.example.a2022_q2_osovskoy.presentation.ProviderViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.add_person.FragmentPersonAdder
 import com.example.a2022_q2_osovskoy.presentation.phone_book.view_model.ProviderMainViewModel
-import com.example.a2022_q2_osovskoy.presentation.phone_book.view_model.ProviderViewModelFactory
 
 class PhoneBookFragment : Fragment(R.layout.fragment_phone_book) {
 
@@ -87,6 +87,9 @@ class PhoneBookFragment : Fragment(R.layout.fragment_phone_book) {
             }
             deleteAllButton.setOnClickListener {
                 viewModel.deleteAllPersons()
+            }
+            phoneBackButton.setOnClickListener {
+                parentFragmentManager.popBackStack()
             }
         }
 

@@ -10,9 +10,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.FragmentAddPersonBinding
 import com.example.a2022_q2_osovskoy.domain.model.Person
+import com.example.a2022_q2_osovskoy.presentation.ProviderViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.add_person.view_model.PersonAdderViewModel
 import com.example.a2022_q2_osovskoy.presentation.phone_book.PhoneBookFragment
-import com.example.a2022_q2_osovskoy.presentation.phone_book.view_model.ProviderViewModelFactory
 
 class FragmentPersonAdder : Fragment(R.layout.fragment_add_person) {
 

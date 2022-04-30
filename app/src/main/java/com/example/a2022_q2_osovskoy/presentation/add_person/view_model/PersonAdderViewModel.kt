@@ -13,12 +13,13 @@ class PersonAdderViewModel(
     private val personDataBaseRepository: PersonDataBaseRepository,
 ) : ViewModel() {
 
-    fun updatePerson(person:Person) {
+    fun updatePerson(person: Person) {
         viewModelScope.launch(dispatcher) {
             personDataBaseRepository.update(person)
         }
     }
-    fun createPerson(person: Person){
+
+    fun createPerson(person: Person) {
         viewModelScope.launch(dispatcher) {
             personDataBaseRepository.create(person)
         }

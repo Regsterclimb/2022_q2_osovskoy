@@ -50,7 +50,7 @@ class PersonViewHolder(itemView: View) :
                         }
                         R.id.menuActionHello -> {
                             Toast.makeText(itemView.context,
-                                "HELLO ${person.name}",
+                                person.name,
                                 Toast.LENGTH_SHORT).show()
                         }
                     }

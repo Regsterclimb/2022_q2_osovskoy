@@ -1,6 +1,5 @@
 package com.example.a2022_q2_osovskoy.domain.use_case
 
-import android.util.Log
 import com.example.a2022_q2_osovskoy.domain.model.Person
 import com.example.a2022_q2_osovskoy.domain.model.toPerson
 import com.example.a2022_q2_osovskoy.domain.repository.PersonRepository
@@ -11,10 +10,11 @@ interface PersonUseCase {
 
     fun deleteAllPersons()
 
-    fun firstLoad(): ResultState
+    suspend fun firstLoad(): ResultState
 
 
-    class Base(private val personRepository: PersonRepository) : PersonUseCase {
+    class Base(private val personRepository: PersonRepository) :
+        PersonUseCase {
 
         override fun loadPersons(): ResultState =
             try {
@@ -22,7 +22,6 @@ interface PersonUseCase {
                     personDto.toPerson()
                 })
             } catch (e: RuntimeException) {
-                Log.e("ERROR", "ERROR WITH LOADPERSONS")
                 ResultState.Error
             }
 
@@ -30,17 +29,14 @@ interface PersonUseCase {
             personRepository.deleteAllPersonDto()
         }
 
-        override fun firstLoad(): ResultState =
-            try {
+        override suspend fun firstLoad(): ResultState = try {
                 ResultState.Success(result = personRepository.firstLoad().map { personDto ->
                     personDto.toPerson()
                 }
                 )
             } catch (e: RuntimeException) {
-                Log.e("ERROR", "ERROR WITH LOADPERSONS")
                 ResultState.Error
             }
-
     }
 
     sealed class ResultState {

@@ -1,21 +1,19 @@
-package com.example.a2022_q2_osovskoy.presentation.phone_book.view_model
+package com.example.a2022_q2_osovskoy.presentation.file_phone_book
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.model.Person
-import com.example.a2022_q2_osovskoy.domain.repository.PersonDataBaseRepository
-import com.example.a2022_q2_osovskoy.domain.use_case.PersonUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.FilePersonsUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
-class ProviderMainViewModel(
-    private val useCase: PersonUseCase,
-    private val personDataBaseRepository: PersonDataBaseRepository,
+class FileBookViewModel(
+    private val fileUseCase: FilePersonsUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
-) : ViewModel() {
+
+    ) : ViewModel() {
 
     private var _personEvents = MutableLiveData<PersonEvent>()
     val personEvents = _personEvents
@@ -25,6 +23,7 @@ class ProviderMainViewModel(
     fun onPermissionResult(granted: Boolean) {
         if (granted && counter == 0) {
             first()
+            counter++
         } else {
             loadPersons()
         }
@@ -33,8 +32,8 @@ class ProviderMainViewModel(
     private fun loadPersons() {
         viewModelScope.launch(dispatcher) {
             _personEvents.value = PersonEvent.Loading
-            when (val resultState = useCase.loadPersons()) {
-                is PersonUseCase.ResultState.Success -> {
+            when (val resultState = fileUseCase.loadPersons()) {
+                is FilePersonsUseCase.ResultState.Success -> {
                     _personEvents.value =
                         if (resultState.result.isEmpty()) {
                             PersonEvent.Empty
@@ -42,7 +41,7 @@ class ProviderMainViewModel(
                             PersonEvent.Success(resultState.result)
                         }
                 }
-                is PersonUseCase.ResultState.Error -> {
+                is FilePersonsUseCase.ResultState.Error -> {
                     _personEvents.value = PersonEvent.Error
                 }
             }
@@ -50,11 +49,10 @@ class ProviderMainViewModel(
     }
 
     private fun first() {
-        counter++
         viewModelScope.launch(dispatcher) {
             _personEvents.value = PersonEvent.Loading
-            when (val resultState = useCase.firstLoad()) {
-                is PersonUseCase.ResultState.Success -> {
+            when (val resultState = fileUseCase.firstLoad()) {
+                is FilePersonsUseCase.ResultState.Success -> {
                     _personEvents.value =
                         if (resultState.result.isEmpty()) {
                             PersonEvent.Empty
@@ -62,23 +60,16 @@ class ProviderMainViewModel(
                             PersonEvent.Success(resultState.result)
                         }
                 }
-                is PersonUseCase.ResultState.Error -> {
+                is FilePersonsUseCase.ResultState.Error -> {
                     _personEvents.value = PersonEvent.Error
                 }
             }
         }
     }
 
-    fun deletePerson(person: Person) {
-        viewModelScope.launch(dispatcher) {
-            personDataBaseRepository.remove(person)
-            loadPersons()
-        }
-    }
-
     fun deleteAllPersons() {
         viewModelScope.launch(dispatcher) {
-            useCase.deleteAllPersons()
+            fileUseCase.deleteAllPersons()
             loadPersons()
         }
     }

@@ -5,11 +5,11 @@ import android.database.Cursor
 import android.provider.ContactsContract
 import com.example.a2022_q2_osovskoy.data.model.PersonDto
 
-interface DataBase {
+interface ContentDataBase {
 
     fun loadPersonFromContentProvider(): List<PersonDto>
 
-    class Base(private val contentResolver: ContentResolver) : DataBase {
+    class BaseContent(private val contentResolver: ContentResolver) : ContentDataBase {
 
         override fun loadPersonFromContentProvider(): List<PersonDto> {
             val cursor = contentResolver.query(
