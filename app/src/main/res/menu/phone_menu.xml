@@ -4,13 +4,14 @@
     <item
         android:id="@+id/menuActionUpdate"
         android:title="@string/menuChange"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/menuActionDelete"
         android:title="@string/menuDelete"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/menuActionHello"
         android:title="@string/menuHello"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
+
 </menu>

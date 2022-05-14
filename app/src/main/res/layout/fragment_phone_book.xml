@@ -4,17 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/phoneBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back"
+        app:layout_constraintEnd_toStartOf="@id/permissionView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/permissionView"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/permissionView"
@@ -23,17 +22,9 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="@string/unknown"
-        app:layout_constraintStart_toEndOf="@id/phoneBackButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/phoneBackButton"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/requestPermissionButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/request_permission"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/permissionView" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/personsRecyclerSwipe"
@@ -44,16 +35,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/deleteAllButton">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/personsRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingTop="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/deleteAllButton"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/personsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingTop="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deleteAllButton" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -62,21 +53,21 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/requestPermissionButton" />
+        app:layout_constraintTop_toBottomOf="@id/deleteAllButton" />
 
     <TextView
         android:id="@+id/errorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/requestPermissionButton"
+        app:layout_constraintTop_toBottomOf="@id/permissionView"
         tools:text="@string/errorText" />
 
     <Button
@@ -86,7 +77,7 @@
         android:text="@string/deleteAllPersons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requestPermissionButton" />
+        app:layout_constraintTop_toBottomOf="@+id/permissionView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addPersonButton"
@@ -94,9 +85,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/personsRecyclerSwipe"
         app:layout_constraintEnd_toEndOf="@+id/personsRecyclerSwipe"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

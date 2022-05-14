@@ -3,4 +3,9 @@
     <style name="Widget.Theme.2022_q2_osovskoy.MyView" parent="">
         <item name="android:background">@color/gray_400</item>
     </style>
+    <style name="PopupMenuAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
+    </style>
+
 </resources>

@@ -1,83 +1,78 @@
 package com.example.a2022_q2_osovskoy.presentation.file_phone_book
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.a2022_q2_osovskoy.domain.model.Person
-import com.example.a2022_q2_osovskoy.domain.use_case.FilePersonsUseCase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.example.a2022_q2_osovskoy.domain.entity.ResultState
+import com.example.a2022_q2_osovskoy.domain.entity.file_phone_book.FileFirstEvent
+import com.example.a2022_q2_osovskoy.domain.entity.file_phone_book.FilePersonEvent
+import com.example.a2022_q2_osovskoy.domain.use_case.file.FileFirstUploadUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.FilePersonsLoaderUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.FilePersonsRemoverUseCase
+import com.example.a2022_q2_osovskoy.extentions.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class FileBookViewModel(
-    private val fileUseCase: FilePersonsUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
+    private val filePersonsLoaderUseCase: FilePersonsLoaderUseCase,
+    private val fileFirstUploadUseCase: FileFirstUploadUseCase,
+    private val filePersonsRemoverUseCase: FilePersonsRemoverUseCase,
+) : ViewModel() {
 
-    ) : ViewModel() {
+    private val _personEvents = MutableLiveData<FilePersonEvent>()
+    val personEvents: LiveData<FilePersonEvent> = _personEvents
 
-    private var _personEvents = MutableLiveData<PersonEvent>()
-    val personEvents = _personEvents
+    private val _firstEvents = SingleLiveEvent<FileFirstEvent>()
+    val firstEvents: LiveData<FileFirstEvent> = _firstEvents
 
-    private var counter = 0
+    private val _isGranted = MutableLiveData(false)
+    val isGranted = _isGranted
 
-    fun onPermissionResult(granted: Boolean) {
-        if (granted && counter == 0) {
-            first()
-            counter++
+    private var counter = CREATE_COUNTER
+
+    fun setGranted(granted: Boolean) {
+        _isGranted.value = granted
+    }
+
+    fun loadPersons() = viewModelScope.launch {
+        _personEvents.value = FilePersonEvent.Loading
+        val resultState = filePersonsLoaderUseCase.loadPersons()
+        _personEvents.value = when (resultState) {
+            is ResultState.Success -> {
+                if (resultState.result.isNotEmpty()) {
+                    FilePersonEvent.Success(resultState.result)
+                } else {
+                    FilePersonEvent.Empty
+                }
+            }
+            is ResultState.Error -> FilePersonEvent.Error
+        }
+    }
+
+    fun loadFirstTime() = viewModelScope.launch {
+        if (counter == CREATE_COUNTER) {
+            _firstEvents.value = FileFirstEvent.Loading
+            val resultState = fileFirstUploadUseCase.uploadFirst()
+            _firstEvents(when (resultState) {
+                is ResultState.Success -> {
+                    loadPersons()
+                    counter++
+                    FileFirstEvent.Success
+                }
+                is ResultState.Error -> FileFirstEvent.Error
+            }
+            )
         } else {
             loadPersons()
         }
     }
 
-    private fun loadPersons() {
-        viewModelScope.launch(dispatcher) {
-            _personEvents.value = PersonEvent.Loading
-            when (val resultState = fileUseCase.loadPersons()) {
-                is FilePersonsUseCase.ResultState.Success -> {
-                    _personEvents.value =
-                        if (resultState.result.isEmpty()) {
-                            PersonEvent.Empty
-                        } else {
-                            PersonEvent.Success(resultState.result)
-                        }
-                }
-                is FilePersonsUseCase.ResultState.Error -> {
-                    _personEvents.value = PersonEvent.Error
-                }
-            }
-        }
+    fun deleteAllPersons() = viewModelScope.launch {
+        filePersonsRemoverUseCase.deleteAll()
+        loadPersons()
     }
 
-    private fun first() {
-        viewModelScope.launch(dispatcher) {
-            _personEvents.value = PersonEvent.Loading
-            when (val resultState = fileUseCase.firstLoad()) {
-                is FilePersonsUseCase.ResultState.Success -> {
-                    _personEvents.value =
-                        if (resultState.result.isEmpty()) {
-                            PersonEvent.Empty
-                        } else {
-                            PersonEvent.Success(resultState.result)
-                        }
-                }
-                is FilePersonsUseCase.ResultState.Error -> {
-                    _personEvents.value = PersonEvent.Error
-                }
-            }
-        }
-    }
-
-    fun deleteAllPersons() {
-        viewModelScope.launch(dispatcher) {
-            fileUseCase.deleteAllPersons()
-            loadPersons()
-        }
-    }
-
-    sealed class PersonEvent {
-        class Success(val result: List<Person>) : PersonEvent()
-        object Loading : PersonEvent()
-        object Error : PersonEvent()
-        object Empty : PersonEvent()
+    companion object {
+        const val CREATE_COUNTER = 0
     }
 }

@@ -21,4 +21,7 @@
     <string name="addNewPerson">добавить нового чела</string>
     <string name="deleteAllPersons">Очистить список контактов</string>
     <string name="addNameOrphone">Введите имя или телефон</string>
+    <string name="errorLength">Требуется меньше 20</string>
+    <string name="success">УСПЕХ!</string>
+    <string name="error">Нужно разрешение</string>
 </resources>
