@@ -12,7 +12,7 @@ class PersonOperationsRepositoryImpl(
     private val baseRepository: BaseRepository,
     private val phonesDao: PhonesDao,
 ) : PersonOperationsRepository {
-    
+
     override suspend fun create(person: Person) = baseRepository.execute {
         phonesDao.insertPerson(person = person.toPersonDto().toPersonEntity())
     }
