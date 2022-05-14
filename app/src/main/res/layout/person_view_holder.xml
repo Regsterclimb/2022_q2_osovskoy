@@ -1,0 +1,70 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="16dp">
+
+    <TextView
+        android:id="@+id/personName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintEnd_toStartOf="@id/barrierMenu"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintBottom_toTopOf="@id/personPhone"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names" />
+
+    <TextView
+        android:id="@+id/personPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintEnd_toStartOf="@id/barrierMenu"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/personName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="@tools:sample/us_phones" />
+
+    <ImageView
+        android:id="@+id/menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_more" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:barrierMargin="-16dp"
+        app:constraint_referenced_ids="menu_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>
