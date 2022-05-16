@@ -7,16 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.ResultState
 import com.example.a2022_q2_osovskoy.domain.entity.file_phone_book.FileFirstEvent
 import com.example.a2022_q2_osovskoy.domain.entity.file_phone_book.FilePersonEvent
-import com.example.a2022_q2_osovskoy.domain.use_case.file.FileFirstUploadUseCase
-import com.example.a2022_q2_osovskoy.domain.use_case.file.FilePersonsLoaderUseCase
-import com.example.a2022_q2_osovskoy.domain.use_case.file.FilePersonsRemoverUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.LoadFilePersonsUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.RemoveFilePersonsUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.UploadFileFirstTimeUseCase
 import com.example.a2022_q2_osovskoy.extentions.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class FileBookViewModel(
-    private val filePersonsLoaderUseCase: FilePersonsLoaderUseCase,
-    private val fileFirstUploadUseCase: FileFirstUploadUseCase,
-    private val filePersonsRemoverUseCase: FilePersonsRemoverUseCase,
+    private val loadFilePersonsUseCase: LoadFilePersonsUseCase,
+    private val uploadFileFirstTimeUseCase: UploadFileFirstTimeUseCase,
+    private val removeFilePersonsUseCase: RemoveFilePersonsUseCase,
 ) : ViewModel() {
 
     private val _personEvents = MutableLiveData<FilePersonEvent>()
@@ -36,7 +36,7 @@ class FileBookViewModel(
 
     fun loadPersons() = viewModelScope.launch {
         _personEvents.value = FilePersonEvent.Loading
-        val resultState = filePersonsLoaderUseCase.loadPersons()
+        val resultState = loadFilePersonsUseCase()
         _personEvents.value = when (resultState) {
             is ResultState.Success -> {
                 if (resultState.result.isNotEmpty()) {
@@ -48,11 +48,11 @@ class FileBookViewModel(
             is ResultState.Error -> FilePersonEvent.Error
         }
     }
-
+    //todo()
     fun loadFirstTime() = viewModelScope.launch {
         if (counter == CREATE_COUNTER) {
             _firstEvents.value = FileFirstEvent.Loading
-            val resultState = fileFirstUploadUseCase.uploadFirst()
+            val resultState = uploadFileFirstTimeUseCase()
             _firstEvents(when (resultState) {
                 is ResultState.Success -> {
                     loadPersons()
@@ -68,7 +68,7 @@ class FileBookViewModel(
     }
 
     fun deleteAllPersons() = viewModelScope.launch {
-        filePersonsRemoverUseCase.deleteAll()
+        removeFilePersonsUseCase()
         loadPersons()
     }
 

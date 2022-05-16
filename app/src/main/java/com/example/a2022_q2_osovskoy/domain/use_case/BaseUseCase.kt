@@ -12,6 +12,7 @@ interface BaseUseCase {
             val result = block.invoke()
             ResultState.Success(result = result)
         } catch (e: Exception) {
+            //todo()
             ResultState.Error()
         }
     }

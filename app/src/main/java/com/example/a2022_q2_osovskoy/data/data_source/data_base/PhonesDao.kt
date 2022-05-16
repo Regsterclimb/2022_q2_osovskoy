@@ -7,8 +7,8 @@ import com.example.a2022_q2_osovskoy.data.data_source.data_base.entity.PersonEnt
 interface PhonesDao {
 
     private companion object {
-        const val TABLE_NAME = PersonEntity.PhoneDb.tableName
-        const val NAME = PersonEntity.PhoneDb.Column.name
+        const val TABLE_NAME = PersonEntity.PhoneDb.TABLE_NAME
+        const val NAME = PersonEntity.PhoneDb.Column.NAME
     }
 
     @Query("SELECT * FROM $TABLE_NAME")

@@ -8,23 +8,34 @@ import com.example.a2022_q2_osovskoy.domain.entity.Person
 import com.example.a2022_q2_osovskoy.domain.entity.ResultState
 import com.example.a2022_q2_osovskoy.domain.entity.base_phone_book.FirstEvent
 import com.example.a2022_q2_osovskoy.domain.entity.base_phone_book.PersonEvent
-import com.example.a2022_q2_osovskoy.domain.use_case.data_base.PersonRemoveUseCase
-import com.example.a2022_q2_osovskoy.domain.use_case.data_base.PersonsFirstUploadUseCase
-import com.example.a2022_q2_osovskoy.domain.use_case.data_base.PersonsLoaderUseCase
-import com.example.a2022_q2_osovskoy.domain.use_case.data_base.PersonsRemoverUseCase
+import com.example.a2022_q2_osovskoy.domain.entity.base_phone_book.PhoneBookScreenState
+import com.example.a2022_q2_osovskoy.domain.use_case.data_base.LoadPersonsUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.data_base.RemoveAllPersonsUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.data_base.RemovePersonUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.data_base.UploadPersonsFirstTimeUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.LoadFilePersonsUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.RemoveFilePersonsUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.UploadFileFirstTimeUseCase
 import com.example.a2022_q2_osovskoy.extentions.SingleLiveEvent
+import com.example.a2022_q2_osovskoy.ui.main_screen.MainFragment
 import kotlinx.coroutines.launch
 
 
 class BaseViewModel(
-    private val personsFirstUploadUseCase: PersonsFirstUploadUseCase,
-    private val personsLoaderUseCase: PersonsLoaderUseCase,
-    private val personsRemoverUseCase: PersonsRemoverUseCase,
-    private val personRemoveUseCase: PersonRemoveUseCase,
+    private val uploadPersonsFirstTimeUseCase: UploadPersonsFirstTimeUseCase,
+    private val loadPersonsUseCase: LoadPersonsUseCase,
+    private val removeAllPersonsUseCase: RemoveAllPersonsUseCase,
+    private val removePersonUseCase: RemovePersonUseCase,
+    private val uploadFileFirstTimeUseCase: UploadFileFirstTimeUseCase,
+    private val loadFilePersonsUseCase: LoadFilePersonsUseCase,
+    private val removeFilePersonsUseCase: RemoveFilePersonsUseCase,
 ) : ViewModel() {
 
+    private val _phoneBookScreenState = MutableLiveData<PhoneBookScreenState>()
+    val phoneBookState = _phoneBookScreenState
+
     private val _personEvents = MutableLiveData<PersonEvent>()
-    val personEvents: LiveData<PersonEvent> = _personEvents
+    val personEvents = _personEvents
 
     private val _firstEvents = SingleLiveEvent<FirstEvent>()
     val firstEvents: LiveData<FirstEvent> = _firstEvents
@@ -35,50 +46,70 @@ class BaseViewModel(
     private var counter = CREATE_COUNTER
 
     fun setGranted(granted: Boolean) {
-        _isGranted.value = granted
-    }
-
-    fun loadPersons() = viewModelScope.launch {
-        _personEvents.value = (PersonEvent.Loading)
-        val resultState = personsLoaderUseCase.load()
-        _personEvents.value = when (resultState) {
-            is ResultState.Success -> {
-                if (resultState.result.isNotEmpty()) {
-                    PersonEvent.Success(resultState.result)
-                } else {
-                    PersonEvent.Empty
-                }
-            }
-            is ResultState.Error -> PersonEvent.Error
+        viewModelScope.launch {
+            _isGranted.value = granted
         }
     }
 
-    fun loadFirstTime() = viewModelScope.launch {
-        if (counter == CREATE_COUNTER) {
-            _firstEvents.value = FirstEvent.Loading
-            val resultState = personsFirstUploadUseCase.upload()
-            _firstEvents(when (resultState) {
-                is ResultState.Success -> {
-                    counter++
-                    loadPersons()
-                    FirstEvent.Success
-                }
-                is ResultState.Error -> FirstEvent.Error
+    fun setPhoneBookState(fragmentFlag: Int) {
+        viewModelScope.launch {
+            _phoneBookScreenState.value = when (fragmentFlag) {
+                MainFragment.FILE_FLAG -> PhoneBookScreenState.File
+                MainFragment.DATA_BASE_FLAG -> PhoneBookScreenState.Database
+                else -> PhoneBookScreenState.Error
             }
-            )
-        } else {
-            loadPersons()
+        }
+    }
+
+    fun loadPersons() {
+        viewModelScope.launch {
+            _personEvents.value = PersonEvent.Loading
+            _personEvents.value = when (val resultState = loadPersonsUseCase()) {
+                is ResultState.Success -> {
+                    if (resultState.result.isNotEmpty()) {
+                        PersonEvent.Success(resultState.result)
+                    } else {
+                        PersonEvent.Empty
+                    }
+                }
+                is ResultState.Error -> PersonEvent.Error
+            }
+        }
+    }
+
+    fun loadFirstTime() {
+        viewModelScope.launch {
+            if (counter == CREATE_COUNTER) {
+                _firstEvents.value = FirstEvent.Loading
+                _firstEvents(when (uploadPersonsFirstTimeUseCase()) {
+                    is ResultState.Success -> {
+                        counter++
+                        loadPersons()
+                        FirstEvent.Success
+                    }
+                    is ResultState.Error -> FirstEvent.Error
+                }
+                )
+            } else {
+                loadPersons()
+            }
         }
     }
 
     fun deletePerson(person: Person) = viewModelScope.launch {
-        personRemoveUseCase.remove(person)
+        removePersonUseCase(person)
         loadPersons()
     }
 
     fun deleteAllPersons() = viewModelScope.launch {
-        personsRemoverUseCase.deleteAll()
+        removeAllPersonsUseCase
         loadPersons()
+    }
+
+    private fun loadDependingOnPhoneBookScreenState(state: PhoneBookScreenState) {
+        when (state) {
+
+        }
     }
 
     companion object {

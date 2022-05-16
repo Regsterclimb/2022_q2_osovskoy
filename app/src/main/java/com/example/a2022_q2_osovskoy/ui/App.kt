@@ -1,73 +1,68 @@
 package com.example.a2022_q2_osovskoy.ui
 
 import android.app.Application
-import com.example.a2022_q2_osovskoy.data.data_source.content_provider.ContentDataBase
+import com.example.a2022_q2_osovskoy.data.data_source.content_provider.PersonsSource
 import com.example.a2022_q2_osovskoy.data.data_source.data_base.PhoneDataBase
 import com.example.a2022_q2_osovskoy.data.data_source.file.FileLoader
 import com.example.a2022_q2_osovskoy.data.repository.BaseRepository
 import com.example.a2022_q2_osovskoy.data.repository.data_base.PersonOperationsRepositoryImpl
 import com.example.a2022_q2_osovskoy.data.repository.data_base.PersonsRepositoryImpl
 import com.example.a2022_q2_osovskoy.data.repository.file.FilePersonsRepositoryImpl
-import com.example.a2022_q2_osovskoy.domain.repository.PersonOperationsRepository
 import com.example.a2022_q2_osovskoy.domain.use_case.BaseUseCase
 import com.example.a2022_q2_osovskoy.domain.use_case.data_base.*
-import com.example.a2022_q2_osovskoy.domain.use_case.file.FileFirstUploadUseCase
-import com.example.a2022_q2_osovskoy.domain.use_case.file.FilePersonsLoaderUseCase
-import com.example.a2022_q2_osovskoy.domain.use_case.file.FilePersonsRemoverUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.LoadFilePersonsUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.RemoveFilePersonsUseCase
+import com.example.a2022_q2_osovskoy.domain.use_case.file.UploadFileFirstTimeUseCase
 import kotlin.properties.Delegates
 
 class App : Application() {
 
-    var personsFirstUploadUseCase: PersonsFirstUploadUseCase by Delegates.notNull()
-    var personsLoaderUseCase: PersonsLoaderUseCase by Delegates.notNull()
-    var personsRemoverUseCase: PersonsRemoverUseCase by Delegates.notNull()
+    var uploadPersonsFirstTimeUseCase: UploadPersonsFirstTimeUseCase by Delegates.notNull()
+    var loadPersonsUseCase: LoadPersonsUseCase by Delegates.notNull()
+    var removeAllPersonsUseCase: RemoveAllPersonsUseCase by Delegates.notNull()
 
-    var filePersonsRemoverUseCase: FilePersonsRemoverUseCase by Delegates.notNull()
-    var filePersonsLoaderUseCase: FilePersonsLoaderUseCase by Delegates.notNull()
-    var fileFirstUploadUseCase: FileFirstUploadUseCase by Delegates.notNull()
+    var removeFilePersonsUseCase: RemoveFilePersonsUseCase by Delegates.notNull()
+    var loadFilePersonsUseCase: LoadFilePersonsUseCase by Delegates.notNull()
+    var uploadFileFirstTimeUseCase: UploadFileFirstTimeUseCase by Delegates.notNull()
 
-    var personOperationsRepository: PersonOperationsRepository by Delegates.notNull()
-
-    var personCreateUseCase: PersonCreateUseCase by Delegates.notNull()
-    var personRemoveUseCase: PersonRemoveUseCase by Delegates.notNull()
-    var personUpdateUseCase: PersonUpdateUseCase by Delegates.notNull()
+    var createPersonUseCase: CreatePersonUseCase by Delegates.notNull()
+    var removePersonUseCase: RemovePersonUseCase by Delegates.notNull()
+    var updatePersonUseCase: UpdatePersonUseCase by Delegates.notNull()
 
     override fun onCreate() {
         super.onCreate()
         val dataBase = PhoneDataBase.create(this).phonesDao()
 
-        personsFirstUploadUseCase = PersonsFirstUploadUseCase.Base(BaseUseCase.Base(),
+        uploadPersonsFirstTimeUseCase = UploadPersonsFirstTimeUseCase(BaseUseCase.Base(),
             PersonsRepositoryImpl(BaseRepository.Base(),
-                ContentDataBase.Base(contentResolver), dataBase))
+                PersonsSource.Base(contentResolver), dataBase))
 
-        personsLoaderUseCase = PersonsLoaderUseCase.Base(BaseUseCase.Base(),
+        loadPersonsUseCase = LoadPersonsUseCase(BaseUseCase.Base(),
             PersonsRepositoryImpl(BaseRepository.Base(),
-                ContentDataBase.Base(contentResolver), dataBase))
+                PersonsSource.Base(contentResolver), dataBase))
 
-        personsRemoverUseCase = PersonsRemoverUseCase.Base(BaseUseCase.Base(),
+        removeAllPersonsUseCase = RemoveAllPersonsUseCase(BaseUseCase.Base(),
             PersonsRepositoryImpl(BaseRepository.Base(),
-                ContentDataBase.Base(contentResolver), dataBase))
+                PersonsSource.Base(contentResolver), dataBase))
 
         val fileRep = FilePersonsRepositoryImpl(
             BaseRepository.Base(),
             FileLoader.Base(this),
-            ContentDataBase.Base(contentResolver))
+            PersonsSource.Base(contentResolver))
 
-        filePersonsRemoverUseCase = FilePersonsRemoverUseCase.Base(fileRep, BaseUseCase.Base())
+        removeFilePersonsUseCase = RemoveFilePersonsUseCase(fileRep, BaseUseCase.Base())
 
-        filePersonsLoaderUseCase = FilePersonsLoaderUseCase.Base(fileRep, BaseUseCase.Base())
+        loadFilePersonsUseCase = LoadFilePersonsUseCase(fileRep, BaseUseCase.Base())
 
-        fileFirstUploadUseCase = FileFirstUploadUseCase.Base(fileRep, BaseUseCase.Base())
-
-        personOperationsRepository = PersonOperationsRepositoryImpl(BaseRepository.Base(), dataBase)
+        uploadFileFirstTimeUseCase = UploadFileFirstTimeUseCase(fileRep, BaseUseCase.Base())
 
         val operationRep = PersonOperationsRepositoryImpl(BaseRepository.Base(), dataBase)
 
-        personCreateUseCase = PersonCreateUseCase.Base(operationRep)
+        createPersonUseCase = CreatePersonUseCase(operationRep)
 
-        personUpdateUseCase = PersonUpdateUseCase.Base(operationRep)
+        updatePersonUseCase = UpdatePersonUseCase(operationRep)
 
-        personRemoveUseCase = PersonRemoveUseCase.Base(operationRep)
+        removePersonUseCase = RemovePersonUseCase(operationRep)
 
     }
 }

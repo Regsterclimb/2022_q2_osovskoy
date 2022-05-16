@@ -5,11 +5,11 @@ import android.database.Cursor
 import android.provider.ContactsContract
 import com.example.a2022_q2_osovskoy.data.model.PersonDto
 
-interface ContentDataBase {
+interface PersonsSource {
 
     fun load(): List<PersonDto>
 
-    class Base(private val contentResolver: ContentResolver) : ContentDataBase {
+    class Base(private val contentResolver: ContentResolver) : PersonsSource {
 
         override fun load(): List<PersonDto> = useCursor(
             contentResolver.query(
@@ -29,8 +29,7 @@ interface ContentDataBase {
             val personsDto = mutableListOf<PersonDto>()
 
             cursor?.use {
-                val name =
-                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+                val name = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
                 val number = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                 val id = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
 

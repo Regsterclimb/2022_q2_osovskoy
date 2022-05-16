@@ -18,19 +18,22 @@ class MainViewModelFactory(private val applicationContext: Context) :
         with(applicationContext) {
             val viewModel = when (modelClass) {
                 BaseViewModel::class.java -> BaseViewModel(
-                    personsFirstUploadUseCase = personsFirstUploadUseCase,
-                    personsLoaderUseCase = personsLoaderUseCase,
-                    personsRemoverUseCase = personsRemoverUseCase,
-                    personRemoveUseCase = personRemoveUseCase)
+                    uploadPersonsFirstTimeUseCase = uploadPersonsFirstTimeUseCase,
+                    loadPersonsUseCase = loadPersonsUseCase,
+                    removeAllPersonsUseCase = removeAllPersonsUseCase,
+                    removePersonUseCase = removePersonUseCase,
+                    uploadFileFirstTimeUseCase = uploadFileFirstTimeUseCase,
+                    loadFilePersonsUseCase = loadFilePersonsUseCase,
+                    removeFilePersonsUseCase = removeFilePersonsUseCase)
 
                 AddPersonViewModel::class.java -> AddPersonViewModel(
-                    personCreateUseCase = personCreateUseCase,
-                    personUpdateUseCase = personUpdateUseCase)
+                    createPersonUseCase = createPersonUseCase,
+                    updatePersonUseCase = updatePersonUseCase)
 
                 FileBookViewModel::class.java -> FileBookViewModel(
-                    fileFirstUploadUseCase = fileFirstUploadUseCase,
-                    filePersonsLoaderUseCase = filePersonsLoaderUseCase,
-                    filePersonsRemoverUseCase = filePersonsRemoverUseCase
+                    uploadFileFirstTimeUseCase = uploadFileFirstTimeUseCase,
+                    loadFilePersonsUseCase = loadFilePersonsUseCase,
+                    removeFilePersonsUseCase = removeFilePersonsUseCase
                 )
                 else -> throw IllegalArgumentException("Wrong Model Class")
             }

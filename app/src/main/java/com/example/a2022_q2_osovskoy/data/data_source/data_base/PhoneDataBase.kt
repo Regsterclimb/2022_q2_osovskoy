@@ -13,7 +13,7 @@ abstract class PhoneDataBase : RoomDatabase() {
 
     companion object {
         fun create(appContext: Context): PhoneDataBase = Room.databaseBuilder(
-            appContext, PhoneDataBase::class.java, PersonEntity.PhoneDb.tableName
+            appContext, PhoneDataBase::class.java, PersonEntity.PhoneDb.TABLE_NAME
         ).fallbackToDestructiveMigration()
             .build()
     }

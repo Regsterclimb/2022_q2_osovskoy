@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -24,15 +25,21 @@ import com.example.a2022_q2_osovskoy.ui.PersonAdapter
 import com.example.a2022_q2_osovskoy.ui.add_person_screen.AddPersonFragment
 import com.example.a2022_q2_osovskoy.ui.core.DividerItemDecorator
 import com.example.a2022_q2_osovskoy.ui.core.PersonEventDisplay
+import com.example.a2022_q2_osovskoy.ui.main_screen.MainFragment
 
 class PhoneBookFragment : Fragment(R.layout.fragment_phone_book) {
 
     private val viewBinding by viewBinding(FragmentPhoneBookBinding::bind)
 
     private val viewModel: BaseViewModel by viewModels {
-        MainViewModelFactory(
-            applicationContext = requireContext().applicationContext
-        )
+        MainViewModelFactory(applicationContext = requireContext().applicationContext)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(MainFragment.REQUEST_FRAGMENT_FLAG_KEY) { _, bundle ->
+            viewModel.setPhoneBookState(bundle.getInt(MainFragment.REQUEST_FRAGMENT_FLAG_KEY))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,6 +64,7 @@ class PhoneBookFragment : Fragment(R.layout.fragment_phone_book) {
         personsRecycler.apply {
             setDivider(this)
             adapter = PersonAdapter(
+                //todo()
                 updatePerson = { person ->
                     with(parentFragmentManager) {
                         setFragmentResult(UPDATE_SCREEN_KEY, bundleOf(UPDATE_VALUES to person))
