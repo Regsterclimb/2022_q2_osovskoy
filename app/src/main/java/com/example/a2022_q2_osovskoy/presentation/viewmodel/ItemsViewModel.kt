@@ -1,38 +1,31 @@
 package com.example.a2022_q2_osovskoy.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.a2022_q2_osovskoy.data.storage.ItemsData
-import com.example.a2022_q2_osovskoy.domain.useCase.ItemsUseCase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import com.example.a2022_q2_osovskoy.domain.entity.ItemsState
+import com.example.a2022_q2_osovskoy.domain.entity.ResultState
+import com.example.a2022_q2_osovskoy.domain.use_case.GetItemsUseCase
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ItemsViewModel(
-    private val itemsUseCase: ItemsUseCase,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Main,
-) : ViewModel() {
+class ItemsViewModel @Inject constructor(private val itemsUseCase: GetItemsUseCase) : ViewModel() {
 
-    private var _itemsEvents = MutableLiveData<ItemsEvent>()
-    val itemEvents = _itemsEvents
+    private var _itemsState = MutableLiveData<ItemsState>()
+    val itemsState = _itemsState
 
-    fun loadItems() {
-        viewModelScope.launch(dispatcher) {
-            when (val resultState = itemsUseCase.loadItems()) {
-                is ItemsUseCase.ResultState.Success -> {
-                    _itemsEvents.value = ItemsEvent.Success(resultState.result)
+    init {
+        Log.d("ViewModelItems", "Init + ${hashCode()}")
+        viewModelScope.launch {
+            when (val resultState = itemsUseCase()) {
+                is ResultState.Success -> {
+                    _itemsState.value = ItemsState.Success(resultState.result)
                 }
-                is ItemsUseCase.ResultState.Error -> {
-                    _itemsEvents.value = ItemsEvent.Error
+                is ResultState.Error -> {
+                    _itemsState.value = ItemsState.Error
                 }
             }
         }
     }
-
-    sealed class ItemsEvent {
-        class Success(val result: List<ItemsData.ListItem>) : ItemsEvent()
-        object Error : ItemsEvent()
-    }
-
 }

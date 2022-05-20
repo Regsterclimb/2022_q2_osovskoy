@@ -1,8 +1,8 @@
 package com.example.a2022_q2_osovskoy.domain.repository
 
-import com.example.a2022_q2_osovskoy.data.storage.ItemsData
+import com.example.a2022_q2_osovskoy.domain.entity.ListItem
 
 interface ItemsRepository {
 
-    suspend fun loadItems() : List<ItemsData.ListItem>
+    fun loadItems(): List<ListItem>
 }

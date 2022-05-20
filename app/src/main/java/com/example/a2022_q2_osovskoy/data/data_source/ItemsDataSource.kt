@@ -1,43 +1,46 @@
-package com.example.a2022_q2_osovskoy.data.storage
+package com.example.a2022_q2_osovskoy.data.data_source
 
-interface ItemsData {
+import com.example.a2022_q2_osovskoy.data.model.ListItemDto
+import javax.inject.Inject
 
-    suspend fun get(): List<ListItem>
+interface ItemsDataSource {
 
-    class Base : ItemsData {
+    fun getItemsDto(): List<ListItemDto>
 
-        override suspend fun get(): List<ListItem> = data
+    class Base @Inject constructor() : ItemsDataSource {
 
-        private val data: List<ListItem> = listOf(
-            ListItem.StudentItem(
+        override fun getItemsDto(): List<ListItemDto> = data
+
+        private val data: List<ListItemDto> = listOf(
+            ListItemDto.StudentItemDto(
                 name = "Иван",
                 secondName = "Иванов",
                 description = "Только что выпустился из универа, с Android знаком не сильно",
                 hasPortfolio = true,
             ),
-            ListItem.BannerItem(
+            ListItemDto.BannerItemDto(
                 title = "Новая заявка",
                 description = "Здравствуйте, меня зовут Глеб, ещё не поздно подать заявку?"
             ),
-            ListItem.StudentItem(
+            ListItemDto.StudentItemDto(
                 name = "Пётр",
                 secondName = "Петров",
                 description = "Сеньор-помидор, 30 лет опыта С++, хочу попробовать себя в новом направлении",
                 hasPortfolio = false,
             ),
-            ListItem.StudentItem(
+            ListItemDto.StudentItemDto(
                 name = "Семён",
                 secondName = "Сёменов",
                 description = "Прошёл курсы Skillbox, SkillFactory, SkillShare, но не могу найти работу, помогите мне",
                 hasPortfolio = false,
             ),
-            ListItem.StudentItem(
+            ListItemDto.StudentItemDto(
                 name = "Андрей",
                 secondName = "Андреев",
                 description = "Мне не придумали длинного описания",
                 hasPortfolio = true,
             ),
-            ListItem.StudentItem(
+            ListItemDto.StudentItemDto(
                 name = "Егор",
                 secondName = "Егоров",
                 description = "Lorem ipsum dolor sit amet ya uchenik mne 19 let",
@@ -45,21 +48,4 @@ interface ItemsData {
             ),
         )
     }
-
-    sealed class ListItem {
-
-        class StudentItem(
-            val name: String,
-            val secondName: String,
-            val description: String,
-            val hasPortfolio: Boolean,
-        ) : ListItem()
-
-        class BannerItem(
-            val title: String,
-            val description: String,
-        ) : ListItem()
-    }
-
-
 }
