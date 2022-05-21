@@ -8,8 +8,6 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 
-//todo обернуть в интерфейс
-
 @Component(modules = [
     DataBindsModule::class,
     DomainBindsModule::class,
