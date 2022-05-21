@@ -12,10 +12,10 @@ class App : Application(), HasAndroidInjector {
     @Inject
     lateinit var injector: DispatchingAndroidInjector<Any>
 
-
     override fun onCreate() {
         super.onCreate()
         DaggerAppComponent.factory().create(this).inject(this)
     }
+
     override fun androidInjector(): AndroidInjector<Any> = injector
 }

@@ -32,7 +32,7 @@ class DividerItemDecorator(private val mDivider: Drawable) :
     }
 
     private fun calcDividerLeft(width: Int): Int {
-        val density  = Resources.getSystem().displayMetrics.density
+        val density = Resources.getSystem().displayMetrics.density
         val valueInDp = (width / density) - INDENT
         return width - (valueInDp * density).toInt()
     }

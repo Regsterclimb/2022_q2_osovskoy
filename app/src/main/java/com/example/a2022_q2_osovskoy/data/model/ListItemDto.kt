@@ -9,8 +9,5 @@ sealed class ListItemDto {
         val hasPortfolio: Boolean,
     ) : ListItemDto()
 
-    class BannerItemDto(
-        val title: String,
-        val description: String,
-    ) : ListItemDto()
+    class BannerItemDto(val title: String, val description: String) : ListItemDto()
 }

@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.domain.entity
+package com.example.a2022_q2_osovskoy.presentation.second_screen
 
 sealed class SecondScreenModelState {
     object Success : SecondScreenModelState()

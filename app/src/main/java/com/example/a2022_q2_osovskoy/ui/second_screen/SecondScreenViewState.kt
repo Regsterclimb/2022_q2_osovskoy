@@ -1,6 +1,6 @@
-package com.example.a2022_q2_osovskoy.domain.entity
+package com.example.a2022_q2_osovskoy.ui.second_screen
 
 sealed class SecondScreenViewState {
     class ClickOnAcceptButton(val textInput: String) : SecondScreenViewState()
-    object ExitFromScreen:SecondScreenViewState()
+    object ExitFromScreen: SecondScreenViewState()
 }

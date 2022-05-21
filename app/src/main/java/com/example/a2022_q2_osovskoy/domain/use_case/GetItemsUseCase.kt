@@ -8,7 +8,7 @@ class GetItemsUseCase @Inject constructor(private val itemsRepository: ItemsRepo
 
     operator fun invoke(): ResultState = try {
         ResultState.Success(result = itemsRepository.loadItems())
-    } catch (e: RuntimeException) {
+    } catch (e: IllegalArgumentException) {
         ResultState.Error
     }
 }

@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.di.presentation
+package com.example.a2022_q2_osovskoy.di.ui
 
 import com.example.a2022_q2_osovskoy.di.annotations.ShiftFragmentScope
 import com.example.a2022_q2_osovskoy.ui.main_screen.ShiftFragment
