@@ -4,7 +4,7 @@ import com.example.a2022_q2_osovskoy.di.annotations.AppScope
 import com.example.a2022_q2_osovskoy.di.data.DataModule
 import com.example.a2022_q2_osovskoy.di.domain.DomainModule
 import com.example.a2022_q2_osovskoy.di.presentation.PresentationModule
-import com.example.a2022_q2_osovskoy.presentation.App
+import com.example.a2022_q2_osovskoy.ui.App
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule

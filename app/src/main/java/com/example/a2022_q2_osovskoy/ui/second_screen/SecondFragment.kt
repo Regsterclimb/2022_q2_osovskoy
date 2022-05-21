@@ -64,7 +64,6 @@ class SecondFragment : DaggerFragment(R.layout.fragment_second) {
                 .play(secondScreenContainer.fadeOut(HIDE_DURATION, HIDE_END_VALUE))
                 .before(secondScreenProgressBar.fadeIn(SHOW_DURATION, SHOW_START_VALUE,
                     SHOW_END_VALUE))
-
         }
         return animationSet
     }

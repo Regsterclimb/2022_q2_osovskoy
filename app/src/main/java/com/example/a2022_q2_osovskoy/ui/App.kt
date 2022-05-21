@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.presentation
+package com.example.a2022_q2_osovskoy.ui
 
 import android.app.Application
 import com.example.a2022_q2_osovskoy.di.DaggerAppComponent
