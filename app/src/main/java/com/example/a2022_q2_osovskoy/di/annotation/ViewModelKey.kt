@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.presentation.view_model
+package com.example.a2022_q2_osovskoy.di.annotation
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

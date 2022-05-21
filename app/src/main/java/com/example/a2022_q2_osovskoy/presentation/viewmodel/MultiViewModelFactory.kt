@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.presentation.view_model
+package com.example.a2022_q2_osovskoy.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +12,4 @@ class MultiViewModelFactory @Inject constructor(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
         viewModelFactories.getValue(modelClass as Class<ViewModel>).get() as T
-
-    val viewModelsClasses get() = viewModelFactories.keys.map { clazz -> clazz.hashCode() }
 }

@@ -1,11 +1,11 @@
 package com.example.a2022_q2_osovskoy.data.datasource
 
+import com.example.a2022_q2_osovskoy.data.model.MockedStringDto
 import javax.inject.Inject
 
-//todo() dto model
-class StringRemoteDataSourceImpl @Inject constructor() : StringRemoteDataSource {
+class StringRemoteDataSourceImpl @Inject constructor() : StringDataSource {
 
-    private val mockedAnswer = "String from remote data source"
+    private val mockedAnswer = MockedStringDto("String from remote data source")
 
-    override fun get(): String = mockedAnswer
+    override fun get(): MockedStringDto = mockedAnswer
 }

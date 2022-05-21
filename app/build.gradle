@@ -52,6 +52,8 @@ dependencies {
 
     implementation "com.google.dagger:dagger:$daggerVers"
     kapt "com.google.dagger:dagger-compiler:$daggerVers"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVers"
+    implementation "com.google.dagger:dagger-android-support:$daggerVers"
 
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
 }

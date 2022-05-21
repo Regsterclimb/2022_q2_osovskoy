@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.di.annotations
+package com.example.a2022_q2_osovskoy.di.annotation
 
 import javax.inject.Scope
 
