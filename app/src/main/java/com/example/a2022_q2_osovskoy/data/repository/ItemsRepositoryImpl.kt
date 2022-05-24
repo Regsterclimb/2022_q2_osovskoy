@@ -8,8 +8,9 @@ import com.example.a2022_q2_osovskoy.extentions.toBannerItem
 import com.example.a2022_q2_osovskoy.extentions.toStudentItem
 import javax.inject.Inject
 
-class ItemsRepositoryImpl @Inject constructor(private val itemsDataSource: ItemsDataSource) :
-    ItemsRepository {
+class ItemsRepositoryImpl @Inject constructor(
+    private val itemsDataSource: ItemsDataSource,
+) : ItemsRepository {
 
     override fun loadItems(): List<ListItem> = itemsDataSource.getItemsDto().map { listItemDto ->
         mapListItemDto(listItemDto)

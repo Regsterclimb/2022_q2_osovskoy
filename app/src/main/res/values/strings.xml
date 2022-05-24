@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">ШИФТ Курсы</string>
+    <string name="appName">ШИФТ Курсы</string>
     <string name="acceptButtonText">Принять</string>
     <string name="declineButtonText">Отклонить</string>
-    <string name="appbar">ШИФТ Курсы</string>
     <string name="errorText">Неизвестная ошибка</string>
     <string name="iconPlus">PLUS</string>
     <string name="acceptButtonSecondScreen">Принять</string>

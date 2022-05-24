@@ -17,9 +17,7 @@ class StudentViewHolder(parent: ViewGroup) :
 
     fun bind(listItem: ListItem, arrowOnClickAction: (name: String) -> Unit) {
         listItem as ListItem.StudentItem
-
         val fullName = String.format(listItem.name + " " + listItem.secondName)
-
         with(viewBinding) {
             personName.text = fullName
             personText.text = listItem.description

@@ -8,7 +8,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.a2022_q2_osovskoy"
+        applicationId "com.example.com.example.a2022_q2_osovskoy"
         minSdk 21
         targetSdk 32
         versionCode 1
@@ -16,11 +16,35 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        releaseConfig {
+            keyAlias "qwerty"
+            keyPassword "123456"
+            storeFile file("../keystore.jks")
+            storePassword "123456"
+        }
+    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        dev {
+            dimension "version"
+            versionNameSuffix " dev"
+            applicationIdSuffix ".dev"
+            resValue "string", "appbar", "ШИФТ КУРСЫ Dev"
+        }
+        live {
+            dimension "version"
+            versionNameSuffix " live"
+            applicationIdSuffix ".live"
+            resValue "string", "appbar", "ШИФТ КУРСЫ Live"
         }
     }
     compileOptions {
