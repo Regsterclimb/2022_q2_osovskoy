@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
-    <color name="transparent">#0000ffff</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#FFFFFF</color>
     <color name="surfaceCard">#FAFAFA</color>
     <color name="primary_some_500">#6202EE</color>
-    <color name="dividerCol">#1A000000</color>
-    <color name="primary_white_90">#80FFFFFF</color>
-    <color name="primary_white">#DEFFFFFF</color>
-    <color name="primary_black">#121212</color>
+    <color name="dividerCol">#E6E6E6</color>
+    <color name="primary_white_90">#FFFFFF</color>
+    <color name="primary_white">#FFFFFF</color>
+    <color name="primary_black">#414141</color>
+    <color name="medium_black">#717171</color>
     <color name="mirage">#171C2D</color>
-    <color name="blue_diane">#A1254252</color>
+    <color name="blue_diane">#E9ECEE</color>
     <color name="red_damask">#E37239</color>
 
 </resources>

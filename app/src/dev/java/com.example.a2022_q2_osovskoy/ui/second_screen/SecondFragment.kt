@@ -1,8 +1,10 @@
 package com.example.a2022_q2_osovskoy.ui.second_screen
 
 import android.animation.AnimatorSet
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.animation.doOnEnd
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -46,7 +48,11 @@ class SecondFragment : DaggerFragment(R.layout.fragment_second) {
     private fun observeScreenState(binding: FragmentSecondBinding) {
         viewModel.state.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
-                SecondScreenModelState.Success -> startEndingAnimation(getEndingAnimator(binding))
+                SecondScreenModelState.Success -> {
+                    startEndingAnimation(getEndingAnimator(binding))
+                    (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                        .hideSoftInputFromWindow(view?.windowToken, 0)
+                }
 
                 SecondScreenModelState.WrongTextInput -> shakeMyTextBox(binding)
 
