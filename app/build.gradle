@@ -18,13 +18,37 @@ android {
         /*testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"*/
         testInstrumentationRunner "com.example.a2022_q2_osovskoy.kaspresso.test_setting.MockTestRunner"
     }
-
+    signingConfigs {
+        releaseConfig {
+            keyAlias "qwerty"
+            keyPassword "123456"
+            storeFile file('..\\keystore.jks')
+            storePassword "123456"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
         }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        dev {
+            dimension "version"
+            versionNameSuffix " dev"
+            applicationIdSuffix ".dev"
+        }
+        live {
+            dimension "version"
+            versionNameSuffix " live"
+            applicationIdSuffix ".live"
+        }
+    }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -60,14 +84,16 @@ dependencies {
     // fragment for viewModels
     implementation 'androidx.fragment:fragment-ktx:1.4.1'
     // mock web server
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
+    implementation "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
     //okhttp
     implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
     //Serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+
 
 }

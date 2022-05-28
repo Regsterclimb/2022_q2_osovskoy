@@ -26,12 +26,17 @@ open class App : Application() {
         super.onCreate()
         sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
 
-        val currencyRepository = CurrencyRepositoryImpl(NetworkModule.RetrofitModule(this),
+        val currencyRepository = CurrencyRepositoryImpl(NetworkModule.RetrofitModule(),
             CurrencyData.Base(sharedPreferences))
 
-        currencyUseCase = CurrencyUseCase.Base(currencyRepository, DoubleRounder.Base(),getDispatcherMainImmediate())
-        currenciesUseCase = CurrenciesUseCase.Base(currencyRepository, DoubleRounder.Base(),getDispatcherMainImmediate())
-        calculationUseCase = CalculationUseCase.Base(Calculation.Base(InputRefactor.Base()),getDispatcherDefault())
+        currencyUseCase = CurrencyUseCase.Base(currencyRepository,
+            DoubleRounder.Base(),
+            getDispatcherMainImmediate())
+        currenciesUseCase = CurrenciesUseCase.Base(currencyRepository,
+            DoubleRounder.Base(),
+            getDispatcherMainImmediate())
+        calculationUseCase =
+            CalculationUseCase.Base(Calculation.Base(InputRefactor.Base()), getDispatcherDefault())
     }
 
     open fun getDispatcherMainImmediate() = Dispatchers.Main.immediate
