@@ -17,7 +17,7 @@ class UploadScreenViewModel @Inject constructor(
     private val getUploadProgress: GetUploadProgress,
 ) : ViewModel() {
 
-    private val _uploadProgress = MutableLiveData<FileLoadingProgressState>()
+    private val _uploadProgress = SingleLiveEvent<FileLoadingProgressState>()
     val uploadProgress = _uploadProgress
 
     private val _mainActivityState = MutableLiveData<MainActivityModelState>()
