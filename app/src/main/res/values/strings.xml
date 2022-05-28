@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">2022_q2_osovskoy</string>
+    <string name="httpError">HTTP ERROR</string>
+    <string name="ioError">No Internet Connection</string>
+    <string name="fileSuccessUpload">Upload Success</string>
+    <string name="fileUploadError">Upload Success</string>
+    <string name="uploadFile">uploadFile</string>
 </resources>
