@@ -46,10 +46,10 @@ class ShiftFragment : DaggerFragment(R.layout.fragment_shift) {
     private fun navigateToSecondFragment() {
         parentFragmentManager.beginTransaction().apply {
             setCustomAnimations(
-                com.google.android.material.R.anim.abc_slide_in_bottom,
-                com.google.android.material.R.anim.abc_fade_out,
-                com.google.android.material.R.anim.abc_fade_in,
-                com.google.android.material.R.anim.abc_slide_out_bottom
+                androidx.appcompat.R.anim.abc_slide_in_bottom,
+                androidx.appcompat.R.anim.abc_fade_out,
+                androidx.appcompat.R.anim.abc_fade_in,
+                androidx.appcompat.R.anim.abc_slide_out_bottom
             )
             replace(R.id.mainActivityFragmentContainer, SecondFragment())
             addToBackStack(null)
