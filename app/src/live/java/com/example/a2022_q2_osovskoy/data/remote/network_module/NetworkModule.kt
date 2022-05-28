@@ -1,8 +1,6 @@
 package com.example.a2022_q2_osovskoy.data.remote.network_module
 
-import android.content.Context
 import com.example.a2022_q2_osovskoy.data.remote.responses.ApiData
-import com.example.a2022_q2_osovskoy.presentation.App
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -15,8 +13,11 @@ interface NetworkModule {
 
     suspend fun loadCurrenciesData(): ApiData
 
-    class RetrofitModule(appContext: Context) : CbrCurrencyApi, NetworkModule {
-        private val baseUrl = (appContext as App).getBaseUrl()
+    class RetrofitModule : CbrCurrencyApi, NetworkModule {
+        companion object {
+            private const val LOCAL_HOST_URL = "https://www.cbr-xml-daily.ru"
+        }
+
         private val json = Json {
             ignoreUnknownKeys = true
         }
@@ -31,7 +32,7 @@ interface NetworkModule {
         @Suppress("EXPERIMENTAL_API_USAGE")
         private val retrofit: Retrofit = Retrofit.Builder()
             .client(httpClient)
-            .baseUrl(baseUrl)
+            .baseUrl(LOCAL_HOST_URL)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
 
