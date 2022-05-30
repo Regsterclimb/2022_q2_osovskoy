@@ -4,11 +4,11 @@ import com.example.a2022_q2_osovskoy.data.data_source.file.FileDataSource
 import com.example.a2022_q2_osovskoy.data.data_source.remote.UploadFileDataSource
 import com.example.a2022_q2_osovskoy.data.data_source.remote.support.ProgressReport
 import com.example.a2022_q2_osovskoy.data.model.ResultState
-import com.example.a2022_q2_osovskoy.domain.entity.ProgressResult
 import com.example.a2022_q2_osovskoy.domain.repository.FileRepository
 import com.example.a2022_q2_osovskoy.extentions.toFilePostInfo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.withContext
 import okio.IOException
 import retrofit2.HttpException
@@ -33,5 +33,5 @@ class FileRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getProgress(): ProgressResult = progressReport.getReport()
+    override suspend fun getProgress(): SharedFlow<Int> = progressReport.getReport()
 }

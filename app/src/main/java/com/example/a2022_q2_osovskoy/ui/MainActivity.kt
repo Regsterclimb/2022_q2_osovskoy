@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.ActivityMainBinding
-import com.example.a2022_q2_osovskoy.presentation.FileLoadingProgressState
 import com.example.a2022_q2_osovskoy.presentation.MainActivityModelState
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.UploadScreenViewModel
@@ -44,17 +43,8 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun observeProgress(binding: ActivityMainBinding) {
-        viewModel.uploadProgress.observe(this) { fileLoadingState ->
-            when (fileLoadingState) {
-                is FileLoadingProgressState.Loading -> {
-                    binding.uploadProgressBar.progress = fileLoadingState.value
-                }
-                FileLoadingProgressState.Error -> showToast(R.string.fileUploadError)
-
-                FileLoadingProgressState.Success -> showToast(R.string.fileSuccessUpload)
-
-                else -> throw IllegalArgumentException()
-            }
+        viewModel.flowUploadProgress.observe(this) { progress ->
+            binding.uploadProgressBar.progress = progress
         }
     }
 

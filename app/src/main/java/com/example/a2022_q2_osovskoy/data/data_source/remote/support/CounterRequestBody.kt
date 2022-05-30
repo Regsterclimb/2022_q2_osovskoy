@@ -1,5 +1,8 @@
 package com.example.a2022_q2_osovskoy.data.data_source.remote.support
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okio.*
@@ -8,6 +11,8 @@ class CounterRequestBody(
     private val requestBody: RequestBody,
     private val progressListener: ProgressListener,
 ) : RequestBody() {
+
+    private val coroutineScope = CoroutineScope(Job())
 
     override fun contentType(): MediaType? = requestBody.contentType()
 
@@ -32,7 +37,10 @@ class CounterRequestBody(
         override fun write(source: Buffer, byteCount: Long) {
             super.write(source, byteCount)
             bytesWritten += byteCount
-            progressListener.onRequestProgress(bytesWritten, contentLength())
+
+            coroutineScope.launch {
+                progressListener.onRequestProgress(bytesWritten, contentLength())
+            }
         }
     }
 }

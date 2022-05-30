@@ -1,10 +1,10 @@
 package com.example.a2022_q2_osovskoy.data.data_source.remote.support
 
-import com.example.a2022_q2_osovskoy.domain.entity.ProgressResult
+import kotlinx.coroutines.flow.SharedFlow
 
 interface ProgressReport {
 
-    fun putReport(progress: Int)
+    suspend fun putReport(progress: Int)
 
-    fun getReport(): ProgressResult
+    suspend fun getReport(): SharedFlow<Int>
 }
