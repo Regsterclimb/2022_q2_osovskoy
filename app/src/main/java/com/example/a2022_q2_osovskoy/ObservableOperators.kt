@@ -1,4 +1,4 @@
-package com.example.rxjava
+package com.example.a2022_q2_osovskoy
 
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
@@ -41,7 +41,7 @@ object ObservableOperators {
          *
          * Успешно завершить передачу данных.
          */
-        fun solve(): Observable<Int> = Observable.fromIterable(1..100)
+        fun solve(): Observable<Int> = Observable.range(1,100)
     }
 
     object Task4 {

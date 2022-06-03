@@ -11,19 +11,19 @@ import org.junit.runners.model.Statement
  */
 class TestSchedulerRule(val scheduler: TestScheduler = TestScheduler()) : TestRule {
 
-	override fun apply(base: Statement, d: Description): Statement =
-		object : Statement() {
-			override fun evaluate() {
-				RxJavaPlugins.setIoSchedulerHandler { scheduler }
-				RxJavaPlugins.setComputationSchedulerHandler { scheduler }
-				RxJavaPlugins.setNewThreadSchedulerHandler { scheduler }
-				RxJavaPlugins.setSingleSchedulerHandler { scheduler }
+    override fun apply(base: Statement, d: Description): Statement =
+        object : Statement() {
+            override fun evaluate() {
+                RxJavaPlugins.setIoSchedulerHandler { scheduler }
+                RxJavaPlugins.setComputationSchedulerHandler { scheduler }
+                RxJavaPlugins.setNewThreadSchedulerHandler { scheduler }
+                RxJavaPlugins.setSingleSchedulerHandler { scheduler }
 
-				try {
-					base.evaluate()
-				} finally {
-					RxJavaPlugins.reset()
-				}
-			}
-		}
+                try {
+                    base.evaluate()
+                } finally {
+                    RxJavaPlugins.reset()
+                }
+            }
+        }
 }
