@@ -5,5 +5,7 @@ import javax.inject.Inject
 
 class DestroyTimerUseCase @Inject constructor(private val timerRepository: TimerRepository) {
 
-    operator fun invoke() = timerRepository.destroy()
+    operator fun invoke() {
+        timerRepository.destroy()
+    }
 }

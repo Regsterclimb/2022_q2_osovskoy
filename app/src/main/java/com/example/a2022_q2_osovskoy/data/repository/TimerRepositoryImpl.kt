@@ -7,7 +7,7 @@ import javax.inject.Inject
 class TimerRepositoryImpl @Inject constructor(private val timer: Timer) :
     TimerRepository {
 
-    override fun start(timerCallBack: (timeFormatted: String) -> Unit) {
+    override fun start(timerCallBack: (time: String) -> Unit) {
         timer.start(timerCallBack)
     }
 

@@ -5,10 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import androidx.work.Configuration
-import androidx.work.WorkManager
 import com.example.a2022_q2_osovskoy.di.DaggerAppComponent
-import com.example.a2022_q2_osovskoy.ui.worker.MainWorkerFactory
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -25,17 +22,11 @@ class App : Application(), HasAndroidInjector {
     @Inject
     lateinit var injector: DispatchingAndroidInjector<Any>
 
-    @Inject
-    lateinit var workerFactory: MainWorkerFactory
-
     override fun onCreate() {
         super.onCreate()
         DaggerAppComponent.factory().create(this).inject(this)
 
         createNotificationChannel()
-
-        WorkManager.initialize(this,
-            Configuration.Builder().setWorkerFactory(workerFactory).build())
     }
 
     override fun androidInjector(): AndroidInjector<Any> = injector

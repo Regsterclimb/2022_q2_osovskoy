@@ -5,5 +5,7 @@ import javax.inject.Inject
 
 class ShutDawnTimerUseCase @Inject constructor(private val timerRepository: TimerRepository) {
 
-    operator fun invoke() = timerRepository.shutdown()
+    operator fun invoke() {
+        timerRepository.shutdown()
+    }
 }

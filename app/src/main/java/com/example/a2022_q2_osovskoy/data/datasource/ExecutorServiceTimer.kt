@@ -12,13 +12,13 @@ class ExecutorServiceTimer @Inject constructor(
     private var timerScheduledExecutor: ScheduledExecutorService,
 ) : Timer {
 
-    private var timerSeconds = AtomicInteger(INITIAL_VALUE)
+    private var timerValue = AtomicInteger(INITIAL_VALUE)
 
     private var timerFuture: Future<*>? = null
 
     override fun start(getTime: (time: String) -> Unit) {
         val work = Runnable {
-            getTime(timerSeconds.getAndIncrement().toMyTimerFormat())
+            getTime(timerValue.getAndIncrement().toMyTimerFormat())
         }
 
         timerFuture = timerScheduledExecutor.scheduleAtFixedRate(
@@ -37,7 +37,7 @@ class ExecutorServiceTimer @Inject constructor(
 
     override fun shutDawn() {
         interruptTimer()
-        timerSeconds.set(INITIAL_VALUE)
+        timerValue.set(INITIAL_VALUE)
     }
 
     override fun onDestroy() {
@@ -46,8 +46,8 @@ class ExecutorServiceTimer @Inject constructor(
 
     companion object {
         const val INITIAL_VALUE = 0
-        const val INITIAL_DELAY = 100L
-        const val PERIOD = 100L
-        const val STOP_DELAY = 5L
+        const val INITIAL_DELAY = 0L
+        const val PERIOD = 1000L
+        const val STOP_DELAY = 1L
     }
 }

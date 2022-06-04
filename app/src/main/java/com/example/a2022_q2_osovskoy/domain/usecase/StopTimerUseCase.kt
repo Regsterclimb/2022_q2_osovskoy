@@ -5,5 +5,7 @@ import javax.inject.Inject
 
 class StopTimerUseCase @Inject constructor(private val timerRepository: TimerRepository) {
 
-    operator fun invoke() = timerRepository.stop()
+    operator fun invoke() {
+        timerRepository.stop()
+    }
 }

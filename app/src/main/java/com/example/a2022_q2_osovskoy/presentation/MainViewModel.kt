@@ -3,10 +3,7 @@ package com.example.a2022_q2_osovskoy.presentation
 import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.a2022_q2_osovskoy.domain.usecase.DestroyTimerUseCase
-import com.example.a2022_q2_osovskoy.domain.usecase.ShutDawnTimerUseCase
-import com.example.a2022_q2_osovskoy.domain.usecase.StartTimerUseCase
-import com.example.a2022_q2_osovskoy.domain.usecase.StopTimerUseCase
+import com.example.a2022_q2_osovskoy.domain.usecase.*
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -14,6 +11,7 @@ class MainViewModel @Inject constructor(
     private val shutDawnTimerUseCase: ShutDawnTimerUseCase,
     private val stopTimerUseCase: StopTimerUseCase,
     private val destroyTimerUseCase: DestroyTimerUseCase,
+    private val pushNotificationUseCase: PushNotificationUseCase,
     private val handler: Handler,
 ) : ViewModel() {
 
@@ -44,5 +42,9 @@ class MainViewModel @Inject constructor(
 
     fun destroyTimer() {
         destroyTimerUseCase()
+    }
+
+    fun pushNotification(time: String) {
+        pushNotificationUseCase(time)
     }
 }
