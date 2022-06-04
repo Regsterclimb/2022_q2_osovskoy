@@ -12,7 +12,6 @@ object MyObservableOperator {
          *
          * Исключить последние 5 символов
          */
-
         fun solve(): Observable<Int> = Observable.fromIterable(10 downTo 1).skipLast(5)
     }
 }

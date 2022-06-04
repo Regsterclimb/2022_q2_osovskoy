@@ -41,7 +41,7 @@ object ObservableOperators {
          *
          * Успешно завершить передачу данных.
          */
-        fun solve(): Observable<Int> = Observable.range(1,100)
+        fun solve(): Observable<Int> = Observable.range(1, 100)
     }
 
     object Task4 {
@@ -86,7 +86,6 @@ object ObservableOperators {
         }
 
         interface Chat {
-
             fun setMessageListener(listener: MessageListener)
         }
 
