@@ -1,8 +1,8 @@
 package com.example.a2022_q2_osovskoy.di.ui
 
 import com.example.a2022_q2_osovskoy.di.annotations.WorkerKey
-import com.example.a2022_q2_osovskoy.presentation.ChildWorkerFactory
-import com.example.a2022_q2_osovskoy.ui.MyWorker
+import com.example.a2022_q2_osovskoy.ui.worker.ChildWorkerFactory
+import com.example.a2022_q2_osovskoy.ui.worker.NotificationWorker
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -11,6 +11,6 @@ import dagger.multibindings.IntoMap
 interface UiModule {
 
     @Binds
-    @[IntoMap WorkerKey(MyWorker::class)]
-    fun bindMyWorker(myWorker: MyWorker.Factory): ChildWorkerFactory
+    @[IntoMap WorkerKey(NotificationWorker::class)]
+    fun bindMyWorker(notificationWorker: NotificationWorker.Factory): ChildWorkerFactory
 }

@@ -2,8 +2,8 @@ package com.example.a2022_q2_osovskoy.di.data
 
 import android.content.Context
 import com.example.a2022_q2_osovskoy.App
+import com.example.a2022_q2_osovskoy.data.datasource.ExecutorServiceTimer
 import com.example.a2022_q2_osovskoy.data.datasource.Timer
-import com.example.a2022_q2_osovskoy.data.datasource.TimerImpl
 import com.example.a2022_q2_osovskoy.di.annotations.AppScope
 import dagger.Binds
 import dagger.Module
@@ -25,6 +25,6 @@ interface DataModule {
 
     @Binds
     @AppScope
-    fun bindTimer(impl: TimerImpl): Timer
+    fun bindTimer(executorService: ExecutorServiceTimer): Timer
 
 }

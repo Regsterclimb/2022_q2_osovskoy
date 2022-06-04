@@ -4,7 +4,9 @@ interface Timer {
 
     fun shutDawn()
 
-    fun start(getProgress: (time: Int) -> Unit)
+    fun start(getTime: (time: String) -> Unit)
 
     fun stop()
+
+    fun onDestroy()
 }

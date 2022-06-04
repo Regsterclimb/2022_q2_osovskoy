@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.presentation
+package com.example.a2022_q2_osovskoy.ui.worker
 
 import android.content.Context
 import androidx.work.CoroutineWorker

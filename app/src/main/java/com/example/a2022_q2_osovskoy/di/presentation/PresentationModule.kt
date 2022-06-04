@@ -21,5 +21,4 @@ interface PresentationModule {
     @Binds
     @[IntoMap ViewModelKey(MainViewModel::class)]
     fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel
-
 }

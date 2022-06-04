@@ -8,7 +8,7 @@ import android.os.Build
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.example.a2022_q2_osovskoy.di.DaggerAppComponent
-import com.example.a2022_q2_osovskoy.ui.MainWorkerFactory
+import com.example.a2022_q2_osovskoy.ui.worker.MainWorkerFactory
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
