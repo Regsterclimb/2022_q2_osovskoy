@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">2022_q2_osovskoy</string>
+    <string name="inputName">введите имя</string>
+    <string name="inputPassword">введите пароль</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="logIn">Войти</string>
 </resources>
