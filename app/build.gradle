@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.a2022_q2_osovskoy"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
     def daggerVers = "2.40"
 
     def okhttpVers = "4.9.3"
@@ -73,6 +74,9 @@ dependencies {
 
     //viewBinding
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
+
+    //SwipeRefresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -3,10 +3,12 @@ package com.example.a2022_q2_osovskoy.di.data
 import com.example.a2022_q2_osovskoy.di.annotations.ShiftLabBaseUrl
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
 
 @Module(includes = [RetrofitModule::class])
 class NetworkModule {
@@ -19,12 +21,14 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideOkHttpClientWithProgress(): OkHttpClient = OkHttpClient().newBuilder()
-        .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-        .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-        .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-        .build()
+    fun provideOkHttpClientWithProgress(authInterceptor: Interceptor): OkHttpClient =
+        OkHttpClient().newBuilder()
+            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+            .addInterceptor(authInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
 
     @Provides
     @ShiftLabBaseUrl

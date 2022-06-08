@@ -3,5 +3,18 @@
     <string name="inputName">введите имя</string>
     <string name="inputPassword">введите пароль</string>
     <string name="registration">Зарегистрироваться</string>
+    <string name="inputNameEmpty">Введите имя</string>
+    <string name="inputPasswordEmpty">Введите пароль</string>
     <string name="logIn">Войти</string>
+    <string name="loginRegistrationText">Зарегистрироваться</string>
+    <string name="exit">выйти</string>
+    <string name="registrationTitle">РЕГИСТРАЦИЯ</string>
+    <string name="openLoanScreenText">Перейти к оформлению</string>
+    <string name="loanInputName">имя</string>
+    <string name="loanInputLastName">фамилия</string>
+    <string name="loanInputPhone">телефон</string>
+    <string name="loanInputAmount">сумма</string>
+    <string name="loanInputPeriod">срок</string>
+    <string name="requestSuccessText">займ успешно оформлен!!</string>
+    <string name="status">Status</string>
 </resources>

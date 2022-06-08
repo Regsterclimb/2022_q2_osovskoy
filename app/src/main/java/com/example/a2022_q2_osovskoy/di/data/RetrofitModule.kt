@@ -1,6 +1,7 @@
 package com.example.a2022_q2_osovskoy.di.data
 
-import com.example.a2022_q2_osovskoy.data.datasourse.network.LoginApi
+import com.example.a2022_q2_osovskoy.data.datasourse.network.AuthApi
+import com.example.a2022_q2_osovskoy.data.datasourse.network.LoansApi
 import com.example.a2022_q2_osovskoy.di.annotations.AppScope
 import com.example.a2022_q2_osovskoy.di.annotations.ShiftLabBaseUrl
 import dagger.Module
@@ -26,5 +27,9 @@ class RetrofitModule {
 
     @Provides
     @AppScope //todo()
-    fun provideConventApi(retrofit: Retrofit): LoginApi = retrofit.create(LoginApi::class.java)
+    fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
+
+    @Provides
+    @AppScope //todo()
+    fun provideLoansApi(retrofit: Retrofit): LoansApi = retrofit.create(LoansApi::class.java)
 }

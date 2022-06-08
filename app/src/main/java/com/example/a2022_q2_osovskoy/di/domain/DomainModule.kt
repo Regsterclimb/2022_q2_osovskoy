@@ -1,7 +1,11 @@
 package com.example.a2022_q2_osovskoy.di.domain
 
-import com.example.a2022_q2_osovskoy.data.repository.LoginRepositoryImpl
-import com.example.a2022_q2_osovskoy.domain.repository.LoginRepository
+import com.example.a2022_q2_osovskoy.data.repository.AppConfigRepositoryImpl
+import com.example.a2022_q2_osovskoy.data.repository.AuthRepositoryImpl
+import com.example.a2022_q2_osovskoy.data.repository.LoansRepositoryImpl
+import com.example.a2022_q2_osovskoy.domain.repository.AppConfigRepository
+import com.example.a2022_q2_osovskoy.domain.repository.AuthRepository
+import com.example.a2022_q2_osovskoy.domain.repository.LoansRepository
 import dagger.Binds
 import dagger.Module
 
@@ -9,5 +13,11 @@ import dagger.Module
 interface DomainModule {
 
     @Binds
-    fun bindLoginRepository(impl: LoginRepositoryImpl): LoginRepository
+    fun bindLoginRepository(impl: AuthRepositoryImpl): AuthRepository
+
+    @Binds
+    fun bindAppConfigRepository(impl: AppConfigRepositoryImpl): AppConfigRepository
+
+    @Binds
+    fun bindLoansRepository(impl: LoansRepositoryImpl): LoansRepository
 }
