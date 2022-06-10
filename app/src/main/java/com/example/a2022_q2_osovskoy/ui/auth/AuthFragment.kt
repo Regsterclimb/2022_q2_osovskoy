@@ -1,24 +1,30 @@
 package com.example.a2022_q2_osovskoy.ui.auth
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
-import com.example.a2022_q2_osovskoy.databinding.LoginFragmentBinding
+import com.example.a2022_q2_osovskoy.databinding.AuthFragmentBinding
+import com.example.a2022_q2_osovskoy.extentions.clearErrorOnAnyInput
 import com.example.a2022_q2_osovskoy.extentions.getTrimmedText
+import com.example.a2022_q2_osovskoy.extentions.showErrorResId
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.auth.AuthState
 import com.example.a2022_q2_osovskoy.presentation.auth.AuthViewModel
-import com.example.a2022_q2_osovskoy.presentation.auth.LoginScreenState
-import com.example.a2022_q2_osovskoy.ui.main.MainFragment
+import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
+import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
+import com.example.a2022_q2_osovskoy.utils.navigation.NavDestination
+import com.example.a2022_q2_osovskoy.utils.navigation.navigate
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class AuthFragment : DaggerFragment(R.layout.login_fragment) {
+class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
 
     @Inject
     lateinit var multiViewModelFactory: MultiViewModelFactory
@@ -27,80 +33,84 @@ class AuthFragment : DaggerFragment(R.layout.login_fragment) {
         ViewModelProvider(this, multiViewModelFactory)[AuthViewModel::class.java]
     }
 
-    private val binding by viewBinding(LoginFragmentBinding::bind)
+    private val binding by viewBinding(AuthFragmentBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            regNameInput.clearErrorOnAnyInput()
+            regPasswordInput.clearErrorOnAnyInput()
+        }
 
-        setUpLoginButton()
+        setUpAuthButton()
+        setUpRegistrationText()
         viewModel.authState.observe(viewLifecycleOwner, ::handleAuthState)
-        viewModel.loginScreenState.observe(viewLifecycleOwner, ::handleLoginScreenState)
     }
 
-    //todo() обнулить текст при смене экрана + ресурсы
+    //todo() обнулить текст и ошибки при смене экрана + ресурсы
+    //SingleLiveEvent
     private fun handleAuthState(state: AuthState) {
         when (state) {
-            is AuthState.Registration.Success -> {
-                viewModel.changeLoginScreenState(true)
-                Toast.makeText(requireContext(), "Registeration success", Toast.LENGTH_SHORT).show()
+            is AuthState.Loading -> loadingEvent(true)
+            is AuthState.Success -> {
+                navigateForward()
             }
-            is AuthState.Registration.Error -> {
-                Toast.makeText(requireContext(), "Registeration Error", Toast.LENGTH_SHORT).show()
-            }
-            is AuthState.Login.Success -> {
-                parentFragmentManager.beginTransaction().replace(R.id.activityContainer,
-                    MainFragment()).commit()
-                Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
-            }
-            is AuthState.Login.Error -> {
+            is AuthState.Error -> {
+                loadingEvent(false)
+                binding.regNameInput.showErrorResId(R.string.authError)
                 Toast.makeText(requireContext(), "Login Error", Toast.LENGTH_SHORT).show()
             }
-            is AuthState.InputError.Name -> showToast(R.string.inputNameEmpty)
-            is AuthState.InputError.Password -> showToast(R.string.inputPasswordEmpty)
-        }
-    }
-
-    private fun handleLoginScreenState(state: LoginScreenState) {
-        when (state) {
-            is LoginScreenState.Registration -> setRegistrationState()
-            is LoginScreenState.UnAuthorized -> setUnauthorizedState()
-        }
-    }
-
-    private fun setRegistrationState() {
-        with(binding) {
-            logInButton.setText(R.string.loginRegistrationText)
-            loginTitle.setText(R.string.registrationTitle)
-            registrationText.apply {
-                setText(R.string.logIn)
-                setOnClickListener {
-                    viewModel.changeLoginScreenState(setLoginScreen = true)
-                }
+            is AuthState.InputError.Name -> {
+                binding.regNameInput.showErrorResId(R.string.inputName)
+            }
+            is AuthState.InputError.Password -> {
+                binding.regPasswordInput.showErrorResId(R.string.inputPassword)
             }
         }
     }
 
-    private fun setUnauthorizedState() {
-        with(binding) {
-            logInButton.setText(R.string.logIn)
-            loginTitle.setText(R.string.logIn)
-            registrationText.apply {
-                setText(R.string.loginRegistrationText)
-                setOnClickListener {
-                    viewModel.changeLoginScreenState(setLoginScreen = false)
-                }
-            }
-        }
+    private fun navigateForward() {
+        navigate(NavCommand(
+            NavCommands.DeepLink(
+                Uri.parse(NavDestination.DEEP_CONDITION),
+                isModal = true,
+                isSingleTop = true))
+        )
     }
 
-    private fun setUpLoginButton(){
+    private fun setUpAuthButton() {
         with(binding) {
-            logInButton.setOnClickListener {
+            regButton.setOnClickListener {
                 viewModel.tryAuth(
-                    name = loginNameBox.getTrimmedText(),
-                    password = loginPasswordBox.getTrimmedText()
+                    name = regNameInput.getTrimmedText(),
+                    password = regPasswordInput.getTrimmedText()
                 )
             }
+        }
+    }
+
+    //todo() button mb
+    private fun setUpRegistrationText() {
+        with(binding) {
+            registrationText.setOnClickListener {
+                navigate(
+                    NavCommand(
+                        NavCommands.DeepLink(
+                            url = (Uri.parse(NavDestination.DEEP_REGISTRATION)),
+                            isModal = true,
+                            isSingleTop = true
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+    private fun loadingEvent(isLoading: Boolean) {
+        with(binding) {
+            authContainer.isVisible = !isLoading
+            registrationText.isVisible = !isLoading
+            authProgressBar.isVisible = isLoading
         }
     }
 

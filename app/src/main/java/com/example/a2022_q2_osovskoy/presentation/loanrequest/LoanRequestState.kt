@@ -1,8 +1,11 @@
 package com.example.a2022_q2_osovskoy.presentation.loanrequest
 
+import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
+
 sealed class LoanRequestState {
 
-    object Success : LoanRequestState()
+    class Success(val loan: Loan) : LoanRequestState()
+    object Error : LoanRequestState()
 
     sealed class InputError : LoanRequestState() {
         object Name : InputError()

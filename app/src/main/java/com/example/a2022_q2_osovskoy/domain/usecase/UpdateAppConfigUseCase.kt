@@ -6,6 +6,5 @@ import javax.inject.Inject
 
 class UpdateAppConfigUseCase @Inject constructor(private val appConfigRepository: AppConfigRepository) {
 
-    suspend operator fun invoke(appConfigValue: AppConfigValue) =
-        appConfigRepository.update(appConfigValue)
+    operator fun invoke(appConfigValue: AppConfigValue) = appConfigRepository.update(appConfigValue)
 }

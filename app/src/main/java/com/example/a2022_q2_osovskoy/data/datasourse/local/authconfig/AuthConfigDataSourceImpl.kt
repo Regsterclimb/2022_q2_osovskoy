@@ -15,10 +15,10 @@ class AuthConfigDataSourceImpl @Inject constructor(
         const val LOGIN_DEFAULT_VALUE = false
     }
 
-    override suspend fun get(): LoginConfigState =
+    override fun get(): LoginConfigState =
         LoginConfigState(sharedPreferences.getBoolean(LOGIN_CONFIG_KEY, LOGIN_DEFAULT_VALUE))
 
-    override suspend fun update(loginConfigState: LoginConfigState) {
+    override fun update(loginConfigState: LoginConfigState) {
         sharedPreferences.edit {
             putBoolean(LOGIN_CONFIG_KEY, loginConfigState.isScreenLogin)
         }

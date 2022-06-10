@@ -1,15 +1,23 @@
 <resources>
     <string name="app_name">2022_q2_osovskoy</string>
+    <string name="authSignUp">Выполните вход</string>
+    <string name="authTitle">Добро пожаловать</string>
+    <string name="authButtonText">Войти</string>
+    <string name="regTitle">Регистрация</string>
     <string name="inputName">введите имя</string>
     <string name="inputPassword">введите пароль</string>
-    <string name="registration">Зарегистрироваться</string>
+    <string name="regUp">введите имя и пароль</string>
+    <string name="authError">"не правильное имя или пароль"</string>
+
+    <string name="registrationButtonText">Зарегистрироваться</string>
+
     <string name="inputNameEmpty">Введите имя</string>
     <string name="inputPasswordEmpty">Введите пароль</string>
-    <string name="logIn">Войти</string>
-    <string name="loginRegistrationText">Зарегистрироваться</string>
+
+    <string name="startRegistrationText">Уже есть аккаунт? Войти</string>
+    <string name="startAuthText">Зарегестрироваться</string>
     <string name="exit">выйти</string>
-    <string name="registrationTitle">РЕГИСТРАЦИЯ</string>
-    <string name="openLoanScreenText">Перейти к оформлению</string>
+    <string name="openLoanScreenText">получить</string>
     <string name="loanInputName">имя</string>
     <string name="loanInputLastName">фамилия</string>
     <string name="loanInputPhone">телефон</string>
@@ -17,4 +25,10 @@
     <string name="loanInputPeriod">срок</string>
     <string name="requestSuccessText">займ успешно оформлен!!</string>
     <string name="status">Status</string>
+    <string name="settings">settings</string>
+    <string name="cardRequestText">Ваша Банковская карта[Visa,MasterCard] под рукой это необходимо для получения займа, карты Visa Electron и Maestro не принимаются, нужны только именные карты с CVV2 кодом на обороте</string>
+    <string name="passportText">Цветной скан или копия Российского Паспорта ИНН, актуальная прописка на территории РФ</string>
+    <string name="requestTitle">Чтобы получить займ вам понадобиться</string>
+    <string name="getMoney">Прийти в отеделение нашего банка и получить деньги</string>
+
 </resources>

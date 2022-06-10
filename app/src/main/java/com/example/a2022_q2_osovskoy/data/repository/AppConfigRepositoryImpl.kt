@@ -8,9 +8,9 @@ import javax.inject.Inject
 class AppConfigRepositoryImpl @Inject constructor(private val appConfigDataSource: AppConfigDataSource) :
     AppConfigRepository {
 
-    override suspend fun get(): AppConfigValue = appConfigDataSource.get()
+    override fun get(): AppConfigValue = appConfigDataSource.get()
 
-    override suspend fun update(appConfigValue: AppConfigValue) {
+    override fun update(appConfigValue: AppConfigValue) {
         appConfigDataSource.update(appConfigValue)
     }
 }

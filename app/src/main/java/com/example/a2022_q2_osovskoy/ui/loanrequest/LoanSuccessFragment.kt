@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanSuccessFragmentBinding
@@ -24,7 +25,7 @@ class LoanSuccessFragment : Fragment(R.layout.loan_success_fragment) {
 
         with(binding) {
             loanBackButton.setOnClickListener {
-                parentFragmentManager.popBackStack()
+                findNavController().popBackStack()
             }
             loanOpenHistoryButton.setOnClickListener {
 

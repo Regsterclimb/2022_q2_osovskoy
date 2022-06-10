@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanRequestFragmentBinding
+import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.extentions.getTrimmedText
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
+import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestState
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -24,16 +26,17 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
+        super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            viewModel.loanCondition.observe(viewLifecycleOwner) {
-                loanConditionAmount.text = it.maxAmount.toString()
-                loanConditionPercent.text = it.percent.toString()
-                loanConditionPeriod.text = it.period.toString()
-            }
-            setUpLoanRequestButton()
+            loanConditionAmount.text = arguments?.get("amount").toString()
+            loanConditionPercent.text = arguments?.get("percent").toString()
+            loanConditionPeriod.text = arguments?.get("period").toString()
         }
+
+
+        viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanConditionState)
+        setUpLoanRequestButton()
     }
 
     private fun setUpLoanRequestButton() {
@@ -49,5 +52,21 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
                 )
             }
         }
+    }
+
+    private fun handleLoanConditionState(state: LoanRequestState) {
+        when (state) {
+            is LoanRequestState.Success -> setUpViews(state.loan)
+
+            is LoanRequestState.Error -> {}
+            LoanRequestState.InputError.Amount -> TODO()
+            LoanRequestState.InputError.LastName -> TODO()
+            LoanRequestState.InputError.Name -> TODO()
+            LoanRequestState.InputError.Phone -> TODO()
+        }
+    }
+
+    private fun setUpViews(loan: Loan) {
+
     }
 }

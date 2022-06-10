@@ -1,38 +1,59 @@
 package com.example.a2022_q2_osovskoy.ui
 
+import android.net.Uri
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import com.example.a2022_q2_osovskoy.R
-import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.SupportViewModel
-import com.example.a2022_q2_osovskoy.ui.auth.AuthFragment
-import com.example.a2022_q2_osovskoy.ui.main.MainFragment
+import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
+import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
+import com.example.a2022_q2_osovskoy.utils.navigation.NavigationProvider
 import dagger.android.support.DaggerAppCompatActivity
-import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
 
-    @Inject
-    lateinit var multiViewModelFactory: MultiViewModelFactory
-
-    private val viewModel by lazy {
-        ViewModelProvider(this, multiViewModelFactory)[SupportViewModel::class.java]
-    }
+    private val navController: NavController
+        get() = findNavController(R.id.activityContainer)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel.appConfigState.observe(this) { isUsedLoggedIn ->
-            if (savedInstanceState == null) {
-                openFragmentIfLogged(isUsedLoggedIn)
-            }
+    }
+
+    override fun launch(navCommand: NavCommand) {
+        if (navCommand.target is NavCommands.DeepLink) {
+            val target = navCommand.target
+            openDeepLink(
+                url = target.url,
+                isModal = target.isModal,
+                isSingleTop = target.isSingleTop
+            )
         }
     }
 
-    private fun openFragmentIfLogged(isUsedLoggedIn: Boolean) {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.activityContainer, if (isUsedLoggedIn) MainFragment() else AuthFragment())
-            .commit()
+    //todo()
+    private fun openDeepLink(url: Uri, isModal: Boolean, isSingleTop: Boolean) {
+        val navOptions = if (isModal) {
+            NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_up_enter)
+                .setExitAnim(R.anim.slide_out_up_exit)
+                .setPopEnterAnim(R.anim.slide_in_up_exit)
+                .setPopExitAnim(R.anim.slide_out_up_exit)
+                .setLaunchSingleTop(isSingleTop)
+                .setPopUpTo(if (isSingleTop) R.id.app_nav_graph else -1, inclusive = isSingleTop)
+                .build()
+        } else {
+            NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_left)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .setLaunchSingleTop(isSingleTop)
+                .setPopUpTo(if (isSingleTop) R.id.app_nav_graph else -1, inclusive = isSingleTop)
+                .build()
+        }
+        navController.navigate(url, navOptions)
     }
 }

@@ -1,16 +1,16 @@
 package com.example.a2022_q2_osovskoy.domain.repository
 
-import com.example.a2022_q2_osovskoy.domain.entity.AuthResult
 import com.example.a2022_q2_osovskoy.domain.entity.BaseUser
 import com.example.a2022_q2_osovskoy.domain.entity.LoginConfigState
+import com.example.a2022_q2_osovskoy.domain.entity.ResultState
 
 interface AuthRepository {
 
-    suspend fun login(baseUser: BaseUser): AuthResult
+    suspend fun login(baseUser: BaseUser): ResultState<Unit>
 
-    suspend fun register(baseUser: BaseUser): AuthResult
+    suspend fun register(baseUser: BaseUser): ResultState<Unit>
 
-    suspend fun getAuthConfig(): LoginConfigState
+    fun getAuthConfig(): LoginConfigState
 
-    suspend fun updateAuthConfig(loginConfigState: LoginConfigState)
+    fun updateAuthConfig(loginConfigState: LoginConfigState)
 }

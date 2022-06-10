@@ -4,7 +4,7 @@ import com.example.a2022_q2_osovskoy.domain.entity.AppConfigValue
 //todo rename
 interface AppConfigDataSource {
 
-    suspend fun get(): AppConfigValue
+    fun get(): AppConfigValue
 
-    suspend fun update(appConfigValue: AppConfigValue)
+    fun update(appConfigValue: AppConfigValue)
 }

@@ -15,11 +15,11 @@ class AppConfigDataSourceImpl @Inject constructor(
         const val APP_CONFIG_DEFAULT = false
     }
 
-    override suspend fun get(): AppConfigValue = AppConfigValue(
+    override fun get(): AppConfigValue = AppConfigValue(
         isLogged = sharedPreferences.getBoolean(APP_CONFIG, APP_CONFIG_DEFAULT)
     )
 
-    override suspend fun update(appConfigValue: AppConfigValue) {
+    override fun update(appConfigValue: AppConfigValue) {
         sharedPreferences.edit {
             putBoolean(APP_CONFIG, appConfigValue.isLogged)
         }

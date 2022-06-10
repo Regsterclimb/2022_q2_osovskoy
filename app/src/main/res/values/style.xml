@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MainTitle">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textSize">@dimen/text_24</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name = "SecondaryTitle">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_20</item>
+        <item name="android:textColor">?colorPrimary</item>
+    </style>
+
+    <style name="PrimaryText">
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:textColor">?colorPrimaryVariant</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">"sans-serif"</item>
+    </style>
+
+    <style name="TextInputBoxMain" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">?colorPrimaryVariant</item>
+
+    </style>
+
+    <!--<style name="AppTitle" parent="MainTitle">
+        <item name="android:textSize">@dimen/text_20</item>
+        <item name="android:text">@string/appbar</item>
+        <item name="android:padding">16dp</item>
+    </style>-->
+
+    <style name="SecondaryText">
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:textColor">?colorPrimaryVariant</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">"sans-serif"</item>
+    </style>
+
+    <style name="MainButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:fontFamily">"sans-serif-medium"</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:textColor">?colorSecondary</item>
+        <item name="lineHeight">16dp</item>
+    </style>
+
+    <style name="RegisterButton" parent="MainButton">
+        <item name="android:text">@string/registrationButtonText</item>
+    </style>
+
+    <style name="AuthButton" parent="MainButton">
+        <item name="android:text">@string/authButtonText</item>
+    </style>
+
+    <style name="BackgroundBanner">
+        <item name="android:background">?backgroundColor</item>
+    </style>
+
+</resources>

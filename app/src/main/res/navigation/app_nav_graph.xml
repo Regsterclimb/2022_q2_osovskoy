@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.a2022_q2_osovskoy.ui.SplashFragment"
+        android:label="splash_fragment"
+        tools:layout="@layout/splash_fragment" />
+
+    <include app:graph="@navigation/auth_graph" />
+    <include app:graph="@navigation/loan_details_graph" />
+    <include app:graph="@navigation/loans_history_graph" />
+    <include app:graph="@navigation/loan_condition_graph" />
+    <include app:graph="@navigation/registration_graph" />
+    <include app:graph="@navigation/loan_request_graph" />
+
+</navigation>

@@ -1,25 +1,16 @@
 package com.example.a2022_q2_osovskoy.data.datasourse.remote
 
-import com.example.a2022_q2_osovskoy.data.datasourse.local.token.TokenDataSource
 import com.example.a2022_q2_osovskoy.data.datasourse.network.AuthApi
 import com.example.a2022_q2_osovskoy.domain.entity.BaseUser
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
-class AuthRemoteDataSourceImpl @Inject constructor(
-    private val authApi: AuthApi,
-    private val dispatcher: CoroutineDispatcher,
-    private val tokenDataSource: TokenDataSource,
-) : AuthDataSource {
-    //todo() Default dispatcher
-    override suspend fun login(baseUser: BaseUser): String = withContext(dispatcher) {
-        val bearer = authApi.login(baseUser).charStream().readText()
-        tokenDataSource.update(bearer)
-        bearer
-    }
+class AuthRemoteDataSourceImpl @Inject constructor(private val authApi: AuthApi) :
+    AuthDataSource {
 
-    override suspend fun register(baseUser: BaseUser) = withContext(dispatcher) {
+    override suspend fun login(baseUser: BaseUser): ResponseBody = authApi.login(baseUser)
+
+    override suspend fun register(baseUser: BaseUser) {
         authApi.register(baseUser)
     }
 }

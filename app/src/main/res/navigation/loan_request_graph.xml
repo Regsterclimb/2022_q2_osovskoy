@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loan_request_graph"
+    app:startDestination="@id/loanRequestFragment">
+
+    <fragment
+        android:id="@+id/loanRequestFragment"
+        android:name="com.example.a2022_q2_osovskoy.ui.loanrequest.LoanRequestFragment"
+        android:label="loan_request_fragment"
+        tools:layout="@layout/loan_request_fragment">
+        <action
+            android:id="@+id/action_loanRequestFragment_to_loanSuccessFragment"
+            app:destination="@id/loanSuccessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loanSuccessFragment"
+        android:name="com.example.a2022_q2_osovskoy.ui.loanrequest.LoanSuccessFragment"
+        android:label="loan_success_fragment"
+        tools:layout="@layout/loan_success_fragment" />
+
+    <deepLink app:uri="app://loanRequest/{amount}/{percent}/{period}" />
+
+    <argument
+        android:name="amount"
+        app:argType="string" />
+    <argument
+        android:name="percent"
+        app:argType="string" />
+    <argument
+        android:name="period"
+        app:argType="string" />
+</navigation>

@@ -1,6 +1,10 @@
 package com.example.a2022_q2_osovskoy.extentions
 
+import android.graphics.Color
+import android.view.View
+import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.textfield.TextInputLayout
 
@@ -20,7 +24,23 @@ fun TextInputLayout.clearError() {
     this.error = null
 }
 
+fun TextView.addText(text: String) = run { this.text = String.format(this.text.toString() + text) }
+
+fun TextView.changeColor(state: String) = when (state) {
+    "APPROVED" -> this.setTextColor(Color.GREEN)
+    "REGISTERED" -> this.setTextColor(Color.BLUE)
+    "REJECTED" -> this.setTextColor(Color.RED)
+    else -> this.setTextColor(Color.BLACK)
+}
+
 fun TextInputLayout.clearErrorOnAnyInput() =
     this.editText?.doAfterTextChanged {
         this.clearError()
     }
+
+fun View.hide() {
+    this.isVisible = true
+}
+fun View.show() {
+    this.isVisible = false
+}

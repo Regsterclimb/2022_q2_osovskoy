@@ -38,11 +38,13 @@ android {
 
 dependencies {
 
-    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
+
     def daggerVers = "2.40"
 
     def okhttpVers = "4.9.3"
+    def navVersion = "2.4.2"
 
+    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
@@ -77,6 +79,9 @@ dependencies {
 
     //SwipeRefresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

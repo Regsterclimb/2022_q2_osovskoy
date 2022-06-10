@@ -10,6 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanViewHolderBinding
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
+import com.example.a2022_q2_osovskoy.extentions.changeColor
 
 class LoansAdapter(private val onLoanClick: (loanId: Long) -> Unit) :
     ListAdapter<Loan, LoanViewHolder>(LoanListCallBack()) {
@@ -33,7 +34,12 @@ class LoanViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 loanItemAmount.text = amount.toString()
                 loanItemDate.text = date
                 loanItemId.text = id.toString()
-                loanItemStatus.text = state
+                loanItemStatus.apply {
+                    text = state
+                    changeColor(state)
+                }
+            }
+            itemView.setOnClickListener {
                 onLoanClick(id)
             }
         }

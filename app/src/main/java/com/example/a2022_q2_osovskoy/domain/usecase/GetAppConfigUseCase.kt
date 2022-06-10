@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 class GetAppConfigUseCase @Inject constructor(private val appConfigRepository: AppConfigRepository) {
 
-    suspend operator fun invoke() : AppConfigValue = appConfigRepository.get()
+    operator fun invoke() : AppConfigValue = appConfigRepository.get()
 }

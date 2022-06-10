@@ -2,7 +2,6 @@ package com.example.a2022_q2_osovskoy.ui.loanhistory
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
@@ -10,6 +9,7 @@ import com.example.a2022_q2_osovskoy.databinding.LoanHistoryFragmentBinding
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.history.LoansHistoryViewModel
 import com.example.a2022_q2_osovskoy.presentation.history.LoansState
+import com.example.a2022_q2_osovskoy.ui.loandetail.LoanDetailFragment
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ class LoanHistoryFragment : DaggerFragment(R.layout.loan_history_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            loansRecycler.adapter = LoansAdapter({navigateToDetails(it)})
+            loansRecycler.adapter = LoansAdapter { navigateToDetails(it) }
             loansSwipeRefresh.apply {
                 setOnRefreshListener {
                     viewModel.refreshLoans()
@@ -53,6 +53,9 @@ class LoanHistoryFragment : DaggerFragment(R.layout.loan_history_fragment) {
     }
 
     private fun navigateToDetails(loansId: Long) {
-        Toast.makeText(requireContext(), loansId.toString(), Toast.LENGTH_SHORT).show()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.activityContainer, LoanDetailFragment())
+            .addToBackStack(null)
+            .commit()
     }
 }

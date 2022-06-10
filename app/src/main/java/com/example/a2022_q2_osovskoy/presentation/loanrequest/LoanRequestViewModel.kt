@@ -6,28 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.LoanRequest
-import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
-import com.example.a2022_q2_osovskoy.domain.usecase.GetLoanConditionUseCase
+import com.example.a2022_q2_osovskoy.domain.entity.ResultState
+import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.domain.usecase.RequestLoanUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoanRequestViewModel @Inject constructor(
-    private val getLoanConditionUseCase: GetLoanConditionUseCase,
     private val requestLoanUseCase: RequestLoanUseCase,
 ) : ViewModel() {
-
-    private val _loanConditionValue = MutableLiveData<LoanCondition>()
-    val loanCondition = _loanConditionValue
 
     private val _loanRequestState = MutableLiveData<LoanRequestState>()
     val loanRequestState: LiveData<LoanRequestState> = _loanRequestState
 
-    init {
-        viewModelScope.launch {
-            _loanConditionValue.value = getLoanConditionUseCase()
-        }
-    }
 
     //todo() buisness logic
     fun trySendRequest(
@@ -70,8 +61,14 @@ class LoanRequestViewModel @Inject constructor(
                 percent.toDouble(),
                 period.toInt(),
                 phone)
-            val requestedLoan = requestLoanUseCase(loanRequest)
+            val requestedLoan = handleResultRequest(requestLoanUseCase(loanRequest))
             Log.d("LoanRequestViewModel", requestedLoan.toString())
         }
     }
+
+    private fun handleResultRequest(result: ResultState<Loan>): LoanRequestState =
+        when (result) {
+            is ResultState.Success -> LoanRequestState.Success(result.data)
+            is ResultState.Error -> LoanRequestState.Error
+        }
 }
