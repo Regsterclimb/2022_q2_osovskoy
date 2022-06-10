@@ -8,7 +8,7 @@
         <item name="lineHeight">24dp</item>
     </style>
 
-    <style name = "SecondaryTitle">
+    <style name="SecondaryTitle">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">@dimen/text_20</item>
         <item name="android:textColor">?colorPrimary</item>
@@ -22,9 +22,13 @@
         <item name="android:fontFamily">"sans-serif"</item>
     </style>
 
-    <style name="TextInputBoxMain" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="TextInputMain" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColorHint">?colorPrimaryVariant</item>
+    </style>
 
+    <style name="TextInputEditMain">
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">?colorPrimaryVariant</item>
     </style>
 
     <!--<style name="AppTitle" parent="MainTitle">

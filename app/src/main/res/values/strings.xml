@@ -8,6 +8,7 @@
     <string name="inputPassword">введите пароль</string>
     <string name="regUp">введите имя и пароль</string>
     <string name="authError">"не правильное имя или пароль"</string>
+    <string name="regError">"это имя уже занято"</string>
 
     <string name="registrationButtonText">Зарегистрироваться</string>
 
@@ -15,7 +16,7 @@
     <string name="inputPasswordEmpty">Введите пароль</string>
 
     <string name="startRegistrationText">Уже есть аккаунт? Войти</string>
-    <string name="startAuthText">Зарегестрироваться</string>
+    <string name="startAuthText">Зарегистрироваться</string>
     <string name="exit">выйти</string>
     <string name="openLoanScreenText">получить</string>
     <string name="loanInputName">имя</string>

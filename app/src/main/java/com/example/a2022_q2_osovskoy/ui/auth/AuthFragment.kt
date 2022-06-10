@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -12,6 +11,7 @@ import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.AuthFragmentBinding
 import com.example.a2022_q2_osovskoy.extentions.clearErrorOnAnyInput
 import com.example.a2022_q2_osovskoy.extentions.getTrimmedText
+import com.example.a2022_q2_osovskoy.extentions.hideKeyBoard
 import com.example.a2022_q2_osovskoy.extentions.showErrorResId
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.auth.AuthState
@@ -38,8 +38,8 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            regNameInput.clearErrorOnAnyInput()
-            regPasswordInput.clearErrorOnAnyInput()
+            authNameInput.clearErrorOnAnyInput()
+            authPasswordInput.clearErrorOnAnyInput()
         }
 
         setUpAuthButton()
@@ -52,57 +52,56 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
     private fun handleAuthState(state: AuthState) {
         when (state) {
             is AuthState.Loading -> loadingEvent(true)
-            is AuthState.Success -> {
-                navigateForward()
-            }
+
+            is AuthState.Success -> navigateForward()
+
             is AuthState.Error -> {
                 loadingEvent(false)
-                binding.regNameInput.showErrorResId(R.string.authError)
-                Toast.makeText(requireContext(), "Login Error", Toast.LENGTH_SHORT).show()
+                binding.authNameInput.showErrorResId(R.string.authError)
+                Toast.makeText(requireContext(), "bad internetconnection", Toast.LENGTH_SHORT).show()
             }
             is AuthState.InputError.Name -> {
-                binding.regNameInput.showErrorResId(R.string.inputName)
+                binding.authNameInput.showErrorResId(R.string.inputName)
             }
             is AuthState.InputError.Password -> {
-                binding.regPasswordInput.showErrorResId(R.string.inputPassword)
+                binding.authPasswordInput.showErrorResId(R.string.inputPassword)
             }
         }
     }
 
     private fun navigateForward() {
-        navigate(NavCommand(
-            NavCommands.DeepLink(
-                Uri.parse(NavDestination.DEEP_CONDITION),
-                isModal = true,
-                isSingleTop = true))
+        navigate(
+            NavCommand(
+                NavCommands.DeepLink(
+                    Uri.parse(NavDestination.DEEP_CONDITION),
+                    isModal = true,
+                    isSingleTop = true)
+            )
         )
     }
 
     private fun setUpAuthButton() {
         with(binding) {
-            regButton.setOnClickListener {
+            authButton.setOnClickListener {
                 viewModel.tryAuth(
-                    name = regNameInput.getTrimmedText(),
-                    password = regPasswordInput.getTrimmedText()
+                    name = authNameInput.getTrimmedText(),
+                    password = authPasswordInput.getTrimmedText()
                 )
             }
         }
     }
 
-    //todo() button mb
     private fun setUpRegistrationText() {
-        with(binding) {
-            registrationText.setOnClickListener {
-                navigate(
-                    NavCommand(
-                        NavCommands.DeepLink(
-                            url = (Uri.parse(NavDestination.DEEP_REGISTRATION)),
-                            isModal = true,
-                            isSingleTop = true
-                        )
+        binding.registrationText.setOnClickListener {
+            navigate(
+                NavCommand(
+                    NavCommands.DeepLink(
+                        url = (Uri.parse(NavDestination.DEEP_REGISTRATION)),
+                        isModal = true,
+                        isSingleTop = true
                     )
                 )
-            }
+            )
         }
     }
 
@@ -112,8 +111,6 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
             registrationText.isVisible = !isLoading
             authProgressBar.isVisible = isLoading
         }
+        hideKeyBoard(requireContext(),view)
     }
-
-    private fun showToast(@StringRes value: Int) =
-        Toast.makeText(requireContext(), value, Toast.LENGTH_SHORT).show()
 }
