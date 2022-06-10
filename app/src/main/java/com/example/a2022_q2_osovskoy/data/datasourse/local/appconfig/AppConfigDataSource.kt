@@ -1,10 +1,10 @@
 package com.example.a2022_q2_osovskoy.data.datasourse.local.appconfig
 
-import com.example.a2022_q2_osovskoy.domain.entity.AppConfigValue
-//todo rename
+import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
+
 interface AppConfigDataSource {
 
-    fun get(): AppConfigValue
+    fun get(): AppConfig
 
-    fun update(appConfigValue: AppConfigValue)
+    fun update(appConfigValue: AppConfig)
 }

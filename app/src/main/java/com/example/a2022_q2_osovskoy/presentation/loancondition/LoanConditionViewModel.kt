@@ -1,9 +1,9 @@
-package com.example.a2022_q2_osovskoy.presentation.availableloan
+package com.example.a2022_q2_osovskoy.presentation.loancondition
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.a2022_q2_osovskoy.domain.entity.AppConfigValue
+import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 import com.example.a2022_q2_osovskoy.domain.entity.ResultState
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLoanConditionUseCase
@@ -19,10 +19,8 @@ class LoanConditionViewModel @Inject constructor(
     private val _loanConditionValue = MutableLiveData<LoanConditionState>()
     val loanCondition = _loanConditionValue
 
-    fun changeAppConfig(isUserLoggedIn: Boolean) {
-        viewModelScope.launch {
-            updateAppConfigUseCase(AppConfigValue(isUserLoggedIn))
-        }
+    fun updateAppConfig(appConfig: AppConfig) {
+            updateAppConfigUseCase(appConfig)
     }
 
     init {

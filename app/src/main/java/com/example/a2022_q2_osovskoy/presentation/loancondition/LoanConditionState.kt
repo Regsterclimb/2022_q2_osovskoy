@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.presentation.availableloan
+package com.example.a2022_q2_osovskoy.presentation.loancondition
 
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 

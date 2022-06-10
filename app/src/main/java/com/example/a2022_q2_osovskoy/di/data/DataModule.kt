@@ -7,8 +7,6 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import com.example.a2022_q2_osovskoy.App
 import com.example.a2022_q2_osovskoy.data.datasourse.local.appconfig.AppConfigDataSource
 import com.example.a2022_q2_osovskoy.data.datasourse.local.appconfig.AppConfigDataSourceImpl
-import com.example.a2022_q2_osovskoy.data.datasourse.local.authconfig.AuthConfigDataSource
-import com.example.a2022_q2_osovskoy.data.datasourse.local.authconfig.AuthConfigDataSourceImpl
 import com.example.a2022_q2_osovskoy.data.datasourse.local.token.TokenDataSource
 import com.example.a2022_q2_osovskoy.data.datasourse.local.token.TokenDataSourceImpl
 import com.example.a2022_q2_osovskoy.data.datasourse.remote.AuthDataSource
@@ -24,7 +22,6 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import okhttp3.Interceptor
 
 
 @Module(includes = [NetworkModule::class])
@@ -56,23 +53,7 @@ interface DataModule {
         fun provideSharedPreferences(context: Context): SharedPreferences =
             context.getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE)
 
-        @Provides
-        fun provideAuthInterceptor(tokenDataSource: TokenDataSource): Interceptor =
-            Interceptor { chain ->
-                var request = chain.request()
-                if (request.header("No-Authentication") == null) {
-
-                    request = request.newBuilder()
-                        .addHeader("Authorization", tokenDataSource.get())
-                        .build()
-                }
-                chain.proceed(request)
-            }
     }
-
-    @Binds
-    @AppScope
-    fun bindLoginConfigDataSource(impl: AuthConfigDataSourceImpl): AuthConfigDataSource
 
     @Binds
     @AppScope

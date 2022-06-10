@@ -8,10 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanConditionFragmentBinding
+import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.availableloan.LoanConditionState
-import com.example.a2022_q2_osovskoy.presentation.availableloan.LoanConditionViewModel
+import com.example.a2022_q2_osovskoy.presentation.loancondition.LoanConditionState
+import com.example.a2022_q2_osovskoy.presentation.loancondition.LoanConditionViewModel
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
 import com.example.a2022_q2_osovskoy.utils.navigation.NavDestination
@@ -33,7 +34,7 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.changeAppConfig(true)
+        viewModel.updateAppConfig(AppConfig.BASE)
 
         viewModel.loanCondition.observe(viewLifecycleOwner, ::handleLoanConditionState)
         setUpListeners()
@@ -57,9 +58,9 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
     //todo()
     private fun setUpListeners() {
         with(viewBinding) {
-            logoutButton.setOnClickListener {
+            /*logoutButton.setOnClickListener {
                 viewModel.changeAppConfig(false)
-            }
+            }*/
             openHistory.setOnClickListener {
                 navigate(
                     NavCommand(

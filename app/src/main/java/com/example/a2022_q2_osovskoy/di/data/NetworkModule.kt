@@ -1,5 +1,6 @@
 package com.example.a2022_q2_osovskoy.di.data
 
+import com.example.a2022_q2_osovskoy.data.datasourse.local.token.TokenDataSource
 import com.example.a2022_q2_osovskoy.di.annotations.ShiftLabBaseUrl
 import dagger.Module
 import dagger.Provides
@@ -29,6 +30,19 @@ class NetworkModule {
             .addInterceptor(authInterceptor)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
+
+    @Provides
+    fun provideAuthInterceptor(tokenDataSource: TokenDataSource): Interceptor =
+        Interceptor { chain ->
+            var request = chain.request()
+            if (request.header("No-Authentication") == null) {
+
+                request = request.newBuilder()
+                    .addHeader("Authorization", tokenDataSource.get())
+                    .build()
+            }
+            chain.proceed(request)
+        }
 
     @Provides
     @ShiftLabBaseUrl

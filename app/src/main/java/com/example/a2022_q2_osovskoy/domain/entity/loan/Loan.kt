@@ -6,5 +6,4 @@ data class Loan(
     val date: String,
     val state: String,
     val percent: Double,
-) {
-}
+)
