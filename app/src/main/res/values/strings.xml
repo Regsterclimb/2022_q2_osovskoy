@@ -18,18 +18,27 @@
     <string name="startRegistrationText">Уже есть аккаунт? Войти</string>
     <string name="startAuthText">Зарегистрироваться</string>
     <string name="exit">выйти</string>
-    <string name="openLoanScreenText">получить</string>
+    <string name="openLoanScreenText">оформить</string>
     <string name="loanInputName">имя</string>
     <string name="loanInputLastName">фамилия</string>
     <string name="loanInputPhone">телефон</string>
     <string name="loanInputAmount">сумма</string>
     <string name="loanInputPeriod">срок</string>
     <string name="requestSuccessText">займ успешно оформлен!!</string>
-    <string name="status">Status</string>
+    <string name="status">Статус</string>
     <string name="settings">settings</string>
     <string name="cardRequestText">Ваша Банковская карта[Visa,MasterCard] под рукой это необходимо для получения займа, карты Visa Electron и Maestro не принимаются, нужны только именные карты с CVV2 кодом на обороте</string>
     <string name="passportText">Цветной скан или копия Российского Паспорта ИНН, актуальная прописка на территории РФ</string>
     <string name="requestTitle">Чтобы получить займ вам понадобиться</string>
     <string name="getMoney">Прийти в отеделение нашего банка и получить деньги</string>
+    <string name="applyLoanButton">оформить еще</string>
+    <string name="detailPeriod">Период</string>
+    <string name="detailPercentText">Процент</string>
+    <string name="detailDateText">Дата</string>
+
+    <string name="detailAmountText">Сумма</string>
+
+    <string name="inputLastNameEmpty">введите фамилию</string>
+    <string name="inputPhoneEmpty">введите телефон</string>
 
 </resources>

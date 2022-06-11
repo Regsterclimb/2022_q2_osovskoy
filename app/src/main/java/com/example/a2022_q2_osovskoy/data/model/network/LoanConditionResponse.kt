@@ -8,7 +8,7 @@ data class LoanConditionResponse(
 	val period: Int,
 
 	@field:SerializedName("maxAmount")
-	val maxAmount: Int,
+	val maxAmount: Long,
 
 	@field:SerializedName("percent")
 	val percent: Double

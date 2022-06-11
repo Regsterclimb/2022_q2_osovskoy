@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loanScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?backgroundColor"
     tools:context=".ui.loanrequest.LoanRequestFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/loanRequestContainer"
         android:layout_marginHorizontal="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/loanScrollView"
         app:layout_constraintEnd_toEndOf="@id/loanScrollView"
         app:layout_constraintStart_toStartOf="@id/loanScrollView"
         app:layout_constraintTop_toTopOf="@id/loanScrollView">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/loanConditionAmount"
@@ -39,7 +48,7 @@
             android:id="@+id/loanNameInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="wrap_content"
             android:hint="@string/loanInputName"
             android:textColorHint="?colorPrimaryVariant"
             android:textStyle="italic"
@@ -58,7 +67,7 @@
             android:id="@+id/loanLastNameInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="wrap_content"
             android:hint="@string/loanInputLastName"
             android:textColorHint="?colorPrimaryVariant"
             android:textStyle="italic"
@@ -78,7 +87,7 @@
             android:id="@+id/loanPhoneInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="wrap_content"
             android:hint="@string/loanInputPhone"
             android:textColorHint="?colorPrimaryVariant"
             android:textStyle="italic"
@@ -96,10 +105,29 @@
 
         <Button
             android:id="@+id/requestLoanButton"
+            style="@style/MainButton"
             android:layout_width="330dp"
             android:layout_height="58dp"
             android:layout_gravity="center"
             android:text="Оформить Займ" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</ScrollView>
+    <ProgressBar
+        android:id="@+id/requestProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

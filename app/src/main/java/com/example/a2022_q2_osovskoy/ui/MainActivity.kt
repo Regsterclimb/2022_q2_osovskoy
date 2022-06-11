@@ -19,7 +19,6 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
     }
 
     override fun launch(navCommand: NavCommand) {
@@ -46,7 +45,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
                 .build()
         } else {
             NavOptions.Builder()
-                .setEnterAnim(R.anim.slide_in_left)
+                .setEnterAnim(R.anim.slide_in_right)
                 .setExitAnim(R.anim.slide_out_left)
                 .setPopEnterAnim(R.anim.slide_in_left)
                 .setPopExitAnim(R.anim.slide_out_right)

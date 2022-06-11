@@ -2,12 +2,17 @@ package com.example.a2022_q2_osovskoy.ui.loanrequest
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanRequestFragmentBinding
-import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
+import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
+import com.example.a2022_q2_osovskoy.extentions.clearErrorOnAnyInput
 import com.example.a2022_q2_osovskoy.extentions.getTrimmedText
+import com.example.a2022_q2_osovskoy.extentions.hideKeyBoard
+import com.example.a2022_q2_osovskoy.extentions.showErrorResId
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestState
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestViewModel
@@ -25,48 +30,87 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
         ViewModelProvider(this, multiViewModelFactory)[LoanRequestViewModel::class.java]
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            loanConditionAmount.text = arguments?.get("amount").toString()
-            loanConditionPercent.text = arguments?.get("percent").toString()
-            loanConditionPeriod.text = arguments?.get("period").toString()
-        }
-
-
-        viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanConditionState)
-        setUpLoanRequestButton()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.handleLoanCondition(
+            arguments?.get("amount") as Long,
+            arguments?.get("percent") as String,
+            arguments?.get("period") as Int
+        )
     }
 
-    private fun setUpLoanRequestButton() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
         with(binding) {
-            binding.requestLoanButton.setOnClickListener {
+            loanNameInput.clearErrorOnAnyInput()
+            loanLastNameInput.clearErrorOnAnyInput()
+            loanPhoneInput.clearErrorOnAnyInput()
+            button.setOnClickListener {
+                findNavController().navigate(R.id.action_loanRequestFragment_to_loanSuccessFragment)
+            }
+        }
+
+        viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanConditionState)
+
+    }
+
+    private fun setUpLoanRequestButton(condition: LoanCondition) {
+        with(binding) {
+            requestLoanButton.setOnClickListener {
                 viewModel.trySendRequest(
-                    loanConditionAmount.text.toString(),
-                    loanNameInput.getTrimmedText(),
-                    loanLastNameInput.getTrimmedText(),
-                    loanPhoneInput.getTrimmedText(),
-                    loanConditionPercent.text.toString(),
-                    loanConditionPeriod.text.toString()
+                    amount = condition.maxAmount,
+                    percent = condition.percent,
+                    period = condition.period,
+                    name = loanNameInput.getTrimmedText(),
+                    lastName = loanLastNameInput.getTrimmedText(),
+                    phone = loanPhoneInput.getTrimmedText(),
                 )
             }
         }
     }
 
     private fun handleLoanConditionState(state: LoanRequestState) {
-        when (state) {
-            is LoanRequestState.Success -> setUpViews(state.loan)
+        with(binding) {
+            when (state) {
+                is LoanRequestState.Success -> {
+                    findNavController().navigate(
+                        R.id.action_loanRequestFragment_to_loanSuccessFragment
+                    )
+                }
 
-            is LoanRequestState.Error -> {}
-            LoanRequestState.InputError.Amount -> TODO()
-            LoanRequestState.InputError.LastName -> TODO()
-            LoanRequestState.InputError.Name -> TODO()
-            LoanRequestState.InputError.Phone -> TODO()
+                is LoanRequestState.Loading -> loadingEvent(true)
+
+                is LoanRequestState.Error -> {
+                    loadingEvent(false)
+                }
+
+                is LoanRequestState.HaveCondition -> haveConditionEvent(state.loanCondition)
+
+                LoanRequestState.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
+
+                LoanRequestState.InputError.LastName -> loanLastNameInput.showErrorResId(R.string.inputLastNameEmpty)
+
+                LoanRequestState.InputError.Phone -> loanPhoneInput.showErrorResId(R.string.inputPhoneEmpty)
+            }
         }
     }
 
-    private fun setUpViews(loan: Loan) {
+    private fun haveConditionEvent(condition: LoanCondition) {
+        setUpLoanRequestButton(condition)
+        with(binding) {
+            loanConditionAmount.text = condition.maxAmount.toString()
+            loanConditionPercent.text = condition.percent.toString()
+            loanConditionPeriod.text = condition.period.toString()
+        }
+    }
 
+    private fun loadingEvent(isLoading: Boolean) {
+        with(binding) {
+            loanRequestContainer.isVisible = !isLoading
+            requestProgressBar.isVisible = isLoading
+        }
+        hideKeyBoard(requireContext(), view)
     }
 }

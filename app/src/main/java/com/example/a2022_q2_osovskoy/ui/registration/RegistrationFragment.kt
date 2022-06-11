@@ -49,10 +49,7 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
     //todo() обработать нетворк + ресурсы
     private fun handleRegState(state: RegState) {
         when (state) {
-            RegState.Loading -> {
-                loadingEvent(true)
-
-            }
+            RegState.Loading -> loadingEvent(true)
 
             RegState.InputError.Name -> binding.regNameInput.showErrorResId(R.string.inputName)
 
@@ -60,11 +57,7 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
 
             is RegState.Success -> navigateToAuth()
 
-            is RegState.Error -> {
-                binding.regNameInput.showErrorResId(R.string.regError)
-                loadingEvent(false)
-                Toast.makeText(requireContext(), "Registration Error", Toast.LENGTH_SHORT).show()
-            }
+            is RegState.Error -> errorEvent()
         }
     }
 
@@ -99,12 +92,18 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
         }
     }
 
+    private fun errorEvent() {
+        binding.regNameInput.showErrorResId(R.string.regError)
+        loadingEvent(false)
+        Toast.makeText(requireContext(), "Registration Error", Toast.LENGTH_SHORT).show()
+    }
+
     private fun loadingEvent(isLoading: Boolean) {
         with(binding) {
             regContainer.isVisible = !isLoading
             authText.isVisible = !isLoading
             regProgressBar.isVisible = isLoading
         }
-        hideKeyBoard(requireContext(),view)
+        hideKeyBoard(requireContext(), view)
     }
 }

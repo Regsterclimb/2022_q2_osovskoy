@@ -35,14 +35,16 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.updateAppConfig(AppConfig.BASE)
-
         viewModel.loanCondition.observe(viewLifecycleOwner, ::handleLoanConditionState)
         setUpListeners()
     }
 
     private fun handleLoanConditionState(state: LoanConditionState) {
         when (state) {
-            is LoanConditionState.Success -> setupViews(state.loanCondition)
+            is LoanConditionState.Success -> {
+                setupViews(state.loanCondition)
+                setNavButtonToRequest(state.loanCondition)
+            }
             is LoanConditionState.Error -> {}
         }
     }
@@ -58,9 +60,9 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
     //todo()
     private fun setUpListeners() {
         with(viewBinding) {
-            /*logoutButton.setOnClickListener {
-                viewModel.changeAppConfig(false)
-            }*/
+            logoutButton.setOnClickListener {
+                viewModel.updateAppConfig(AppConfig.UNAUTHORIZED)
+            }
             openHistory.setOnClickListener {
                 navigate(
                     NavCommand(
@@ -75,17 +77,23 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
             showInstructionButton.setOnClickListener {
                 instruction.isVisible = !instruction.isVisible
             }
-            openLoanScreenButton.setOnClickListener {
-                navigate(
-                    NavCommand(
-                        NavCommands.DeepLink(
-                            url = (Uri.parse(NavDestination.DEEP_LOAN_REQUEST + "/${mainAmount.text}/${mainPercent.text}/${mainPeriod.text}")),
-                            isModal = true,
-                            isSingleTop = true
-                        )
+        }
+    }
+
+    private fun setNavButtonToRequest(condition: LoanCondition) {
+        viewBinding.openLoanScreenButton.setOnClickListener {
+            val deeplink = String.format(
+                NavDestination.DEEP_LOAN_REQUEST + "/${condition.maxAmount}/${condition.percent}/${condition.period}"
+            )
+            navigate(
+                NavCommand(
+                    NavCommands.DeepLink(
+                        url = Uri.parse(deeplink),
+                        isModal = false,
+                        isSingleTop = false
                     )
                 )
-            }
+            )
         }
     }
 }

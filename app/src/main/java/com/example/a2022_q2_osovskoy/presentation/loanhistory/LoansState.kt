@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.presentation.history
+package com.example.a2022_q2_osovskoy.presentation.loanhistory
 
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 

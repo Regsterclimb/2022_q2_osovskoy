@@ -31,6 +31,13 @@
         <item name="android:textColor">?colorPrimaryVariant</item>
     </style>
 
+    <style name="RowTextView">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/text_16</item>
+    </style>
+
     <!--<style name="AppTitle" parent="MainTitle">
         <item name="android:textSize">@dimen/text_20</item>
         <item name="android:text">@string/appbar</item>

@@ -25,11 +25,11 @@
 
     <argument
         android:name="amount"
-        app:argType="string" />
+        app:argType="long" />
     <argument
         android:name="percent"
         app:argType="string" />
     <argument
         android:name="period"
-        app:argType="string" />
+        app:argType="integer" />
 </navigation>

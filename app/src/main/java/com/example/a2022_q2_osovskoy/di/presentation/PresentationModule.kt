@@ -3,9 +3,9 @@ package com.example.a2022_q2_osovskoy.di.presentation
 import androidx.lifecycle.ViewModel
 import com.example.a2022_q2_osovskoy.di.annotations.ViewModelKey
 import com.example.a2022_q2_osovskoy.presentation.auth.AuthViewModel
-import com.example.a2022_q2_osovskoy.presentation.history.LoansHistoryViewModel
 import com.example.a2022_q2_osovskoy.presentation.loancondition.LoanConditionViewModel
 import com.example.a2022_q2_osovskoy.presentation.loandetail.LoanDetailViewModel
+import com.example.a2022_q2_osovskoy.presentation.loanhistory.LoansHistoryViewModel
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestViewModel
 import com.example.a2022_q2_osovskoy.presentation.registration.RegistrationViewModel
 import dagger.Binds

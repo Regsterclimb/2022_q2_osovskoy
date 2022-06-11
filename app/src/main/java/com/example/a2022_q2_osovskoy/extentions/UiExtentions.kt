@@ -38,9 +38,15 @@ fun TextInputLayout.clearErrorOnAnyInput() =
         this.clearError()
     }
 
+fun String.addPercent() = "$this %"
+
+
+fun String.addRub() = "$this Rub"
+
 fun View.hide() {
-    this.isVisible = true
-}
-fun View.show() {
     this.isVisible = false
+}
+
+fun View.show() {
+    this.isVisible = true
 }

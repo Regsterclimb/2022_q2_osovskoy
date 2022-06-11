@@ -20,7 +20,6 @@ class AppConfigDataSourceImpl @Inject constructor(
             0 -> AppConfig.UNAUTHORIZED
             1 -> AppConfig.AUTHORIZED
             2 -> AppConfig.UNINSTRUCTED
-            3 -> AppConfig.BASE
             else -> AppConfig.BASE
         }
 

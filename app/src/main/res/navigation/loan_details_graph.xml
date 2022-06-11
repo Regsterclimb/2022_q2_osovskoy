@@ -11,5 +11,9 @@
         android:label="loan_details_fragment"
         tools:layout="@layout/loan_details_fragment" />
 
-    <deepLink app:uri="app://loanDetails" />
+    <deepLink app:uri="app://loanDetails/{id}" />
+
+    <argument
+        android:name="id"
+        app:argType="long" />
 </navigation>

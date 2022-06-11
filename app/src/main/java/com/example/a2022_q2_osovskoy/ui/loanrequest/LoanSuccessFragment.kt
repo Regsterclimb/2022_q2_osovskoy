@@ -28,7 +28,7 @@ class LoanSuccessFragment : Fragment(R.layout.loan_success_fragment) {
                 findNavController().popBackStack()
             }
             loanOpenHistoryButton.setOnClickListener {
-
+                TODO()
             }
         }
     }

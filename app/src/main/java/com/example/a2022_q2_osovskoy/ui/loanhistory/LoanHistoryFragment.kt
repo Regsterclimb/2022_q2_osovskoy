@@ -1,5 +1,6 @@
 package com.example.a2022_q2_osovskoy.ui.loanhistory
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -7,9 +8,12 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanHistoryFragmentBinding
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.history.LoansHistoryViewModel
-import com.example.a2022_q2_osovskoy.presentation.history.LoansState
-import com.example.a2022_q2_osovskoy.ui.loandetail.LoanDetailFragment
+import com.example.a2022_q2_osovskoy.presentation.loanhistory.LoansHistoryViewModel
+import com.example.a2022_q2_osovskoy.presentation.loanhistory.LoansState
+import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
+import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
+import com.example.a2022_q2_osovskoy.utils.navigation.NavDestination
+import com.example.a2022_q2_osovskoy.utils.navigation.navigate
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -28,15 +32,17 @@ class LoanHistoryFragment : DaggerFragment(R.layout.loan_history_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            loansRecycler.adapter = LoansAdapter { navigateToDetails(it) }
+            loansRecycler.adapter = LoansAdapter {
+                navigateToDetails(it)
+            }
             loansSwipeRefresh.apply {
                 setOnRefreshListener {
                     viewModel.refreshLoans()
                     isRefreshing = false
                 }
             }
-            button.setOnClickListener {
-                parentFragmentManager.popBackStack()
+            applyNewLoanButton.setOnClickListener {
+                navigateToLoanCondition()
             }
         }
 
@@ -53,9 +59,26 @@ class LoanHistoryFragment : DaggerFragment(R.layout.loan_history_fragment) {
     }
 
     private fun navigateToDetails(loansId: Long) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.activityContainer, LoanDetailFragment())
-            .addToBackStack(null)
-            .commit()
+        navigate(
+            NavCommand(
+                NavCommands.DeepLink(
+                    url = (Uri.parse(NavDestination.DEEP_DETAILS + "/$loansId")),
+                    isModal = false,
+                    isSingleTop = false
+                )
+            )
+        )
+    }
+
+    private fun navigateToLoanCondition() {
+        navigate(
+            NavCommand(
+                NavCommands.DeepLink(
+                    url = (Uri.parse(NavDestination.DEEP_CONDITION)),
+                    isModal = true,
+                    isSingleTop = true
+                )
+            )
+        )
     }
 }
