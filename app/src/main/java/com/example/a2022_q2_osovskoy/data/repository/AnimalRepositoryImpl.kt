@@ -24,17 +24,17 @@ class AnimalRepositoryImpl @Inject constructor(
 
     override suspend fun getAnimals(): List<MyAnimal> = withContext(dispatcher) {
         val animalList: List<Animal> = coroutineScope {
-            val cats = async(dispatcher) {
+            val cats = async {
                 catsDataSource.get()
             }
-            val dogs = async(dispatcher) {
+            val dogs = async {
                 dogsDataSource.get()
             }
-            val rats = async(dispatcher) {
+            val rats = async {
                 ratsDataSource.get()
             }
             listOf(cats.await() + dogs.await() + rats.await()).flatten()
         }
-        animalList.map { MyAnimal(it.name, it.age, priceDataSource.getPrice(it)) }
+        animalList.map { MyAnimal(it.name, it.age, priceDataSource.getPrice(it)) { it.voice() } }
     }
 }

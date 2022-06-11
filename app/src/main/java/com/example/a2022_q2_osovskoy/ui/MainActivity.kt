@@ -1,7 +1,6 @@
 package com.example.a2022_q2_osovskoy.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
@@ -18,8 +17,7 @@ class MainActivity : DaggerAppCompatActivity() {
     private val viewBinding by viewBinding(ActivityMainBinding::bind)
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this,
-            multiModuleFactory)[MainViewModel::class.java]
+        ViewModelProvider(this, multiModuleFactory)[MainViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +30,6 @@ class MainActivity : DaggerAppCompatActivity() {
 
         viewModel.result.observe(this) {
             (viewBinding.animalRecycler.adapter as AnimalAdapter).submitList(it)
-            Log.i("Result", it.toString())
         }
     }
 }

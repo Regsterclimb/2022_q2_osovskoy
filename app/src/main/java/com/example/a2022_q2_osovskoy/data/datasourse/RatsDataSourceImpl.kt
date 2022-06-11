@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class RatsDataSourceImpl @Inject constructor() : AnimalDataSource {
 
-    override suspend fun get(): List<Rat> = listOf(Rat("Christie", "1"))
+    override suspend fun get(): List<Rat> = listOf(Rat("Christie", "1"),Rat("Victoria", "4"))
 
 }
