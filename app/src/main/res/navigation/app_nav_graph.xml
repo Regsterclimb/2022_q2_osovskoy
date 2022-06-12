@@ -13,7 +13,6 @@
     <include app:graph="@navigation/auth_graph" />
     <include app:graph="@navigation/loan_details_graph" />
     <include app:graph="@navigation/loans_history_graph" />
-    <include app:graph="@navigation/loan_condition_graph" />
     <include app:graph="@navigation/registration_graph" />
     <include app:graph="@navigation/loan_request_graph" />
 

@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/registration_graph"
-    app:startDestination="@id/registrationFragment2">
+    app:startDestination="@id/registrationFragment">
 
-    <deepLink app:uri="app://registration" />
     <fragment
-        android:id="@+id/registrationFragment2"
+        android:id="@+id/registrationFragment"
         android:name="com.example.a2022_q2_osovskoy.ui.registration.RegistrationFragment"
         android:label="registration_fragment"
         tools:layout="@layout/registration_fragment">

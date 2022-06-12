@@ -1,35 +1,67 @@
 package com.example.a2022_q2_osovskoy.ui.loanrequest
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanSuccessFragmentBinding
-import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import javax.inject.Inject
+import com.example.a2022_q2_osovskoy.extentions.provideOnBackPressedCallBack
+import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
+import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
+import com.example.a2022_q2_osovskoy.utils.navigation.NavDestination
+import com.example.a2022_q2_osovskoy.utils.navigation.navigate
+import dagger.android.support.DaggerFragment
 
-class LoanSuccessFragment : Fragment(R.layout.loan_success_fragment) {
+
+class LoanSuccessFragment : DaggerFragment(R.layout.loan_success_fragment) {
 
     private val binding by viewBinding(LoanSuccessFragmentBinding::bind)
 
-    @Inject
-    lateinit var multiVIewModelFactory: MultiViewModelFactory
+    private val args: LoanSuccessFragmentArgs by navArgs()
 
-    private val viewModel by lazy { ViewModelProvider(this, multiVIewModelFactory) }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            provideOnBackPressedCallBack { navigateToHistory() })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            loanBackButton.setOnClickListener {
-                findNavController().popBackStack()
+            navToHistoryButton.setOnClickListener {
+                navigateToHistory()
             }
-            loanOpenHistoryButton.setOnClickListener {
-                TODO()
+            navToDetailsButton.setOnClickListener {
+                navigateToDetails(args.id)
             }
         }
+    }
+
+    private fun navigateToDetails(loanId: Long) {
+        navigate(
+            NavCommand(
+                NavCommands.DeepLink(
+                    url = Uri.parse(String.format(NavDestination.DEEP_DETAILS + "/$loanId")),
+                    isModal = true,
+                    isSingleTop = false
+                )
+            )
+        )
+    }
+
+    private fun navigateToHistory() {
+        navigate(
+            NavCommand(
+                NavCommands.DeepLink(
+                    url = Uri.parse(NavDestination.DEEP_HISTORY),
+                    isModal = true,
+                    isSingleTop = true
+                )
+            )
+        )
     }
 }

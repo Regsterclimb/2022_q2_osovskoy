@@ -7,7 +7,7 @@
     android:elevation="3dp"
     android:id="@+id/requestContainer"
     android:background="?backgroundColor"
-    tools:context=".ui.loancondition.LoanConditionFragment">
+    tools:context=".ui.loanrequest.LoanConditionFragment">
 
     <ImageView
         android:id="@+id/bannerContainer"
@@ -66,13 +66,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Срок: "
-        app:layout_constraintBottom_toTopOf="@+id/openLoanScreenButton"
+        app:layout_constraintBottom_toTopOf="@+id/open_request_button"
         app:layout_constraintEnd_toStartOf="@id/mainPeriod"
         app:layout_constraintStart_toStartOf="@id/itemImageBarrier"
         app:layout_constraintTop_toBottomOf="@+id/loanConditionPercent" />
 
     <Button
-        android:id="@+id/openLoanScreenButton"
+        android:id="@+id/open_request_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/openLoanScreenText"
@@ -110,7 +110,7 @@
         android:id="@+id/imageView"
         android:layout_width="80dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/openLoanScreenButton"
+        app:layout_constraintBottom_toTopOf="@+id/open_request_button"
         app:layout_constraintStart_toStartOf="@+id/bannerContainer"
         app:layout_constraintTop_toTopOf="@id/bannerContainer"
         app:srcCompat="@drawable/shift_banner" />
@@ -148,7 +148,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:text="45"
-        app:layout_constraintBottom_toTopOf="@+id/openLoanScreenButton"
+        app:layout_constraintBottom_toTopOf="@+id/open_request_button"
         app:layout_constraintEnd_toEndOf="@+id/bannerContainer"
         app:layout_constraintStart_toEndOf="@id/loanConditionPeriod"
         app:layout_constraintTop_toBottomOf="@+id/mainPercent" />

@@ -4,11 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_graph"
     app:startDestination="@id/authFragment">
+
     <fragment
         android:id="@+id/authFragment"
         android:name="com.example.a2022_q2_osovskoy.ui.auth.AuthFragment"
         android:label="auth_fragment"
-        tools:layout="@layout/auth_fragment"/>
-    <deepLink app:uri="app://auth" />
+        tools:layout="@layout/auth_fragment">
+
+        <deepLink app:uri="app://auth" />
+
+    </fragment>
 
 </navigation>

@@ -24,7 +24,7 @@
     <string name="loanInputPhone">телефон</string>
     <string name="loanInputAmount">сумма</string>
     <string name="loanInputPeriod">срок</string>
-    <string name="requestSuccessText">займ успешно оформлен!!</string>
+    <string name="requestSuccessText">займ успешно оформлен</string>
     <string name="status">Статус</string>
     <string name="settings">settings</string>
     <string name="cardRequestText">Ваша Банковская карта[Visa,MasterCard] под рукой это необходимо для получения займа, карты Visa Electron и Maestro не принимаются, нужны только именные карты с CVV2 кодом на обороте</string>

@@ -91,7 +91,7 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
             )
         }
     }
-
+    //todo() ресурсы
     private fun errorEvent() {
         binding.regNameInput.showErrorResId(R.string.regError)
         loadingEvent(false)

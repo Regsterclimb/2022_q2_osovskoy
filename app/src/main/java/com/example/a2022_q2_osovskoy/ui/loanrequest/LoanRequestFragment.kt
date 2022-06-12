@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanRequestFragmentBinding
@@ -30,30 +31,42 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
         ViewModelProvider(this, multiViewModelFactory)[LoanRequestViewModel::class.java]
     }
 
+    private val args: LoanRequestFragmentArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.handleLoanCondition(
-            arguments?.get("amount") as Long,
-            arguments?.get("percent") as String,
-            arguments?.get("period") as Int
-        )
+        viewModel.handleLoanCondition(args.amount, args.percent, args.period)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         with(binding) {
             loanNameInput.clearErrorOnAnyInput()
             loanLastNameInput.clearErrorOnAnyInput()
             loanPhoneInput.clearErrorOnAnyInput()
-            button.setOnClickListener {
-                findNavController().navigate(R.id.action_loanRequestFragment_to_loanSuccessFragment)
+        }
+        viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanRequestState)
+    }
+
+    private fun handleLoanRequestState(state: LoanRequestState) {
+        with(binding) {
+            when (state) {
+                is LoanRequestState.Success -> handleSuccessEvent(state.loan.id)
+
+                is LoanRequestState.Loading -> handleLoadingEvent(true)
+
+                is LoanRequestState.Error -> handleLoadingEvent(false)
+
+                is LoanRequestState.LoanConditionReceieved -> handleHaveConditionEvent(state.loanCondition)
+
+                LoanRequestState.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
+
+                LoanRequestState.InputError.LastName -> loanLastNameInput.showErrorResId(R.string.inputLastNameEmpty)
+
+                LoanRequestState.InputError.Phone -> loanPhoneInput.showErrorResId(R.string.inputPhoneEmpty)
             }
         }
-
-        viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanConditionState)
-
     }
 
     private fun setUpLoanRequestButton(condition: LoanCondition) {
@@ -71,33 +84,7 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
         }
     }
 
-    private fun handleLoanConditionState(state: LoanRequestState) {
-        with(binding) {
-            when (state) {
-                is LoanRequestState.Success -> {
-                    findNavController().navigate(
-                        R.id.action_loanRequestFragment_to_loanSuccessFragment
-                    )
-                }
-
-                is LoanRequestState.Loading -> loadingEvent(true)
-
-                is LoanRequestState.Error -> {
-                    loadingEvent(false)
-                }
-
-                is LoanRequestState.HaveCondition -> haveConditionEvent(state.loanCondition)
-
-                LoanRequestState.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
-
-                LoanRequestState.InputError.LastName -> loanLastNameInput.showErrorResId(R.string.inputLastNameEmpty)
-
-                LoanRequestState.InputError.Phone -> loanPhoneInput.showErrorResId(R.string.inputPhoneEmpty)
-            }
-        }
-    }
-
-    private fun haveConditionEvent(condition: LoanCondition) {
+    private fun handleHaveConditionEvent(condition: LoanCondition) {
         setUpLoanRequestButton(condition)
         with(binding) {
             loanConditionAmount.text = condition.maxAmount.toString()
@@ -106,11 +93,21 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
         }
     }
 
-    private fun loadingEvent(isLoading: Boolean) {
+    private fun handleLoadingEvent(isLoading: Boolean) {
         with(binding) {
             loanRequestContainer.isVisible = !isLoading
             requestProgressBar.isVisible = isLoading
         }
         hideKeyBoard(requireContext(), view)
+    }
+
+    private fun handleSuccessEvent(loanId: Long) {
+        val directions =
+            LoanRequestFragmentDirections.actionLoanRequestFragmentToLoanSuccessFragment(loanId)
+
+        findNavController()
+            .navigate(
+                directions,
+            )
     }
 }

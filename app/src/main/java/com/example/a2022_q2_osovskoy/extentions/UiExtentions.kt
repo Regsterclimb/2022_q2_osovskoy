@@ -1,8 +1,11 @@
 package com.example.a2022_q2_osovskoy.extentions
 
+import android.content.Context
 import android.graphics.Color
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -24,24 +27,17 @@ fun TextInputLayout.clearError() {
     this.error = null
 }
 
-fun TextView.addText(text: String) = run { this.text = String.format(this.text.toString() + text) }
-
-fun TextView.changeColor(state: String) = when (state) {
+fun TextView.changeColor(statusState: String) = when (statusState) {
     "APPROVED" -> this.setTextColor(Color.GREEN)
     "REGISTERED" -> this.setTextColor(Color.BLUE)
     "REJECTED" -> this.setTextColor(Color.RED)
-    else -> this.setTextColor(Color.BLACK)
+    else -> Unit
 }
 
 fun TextInputLayout.clearErrorOnAnyInput() =
     this.editText?.doAfterTextChanged {
         this.clearError()
     }
-
-fun String.addPercent() = "$this %"
-
-
-fun String.addRub() = "$this Rub"
 
 fun View.hide() {
     this.isVisible = false
@@ -50,3 +46,15 @@ fun View.hide() {
 fun View.show() {
     this.isVisible = true
 }
+
+fun hideKeyBoard(context: Context, view: View?) {
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .hideSoftInputFromWindow(view?.windowToken, 0)
+}
+
+fun provideOnBackPressedCallBack(navigate: () -> Unit): OnBackPressedCallback =
+    object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            navigate()
+        }
+    }

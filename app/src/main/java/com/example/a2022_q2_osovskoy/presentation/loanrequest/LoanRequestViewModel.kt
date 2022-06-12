@@ -21,7 +21,7 @@ class LoanRequestViewModel @Inject constructor(
 
     fun handleLoanCondition(amount: Long, percent: String, period: Int) {
         _loanRequestState.value =
-            LoanRequestState.HaveCondition(LoanCondition(period, amount, percent.toDouble()))
+            LoanRequestState.LoanConditionReceieved(LoanCondition(period, amount, percent.toDouble()))
     }
 
     fun trySendRequest(
@@ -42,9 +42,10 @@ class LoanRequestViewModel @Inject constructor(
             phone.isEmpty() -> {
                 _loanRequestState.value = LoanRequestState.InputError.Phone
             }
-            else -> {
+            name.isNotEmpty() && lastName.isNotEmpty() && phone.isNotEmpty() -> {
                 sendLoanRequest(amount, name, lastName, phone, percent, period)
             }
+            else -> LoanRequestState.Error
         }
     }
 
@@ -59,7 +60,7 @@ class LoanRequestViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             _loanRequestState.value = LoanRequestState.Loading
-            _loanRequestState.value = handleResultRequest(
+            _loanRequestState.value = handleLoanResultRequest(
                 requestLoanUseCase(
                     LoanRequest(
                         amount = amount,
@@ -74,9 +75,10 @@ class LoanRequestViewModel @Inject constructor(
         }
     }
 
-    private fun handleResultRequest(result: ResultState<Loan>): LoanRequestState =
+    private fun handleLoanResultRequest(result: ResultState<Loan>): LoanRequestState =
         when (result) {
             is ResultState.Success -> LoanRequestState.Success(result.data)
             is ResultState.Error -> LoanRequestState.Error
         }
+
 }

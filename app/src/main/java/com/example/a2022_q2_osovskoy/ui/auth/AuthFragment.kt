@@ -58,7 +58,8 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
             is AuthState.Error -> {
                 loadingEvent(false)
                 binding.authNameInput.showErrorResId(R.string.authError)
-                Toast.makeText(requireContext(), "bad internetconnection", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "bad internetconnection", Toast.LENGTH_SHORT)
+                    .show()
             }
             is AuthState.InputError.Name -> {
                 binding.authNameInput.showErrorResId(R.string.inputName)
@@ -73,7 +74,7 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
         navigate(
             NavCommand(
                 NavCommands.DeepLink(
-                    Uri.parse(NavDestination.DEEP_CONDITION),
+                    Uri.parse(NavDestination.DEEP_LOAN_REQUEST),
                     isModal = true,
                     isSingleTop = true)
             )
@@ -111,6 +112,6 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
             registrationText.isVisible = !isLoading
             authProgressBar.isVisible = isLoading
         }
-        hideKeyBoard(requireContext(),view)
+        hideKeyBoard(requireContext(), view)
     }
 }

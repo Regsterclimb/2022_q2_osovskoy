@@ -6,8 +6,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.example.a2022_q2_osovskoy.R
+import com.example.a2022_q2_osovskoy.extentions.provideFlatNavOptionsBuilder
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
+import com.example.a2022_q2_osovskoy.utils.navigation.NavDestination
 import com.example.a2022_q2_osovskoy.utils.navigation.NavigationProvider
 import dagger.android.support.DaggerAppCompatActivity
 
@@ -19,6 +21,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
+
+    override fun onNavigateUp(): Boolean {
+        navController.navigate(NavDestination.DEEP_HISTORY)
+        return super.onNavigateUp()
     }
 
     override fun launch(navCommand: NavCommand) {
@@ -44,12 +51,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
                 .setPopUpTo(if (isSingleTop) R.id.app_nav_graph else -1, inclusive = isSingleTop)
                 .build()
         } else {
-            NavOptions.Builder()
-                .setEnterAnim(R.anim.slide_in_right)
-                .setExitAnim(R.anim.slide_out_left)
-                .setPopEnterAnim(R.anim.slide_in_left)
-                .setPopExitAnim(R.anim.slide_out_right)
-                .setLaunchSingleTop(isSingleTop)
+            provideFlatNavOptionsBuilder(isSingleTop)
                 .setPopUpTo(if (isSingleTop) R.id.app_nav_graph else -1, inclusive = isSingleTop)
                 .build()
         }

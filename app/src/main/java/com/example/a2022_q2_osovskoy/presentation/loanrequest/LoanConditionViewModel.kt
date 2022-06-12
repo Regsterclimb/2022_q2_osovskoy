@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.presentation.loancondition
+package com.example.a2022_q2_osovskoy.presentation.loanrequest
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +24,10 @@ class LoanConditionViewModel @Inject constructor(
     }
 
     init {
+        refreshConditions()
+    }
+
+    fun refreshConditions() {
         viewModelScope.launch {
             _loanConditionValue.value = handleResultState(getLoanConditionUseCase())
         }

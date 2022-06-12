@@ -3,33 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loan_request_graph"
-    app:startDestination="@id/loanRequestFragment">
+    app:startDestination="@id/loanConditionFragment">
+
+    <fragment
+        android:id="@+id/loanConditionFragment"
+        android:name="com.example.a2022_q2_osovskoy.ui.loanrequest.LoanConditionFragment"
+        android:label="loan_condition_fragment"
+        tools:layout="@layout/loan_condition_fragment">
+        <action
+            android:id="@+id/action_loanConditionFragment_to_loanRequestFragment"
+            app:destination="@id/loanRequestFragment" />
+
+        <deepLink app:uri="app://loanRequest" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/loanRequestFragment"
         android:name="com.example.a2022_q2_osovskoy.ui.loanrequest.LoanRequestFragment"
         android:label="loan_request_fragment"
         tools:layout="@layout/loan_request_fragment">
+
         <action
             android:id="@+id/action_loanRequestFragment_to_loanSuccessFragment"
-            app:destination="@id/loanSuccessFragment" />
+            app:destination="@id/loanSuccessFragment"
+            app:popUpToSaveState="false"
+            app:popUpToInclusive="false" />
+
+        <argument
+            android:name="amount"
+            app:argType="long" />
+
+        <argument
+            android:name="percent"
+            app:argType="string" />
+
+        <argument
+            android:name="period"
+            app:argType="integer" />
+
     </fragment>
 
     <fragment
         android:id="@+id/loanSuccessFragment"
         android:name="com.example.a2022_q2_osovskoy.ui.loanrequest.LoanSuccessFragment"
         android:label="loan_success_fragment"
-        tools:layout="@layout/loan_success_fragment" />
+        tools:layout="@layout/loan_success_fragment">
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
 
-    <deepLink app:uri="app://loanRequest/{amount}/{percent}/{period}" />
-
-    <argument
-        android:name="amount"
-        app:argType="long" />
-    <argument
-        android:name="percent"
-        app:argType="string" />
-    <argument
-        android:name="period"
-        app:argType="integer" />
 </navigation>

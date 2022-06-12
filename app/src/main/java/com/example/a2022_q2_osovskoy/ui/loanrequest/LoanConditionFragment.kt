@@ -1,18 +1,22 @@
-package com.example.a2022_q2_osovskoy.ui.loancondition
+package com.example.a2022_q2_osovskoy.ui.loanrequest
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanConditionFragmentBinding
 import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
+import com.example.a2022_q2_osovskoy.extentions.provideFlatNavOptionsBuilder
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.loancondition.LoanConditionState
-import com.example.a2022_q2_osovskoy.presentation.loancondition.LoanConditionViewModel
+import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanConditionState
+import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanConditionViewModel
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
 import com.example.a2022_q2_osovskoy.utils.navigation.NavDestination
@@ -31,8 +35,10 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
         ViewModelProvider(this, multiViewModelFactory)[LoanConditionViewModel::class.java]
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         viewModel.updateAppConfig(AppConfig.BASE)
         viewModel.loanCondition.observe(viewLifecycleOwner, ::handleLoanConditionState)
@@ -43,9 +49,11 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
         when (state) {
             is LoanConditionState.Success -> {
                 setupViews(state.loanCondition)
-                setNavButtonToRequest(state.loanCondition)
+                setupOpenRequestButton(state.loanCondition)
             }
-            is LoanConditionState.Error -> {}
+            is LoanConditionState.Error -> {
+                TODO()
+            }
         }
     }
 
@@ -64,15 +72,7 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
                 viewModel.updateAppConfig(AppConfig.UNAUTHORIZED)
             }
             openHistory.setOnClickListener {
-                navigate(
-                    NavCommand(
-                        NavCommands.DeepLink(
-                            url = (Uri.parse(NavDestination.DEEP_HISTORY)),
-                            isModal = true,
-                            isSingleTop = true
-                        )
-                    )
-                )
+                navigateToHistory()
             }
             showInstructionButton.setOnClickListener {
                 instruction.isVisible = !instruction.isVisible
@@ -80,20 +80,35 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
         }
     }
 
-    private fun setNavButtonToRequest(condition: LoanCondition) {
-        viewBinding.openLoanScreenButton.setOnClickListener {
-            val deeplink = String.format(
-                NavDestination.DEEP_LOAN_REQUEST + "/${condition.maxAmount}/${condition.percent}/${condition.period}"
-            )
-            navigate(
-                NavCommand(
-                    NavCommands.DeepLink(
-                        url = Uri.parse(deeplink),
-                        isModal = false,
-                        isSingleTop = false
-                    )
+    private fun navigateToHistory() {
+        navigate(
+            NavCommand(
+                NavCommands.DeepLink(
+                    url = (Uri.parse(NavDestination.DEEP_HISTORY)),
+                    isModal = true,
+                    isSingleTop = true
                 )
             )
+        )
+    }
+
+    private fun setupOpenRequestButton(condition: LoanCondition) {
+        val requestDirection =
+            LoanConditionFragmentDirections
+                .actionLoanConditionFragmentToLoanRequestFragment(
+                    condition.maxAmount,
+                    condition.percent.toString(),
+                    condition.period
+                )
+
+        viewBinding.openRequestButton.setOnClickListener {
+            Log.d("LoanConditionFragment",
+                findNavController().backQueue.first().destination.id.toString())
+            findNavController().navigate(requestDirection, navOptions {
+                provideFlatNavOptionsBuilder(true).setPopUpTo(
+                    findNavController().backQueue.first().destination.id,
+                    true).build()
+            })
         }
     }
 }

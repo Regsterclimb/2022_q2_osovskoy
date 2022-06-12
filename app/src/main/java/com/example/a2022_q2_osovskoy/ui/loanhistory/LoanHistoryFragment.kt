@@ -59,6 +59,7 @@ class LoanHistoryFragment : DaggerFragment(R.layout.loan_history_fragment) {
     }
 
     private fun navigateToDetails(loansId: Long) {
+
         navigate(
             NavCommand(
                 NavCommands.DeepLink(
@@ -74,9 +75,9 @@ class LoanHistoryFragment : DaggerFragment(R.layout.loan_history_fragment) {
         navigate(
             NavCommand(
                 NavCommands.DeepLink(
-                    url = (Uri.parse(NavDestination.DEEP_CONDITION)),
+                    url = (Uri.parse(NavDestination.DEEP_LOAN_REQUEST)),
                     isModal = true,
-                    isSingleTop = true
+                    isSingleTop = false
                 )
             )
         )
