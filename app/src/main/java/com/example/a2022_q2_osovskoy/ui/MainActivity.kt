@@ -9,7 +9,6 @@ import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.extentions.provideFlatNavOptionsBuilder
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
-import com.example.a2022_q2_osovskoy.utils.navigation.NavDestination
 import com.example.a2022_q2_osovskoy.utils.navigation.NavigationProvider
 import dagger.android.support.DaggerAppCompatActivity
 
@@ -23,11 +22,6 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         setContentView(R.layout.activity_main)
     }
 
-    override fun onNavigateUp(): Boolean {
-        navController.navigate(NavDestination.DEEP_HISTORY)
-        return super.onNavigateUp()
-    }
-
     override fun launch(navCommand: NavCommand) {
         if (navCommand.target is NavCommands.DeepLink) {
             val target = navCommand.target
@@ -39,7 +33,6 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         }
     }
 
-    //todo()
     private fun openDeepLink(url: Uri, isModal: Boolean, isSingleTop: Boolean) {
         val navOptions = if (isModal) {
             NavOptions.Builder()

@@ -5,95 +5,103 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?backgroundColor"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ui.registration.RegistrationFragment">
 
-    <LinearLayout
-        android:id="@+id/regContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/authText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/regTitle"
-            style="@style/MainTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="12dp"
-            android:text="@string/regTitle" />
-
-        <TextView
-            android:id="@+id/regUp"
-            style="@style/SecondaryText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-            android:text="@string/regUp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/regNameInput"
-            style="@style/TextInputMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/inputName"
-            app:boxStrokeColor="?colorSecondary"
-            app:layout_constraintTop_toBottomOf="@+id/change_title">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/regNameEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextInputEditMain"
-                android:inputType="textPersonName"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/regPasswordInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/inputPassword"
-            android:textColorHint="?colorPrimaryVariant"
-            app:boxStrokeColor="?colorSecondary"
-            app:helperTextEnabled="true"
-            app:layout_constraintTop_toBottomOf="@+id/change_title"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/regPasswordEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextInputEditMain"
-                android:inputType="textPassword"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/regButton"
-            style="@style/RegisterButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/authText"
-        style="@style/PrimaryText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/startRegistrationText"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop">
+
+        <LinearLayout
+            android:id="@+id/regContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/regTitle"
+                style="@style/MainTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
+                android:text="@string/regTitle" />
+
+            <TextView
+                android:id="@+id/regUp"
+                style="@style/SecondaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:text="@string/regUp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/regNameInput"
+                style="@style/TextInputMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/inputName"
+                app:boxStrokeColor="?colorSecondary"
+                app:layout_constraintTop_toBottomOf="@+id/change_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/regNameEdit"
+                    style="@style/TextInputEditMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/regPasswordInput"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/inputPassword"
+                android:textColorHint="?colorPrimaryVariant"
+                app:boxStrokeColor="?colorSecondary"
+                app:helperTextEnabled="true"
+                app:layout_constraintTop_toBottomOf="@+id/change_title"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/regPasswordEdit"
+                    style="@style/TextInputEditMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/regButton"
+                style="@style/RegisterButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp" />
+
+            <TextView
+                android:id="@+id/authText"
+                style="@style/PrimaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/startRegistrationText" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/regProgressBar"
@@ -101,11 +109,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

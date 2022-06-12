@@ -24,8 +24,10 @@ class LoanSuccessFragment : DaggerFragment(R.layout.loan_success_fragment) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-            provideOnBackPressedCallBack { navigateToHistory() })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            provideOnBackPressedCallBack { navigateToHistory() }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

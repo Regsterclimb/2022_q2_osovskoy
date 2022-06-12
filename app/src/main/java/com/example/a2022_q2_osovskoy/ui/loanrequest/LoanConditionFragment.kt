@@ -2,18 +2,16 @@ package com.example.a2022_q2_osovskoy.ui.loanrequest
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanConditionFragmentBinding
 import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
-import com.example.a2022_q2_osovskoy.extentions.provideFlatNavOptionsBuilder
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanConditionState
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanConditionViewModel
@@ -51,7 +49,7 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
                 setupOpenRequestButton(state.loanCondition)
             }
             is LoanConditionState.Error -> {
-                TODO()
+                Toast.makeText(requireContext(), R.string.simpleError, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -64,15 +62,17 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
         }
     }
 
-    //todo()
     private fun setUpListeners() {
         with(viewBinding) {
             logoutButton.setOnClickListener {
                 viewModel.updateAppConfig(AppConfig.UNAUTHORIZED)
+                navigateToAuth()
             }
+
             openHistory.setOnClickListener {
                 navigateToHistory()
             }
+
             showInstructionButton.setOnClickListener {
                 instruction.isVisible = !instruction.isVisible
             }
@@ -101,13 +101,19 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
                 )
 
         viewBinding.openRequestButton.setOnClickListener {
-            Log.d("LoanConditionFragment",
-                findNavController().backQueue.first().destination.id.toString())
-            findNavController().navigate(requestDirection, navOptions {
-                provideFlatNavOptionsBuilder(true).setPopUpTo(
-                    findNavController().backQueue.first().destination.id,
-                    true).build()
-            })
+            findNavController().navigate(requestDirection)
         }
+    }
+
+    private fun navigateToAuth() {
+        navigate(
+            NavCommand(
+                NavCommands.DeepLink(
+                    url = (Uri.parse(NavDestination.DEEP_AUTH)),
+                    isModal = true,
+                    isSingleTop = true
+                )
+            )
+        )
     }
 }

@@ -14,6 +14,7 @@ import com.example.a2022_q2_osovskoy.extentions.changeColor
 
 class LoansAdapter(private val onLoanClick: (loanId: Long) -> Unit) :
     ListAdapter<Loan, LoanViewHolder>(LoanListCallBack()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoanViewHolder =
         LoanViewHolder(
             LayoutInflater.from(parent.context)

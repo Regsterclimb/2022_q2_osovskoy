@@ -60,7 +60,7 @@ fun provideOnBackPressedCallBack(navigate: () -> Unit): OnBackPressedCallback =
         }
     }
 
-fun EditText.changeFocus(hideKeyboard: () -> Unit) {
+fun EditText.onFocusChange(hideKeyboard: () -> Unit) {
     this.setOnFocusChangeListener { _, hasFocus ->
         if (!hasFocus) {
             hideKeyboard()

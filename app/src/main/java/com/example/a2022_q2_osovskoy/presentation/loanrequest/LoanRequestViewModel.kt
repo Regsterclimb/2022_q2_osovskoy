@@ -49,7 +49,6 @@ class LoanRequestViewModel @Inject constructor(
         }
     }
 
-    //todo()
     private fun sendLoanRequest(
         amount: Long,
         name: String,

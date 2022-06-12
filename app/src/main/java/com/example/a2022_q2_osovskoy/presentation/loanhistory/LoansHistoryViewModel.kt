@@ -27,7 +27,7 @@ class LoansHistoryViewModel @Inject constructor(private val getLoansUseCase: Get
             _loansState.value = handleResultState(getLoansUseCase())
         }
     }
-    //todo() обработать во фрагменте
+
     private fun handleResultState(state: ResultState<List<Loan>>): LoansState = when (state) {
         is ResultState.Success -> LoansState.Success(state.data)
         is ResultState.Error -> LoansState.Error

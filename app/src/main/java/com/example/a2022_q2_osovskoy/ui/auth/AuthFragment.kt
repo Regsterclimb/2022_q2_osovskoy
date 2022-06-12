@@ -3,16 +3,12 @@ package com.example.a2022_q2_osovskoy.ui.auth
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.AuthFragmentBinding
-import com.example.a2022_q2_osovskoy.extentions.clearErrorOnAnyInput
-import com.example.a2022_q2_osovskoy.extentions.getTrimmedText
-import com.example.a2022_q2_osovskoy.extentions.hideKeyBoard
-import com.example.a2022_q2_osovskoy.extentions.showErrorResId
+import com.example.a2022_q2_osovskoy.extentions.*
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.auth.AuthState
 import com.example.a2022_q2_osovskoy.presentation.auth.AuthViewModel
@@ -40,6 +36,8 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
         with(binding) {
             authNameInput.clearErrorOnAnyInput()
             authPasswordInput.clearErrorOnAnyInput()
+            authNameEdit.onFocusChange { hideKeyBoard(requireContext(), view) }
+            authPasswordEdit.onFocusChange { hideKeyBoard(requireContext(), view) }
         }
 
         setUpAuthButton()
@@ -47,8 +45,6 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
         viewModel.authState.observe(viewLifecycleOwner, ::handleAuthState)
     }
 
-    //todo() обнулить текст и ошибки при смене экрана + ресурсы
-    //SingleLiveEvent
     private fun handleAuthState(state: AuthState) {
         when (state) {
             is AuthState.Loading -> loadingEvent(true)
@@ -58,8 +54,6 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
             is AuthState.Error -> {
                 loadingEvent(false)
                 binding.authNameInput.showErrorResId(R.string.authError)
-                Toast.makeText(requireContext(), "bad internetconnection", Toast.LENGTH_SHORT)
-                    .show()
             }
             is AuthState.InputError.Name -> {
                 binding.authNameInput.showErrorResId(R.string.inputName)
@@ -109,7 +103,6 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
     private fun loadingEvent(isLoading: Boolean) {
         with(binding) {
             authContainer.isVisible = !isLoading
-            registrationText.isVisible = !isLoading
             authProgressBar.isVisible = isLoading
         }
         hideKeyBoard(requireContext(), view)

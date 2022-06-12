@@ -38,20 +38,8 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            loanNameInput.clearErrorOnAnyInput()
-            loanLastNameInput.clearErrorOnAnyInput()
-            loanPhoneInput.clearErrorOnAnyInput()
-            loanNameEdit.changeFocus {
-                hideKeyBoard(requireContext(), view)
-            }
-            loanLastNameEdit.changeFocus {
-                hideKeyBoard(requireContext(), view)
-            }
-            loanPhoneEdit.changeFocus {
-                hideKeyBoard(requireContext(), view)
-            }
-        }
+        setUpTextInput()
+        setupEditText()
         viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanRequestState)
     }
 
@@ -64,11 +52,15 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
 
                 is LoanRequestState.Error -> handleLoadingEvent(false)
 
-                is LoanRequestState.LoanConditionReceieved -> handleHaveConditionEvent(state.loanCondition)
+                is LoanRequestState.LoanConditionReceieved -> {
+                    handleHaveConditionEvent(state.loanCondition)
+                }
 
                 LoanRequestState.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
 
-                LoanRequestState.InputError.LastName -> loanLastNameInput.showErrorResId(R.string.inputLastNameEmpty)
+                LoanRequestState.InputError.LastName -> {
+                    loanLastNameInput.showErrorResId(R.string.inputLastNameEmpty)
+                }
 
                 LoanRequestState.InputError.Phone -> loanPhoneInput.showErrorResId(R.string.inputPhoneEmpty)
             }
@@ -108,12 +100,31 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
     }
 
     private fun handleSuccessEvent(loanId: Long) {
-        val directions =
-            LoanRequestFragmentDirections.actionLoanRequestFragmentToLoanSuccessFragment(loanId)
+        findNavController().navigate(
+            LoanRequestFragmentDirections
+                .actionLoanRequestFragmentToLoanSuccessFragment(loanId)
+        )
+    }
 
-        findNavController()
-            .navigate(
-                directions,
-            )
+    private fun setUpTextInput() {
+        with(binding) {
+            loanNameInput.clearErrorOnAnyInput()
+            loanLastNameInput.clearErrorOnAnyInput()
+            loanPhoneInput.clearErrorOnAnyInput()
+        }
+    }
+
+    private fun setupEditText() {
+        with(binding) {
+            loanNameEdit.onFocusChange {
+                hideKeyBoard(requireContext(), view)
+            }
+            loanLastNameEdit.onFocusChange {
+                hideKeyBoard(requireContext(), view)
+            }
+            loanPhoneEdit.onFocusChange {
+                hideKeyBoard(requireContext(), view)
+            }
+        }
     }
 }

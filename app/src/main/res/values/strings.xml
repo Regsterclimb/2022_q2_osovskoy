@@ -48,5 +48,7 @@
     <string name="SuccessTitle">УСПЕХ!</string>
     <string name="requestHistoryButtonText">посмотреть историю</string>
     <string name="requestDetailsButtonText">Детали займа</string>
+    <string name="loanInstruction">вводим имя фамилию телефон и получаем свой займ</string>
+    <string name="simpleError">Ошибка</string>
 
 </resources>

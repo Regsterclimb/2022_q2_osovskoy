@@ -21,7 +21,6 @@ class LoanDetailViewModel @Inject constructor(private val getLoanByIdUseCase: Ge
         }
     }
 
-    //todo()
     private fun handleResultState(result: ResultState<Loan>): LoanDetailState = when (result) {
         is ResultState.Success -> LoanDetailState.Success(result.data)
         is ResultState.Error -> LoanDetailState.Error

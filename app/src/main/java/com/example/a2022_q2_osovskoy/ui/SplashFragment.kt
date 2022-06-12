@@ -26,14 +26,11 @@ class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.appConfigState.observe(viewLifecycleOwner) { configState ->
-            if (savedInstanceState == null) {
-                openFragmentIfLogged(
-                    getNavDestinationByConfigState(
-                        configState
-                    )
-                )
-            }
+            openFragmentIfLogged(
+                getNavDestinationByConfigState(configState)
+            )
         }
     }
 
@@ -51,7 +48,7 @@ class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
 
     private fun getNavDestinationByConfigState(configState: ConfigState): String =
         when (configState) {
-            ConfigState.Unauthorized -> NavDestination.DEEP_AUTH
+            ConfigState.Unauthorized -> NavDestination.DEEP_REGISTRATION
             ConfigState.Uninstructed -> NavDestination.DEEP_LOAN_REQUEST
             else -> NavDestination.DEEP_HISTORY
         }

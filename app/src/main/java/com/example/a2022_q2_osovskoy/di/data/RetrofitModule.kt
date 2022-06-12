@@ -26,10 +26,10 @@ class RetrofitModule {
         .build()
 
     @Provides
-    @AppScope //todo()
+    @AppScope
     fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
 
     @Provides
-    @AppScope //todo()
+    @AppScope
     fun provideLoansApi(retrofit: Retrofit): LoansApi = retrofit.create(LoansApi::class.java)
 }
