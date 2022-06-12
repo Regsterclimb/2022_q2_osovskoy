@@ -7,116 +7,174 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?backgroundColor"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ui.loanrequest.LoanRequestFragment">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/loanRequestContainer"
-        android:layout_marginHorizontal="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/loanScrollView"
-        app:layout_constraintEnd_toEndOf="@id/loanScrollView"
-        app:layout_constraintStart_toStartOf="@id/loanScrollView"
-        app:layout_constraintTop_toTopOf="@id/loanScrollView">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/loanConditionAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Вам Доступно: " />
-
-        <TextView
-            android:id="@+id/loanConditionPercent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Процент : " />
-
-        <TextView
-            android:id="@+id/loanConditionPeriod"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Срок: " />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loanNameInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/loanRequestContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/loanInputName"
-            android:textColorHint="?colorPrimaryVariant"
-            android:textStyle="italic"
-            app:boxStrokeColor="?colorSecondary"
-            app:endIconMode="clear_text">
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/loanNameEdit"
+            <TextView
+                android:id="@+id/requestTitle"
+                style="@style/MainTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/requestTitleText" />
+
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:textColor="?colorPrimaryVariant" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loanLastNameInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/loanInputLastName"
-            android:textColorHint="?colorPrimaryVariant"
-            android:textStyle="italic"
-            app:boxStrokeColor="?colorSecondary"
-            app:endIconMode="clear_text">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/loanLastNameEdit"
+                    <TextView
+                        android:id="@+id/requestAmountRow"
+                        style="@style/RowTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        android:text="@string/requestAmountRow" />
+
+                    <TextView
+                        android:id="@+id/requestAmount"
+                        style="@style/RowTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        tools:text="@tools:sample/lorem" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/requestPercentRow"
+                        style="@style/RowTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        android:text="@string/requestPercentRow" />
+
+                    <TextView
+                        android:id="@+id/requestPercent"
+                        style="@style/RowTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        tools:text="@tools:sample/lorem" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/requestPeriodRow"
+                        style="@style/RowTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        android:text="@string/requestPeriodRow" />
+
+                    <TextView
+                        android:id="@+id/requestPeriod"
+                        style="@style/RowTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_weight="1"
+                        tools:text="@tools:sample/lorem" />
+                </TableRow>
+
+            </TableLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loanNameInput"
+                style="@style/TextInputMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:textColor="?colorPrimaryVariant" />
+                android:layout_marginTop="12dp"
+                android:hint="@string/loanInputName"
+                app:boxStrokeColor="?colorSecondary"
+                app:endIconMode="clear_text">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loanNameEdit"
+                    style="@style/TextInputEditMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loanPhoneInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/loanInputPhone"
-            android:textColorHint="?colorPrimaryVariant"
-            android:textStyle="italic"
-            app:boxStrokeColor="?colorSecondary"
-            app:endIconMode="clear_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/loanPhoneEdit"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loanLastNameInput"
+                style="@style/TextInputMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:textColor="?colorPrimaryVariant" />
+                android:hint="@string/loanInputLastName"
+                android:textColorHint="?colorPrimaryVariant"
+                android:textStyle="italic"
+                app:boxStrokeColor="?colorSecondary"
+                app:endIconMode="clear_text">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loanLastNameEdit"
+                    style="@style/TextInputEditMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/requestLoanButton"
-            style="@style/MainButton"
-            android:layout_width="330dp"
-            android:layout_height="58dp"
-            android:layout_gravity="center"
-            android:text="Оформить Займ" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loanPhoneInput"
+                style="@style/TextInputMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/loanInputPhone"
+                android:textColorHint="?colorPrimaryVariant"
+                android:textStyle="italic"
+                app:boxStrokeColor="?colorSecondary"
+                app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loanPhoneEdit"
+                    style="@style/TextInputEditMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/requestLoanButton"
+                style="@style/MainButton"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_gravity="center"
+                android:text="@string/requestButtonText" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/requestProgressBar"
@@ -129,5 +187,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

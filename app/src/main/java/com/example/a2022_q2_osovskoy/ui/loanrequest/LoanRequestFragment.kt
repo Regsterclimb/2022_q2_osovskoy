@@ -10,10 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanRequestFragmentBinding
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
-import com.example.a2022_q2_osovskoy.extentions.clearErrorOnAnyInput
-import com.example.a2022_q2_osovskoy.extentions.getTrimmedText
-import com.example.a2022_q2_osovskoy.extentions.hideKeyBoard
-import com.example.a2022_q2_osovskoy.extentions.showErrorResId
+import com.example.a2022_q2_osovskoy.extentions.*
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestState
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestViewModel
@@ -45,6 +42,15 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
             loanNameInput.clearErrorOnAnyInput()
             loanLastNameInput.clearErrorOnAnyInput()
             loanPhoneInput.clearErrorOnAnyInput()
+            loanNameEdit.changeFocus {
+                hideKeyBoard(requireContext(), view)
+            }
+            loanLastNameEdit.changeFocus {
+                hideKeyBoard(requireContext(), view)
+            }
+            loanPhoneEdit.changeFocus {
+                hideKeyBoard(requireContext(), view)
+            }
         }
         viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanRequestState)
     }
@@ -87,9 +93,9 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
     private fun handleHaveConditionEvent(condition: LoanCondition) {
         setUpLoanRequestButton(condition)
         with(binding) {
-            loanConditionAmount.text = condition.maxAmount.toString()
-            loanConditionPercent.text = condition.percent.toString()
-            loanConditionPeriod.text = condition.period.toString()
+            requestAmount.text = condition.maxAmount.toString().addRub()
+            requestPercent.text = condition.percent.toString().addPercent()
+            requestPeriod.text = condition.period.toString().addDays()
         }
     }
 

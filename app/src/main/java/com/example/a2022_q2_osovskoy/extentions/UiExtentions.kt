@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
@@ -58,3 +59,11 @@ fun provideOnBackPressedCallBack(navigate: () -> Unit): OnBackPressedCallback =
             navigate()
         }
     }
+
+fun EditText.changeFocus(hideKeyboard: () -> Unit) {
+    this.setOnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) {
+            hideKeyboard()
+        }
+    }
+}

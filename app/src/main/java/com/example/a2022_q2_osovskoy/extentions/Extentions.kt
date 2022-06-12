@@ -13,6 +13,8 @@ fun String.addPercent() = "$this %"
 
 fun String.addRub() = "$this Rub"
 
+fun String.addDays() = "$this дн."
+
 fun LoanResponse.toLoan(): Loan =
     Loan(id, amount, date = date.substring(0, date.indexOf("T")), state, percent)
 

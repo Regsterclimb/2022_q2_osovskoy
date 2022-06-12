@@ -35,12 +35,11 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
         ViewModelProvider(this, multiViewModelFactory)[LoanConditionViewModel::class.java]
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         viewModel.updateAppConfig(AppConfig.BASE)
+
         viewModel.loanCondition.observe(viewLifecycleOwner, ::handleLoanConditionState)
         setUpListeners()
     }

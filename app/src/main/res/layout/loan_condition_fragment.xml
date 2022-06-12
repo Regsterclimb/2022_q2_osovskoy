@@ -42,34 +42,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/loanConditionAmount"
+        android:id="@+id/requestAmountRow"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Сумма:"
-        app:layout_constraintBottom_toTopOf="@id/loanConditionPercent"
+        app:layout_constraintBottom_toTopOf="@id/requestPercentRow"
         app:layout_constraintEnd_toStartOf="@id/mainAmount"
         app:layout_constraintStart_toStartOf="@id/itemImageBarrier"
         app:layout_constraintTop_toTopOf="@+id/bannerContainer" />
 
     <TextView
-        android:id="@+id/loanConditionPercent"
+        android:id="@+id/requestPercentRow"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Процент : "
-        app:layout_constraintBottom_toTopOf="@id/loanConditionPeriod"
+        app:layout_constraintBottom_toTopOf="@id/requestPeriodRow"
         app:layout_constraintEnd_toStartOf="@id/mainPercent"
         app:layout_constraintStart_toStartOf="@id/itemImageBarrier"
-        app:layout_constraintTop_toBottomOf="@+id/loanConditionAmount" />
+        app:layout_constraintTop_toBottomOf="@+id/requestAmountRow" />
 
     <TextView
-        android:id="@+id/loanConditionPeriod"
+        android:id="@+id/requestPeriodRow"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Срок: "
         app:layout_constraintBottom_toTopOf="@+id/open_request_button"
         app:layout_constraintEnd_toStartOf="@id/mainPeriod"
         app:layout_constraintStart_toStartOf="@id/itemImageBarrier"
-        app:layout_constraintTop_toBottomOf="@+id/loanConditionPercent" />
+        app:layout_constraintTop_toBottomOf="@+id/requestPercentRow" />
 
     <Button
         android:id="@+id/open_request_button"
@@ -130,7 +130,7 @@
         tools:text="15000"
         app:layout_constraintBottom_toTopOf="@id/mainPercent"
         app:layout_constraintEnd_toEndOf="@+id/bannerContainer"
-        app:layout_constraintStart_toEndOf="@+id/loanConditionAmount"
+        app:layout_constraintStart_toEndOf="@+id/requestAmountRow"
         app:layout_constraintTop_toTopOf="@+id/bannerContainer" />
 
     <TextView
@@ -140,7 +140,7 @@
         tools:text = "8.9"
         app:layout_constraintBottom_toTopOf="@id/mainPeriod"
         app:layout_constraintEnd_toEndOf="@+id/bannerContainer"
-        app:layout_constraintStart_toEndOf="@id/loanConditionPercent"
+        app:layout_constraintStart_toEndOf="@id/requestPercentRow"
         app:layout_constraintTop_toBottomOf="@+id/mainAmount" />
 
     <TextView
@@ -150,7 +150,7 @@
         tools:text="45"
         app:layout_constraintBottom_toTopOf="@+id/open_request_button"
         app:layout_constraintEnd_toEndOf="@+id/bannerContainer"
-        app:layout_constraintStart_toEndOf="@id/loanConditionPeriod"
+        app:layout_constraintStart_toEndOf="@id/requestPeriodRow"
         app:layout_constraintTop_toBottomOf="@+id/mainPercent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
