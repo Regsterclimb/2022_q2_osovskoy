@@ -10,19 +10,19 @@ import com.example.a2022_q2_osovskoy.utils.sample.SingleLiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class RegistrationViewModel @Inject constructor(private val registerUseCase: RegisterUseCase) : ViewModel() {
+class RegistrationViewModel @Inject constructor(private val registerUseCase: RegisterUseCase) :
+    ViewModel() {
 
-    private val _regState = SingleLiveEvent<RegState>()
-    val regState: LiveData<RegState> = _regState
-
+    private val _regState = SingleLiveEvent<RegEvent>()
+    val regEvent: LiveData<RegEvent> = _regState
 
     fun tryReg(name: String, password: String) {
         when {
             name.isEmpty() -> {
-                _regState.value = RegState.InputError.Name
+                _regState.value = RegEvent.InputError.Name
             }
             password.isEmpty() -> {
-                _regState.value = RegState.InputError.Password
+                _regState.value = RegEvent.InputError.Password
             }
             else -> {
                 executeRegRequest(name, password)
@@ -32,14 +32,13 @@ class RegistrationViewModel @Inject constructor(private val registerUseCase: Reg
 
     private fun executeRegRequest(name: String, password: String) {
         viewModelScope.launch {
-            val baseUser = BaseUser(name, password)
-            _regState.value = RegState.Loading
-            _regState.value = getRegResult(registerUseCase(baseUser))
+            _regState.value = RegEvent.Loading
+            _regState.value = getRegResult(registerUseCase(BaseUser(name, password)))
         }
     }
 
-    private fun getRegResult(regResult: ResultState<Unit>): RegState = when (regResult) {
-        is ResultState.Success -> RegState.Success
-        is ResultState.Error -> RegState.Error
+    private fun getRegResult(regResult: ResultState<Unit>): RegEvent = when (regResult) {
+        is ResultState.Success -> RegEvent.Success
+        is ResultState.Error -> RegEvent.Error
     }
 }

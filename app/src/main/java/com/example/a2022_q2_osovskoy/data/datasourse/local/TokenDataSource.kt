@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.data.datasourse.local.token
+package com.example.a2022_q2_osovskoy.data.datasourse.local
 
 interface TokenDataSource {
 

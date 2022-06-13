@@ -5,4 +5,5 @@ import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 sealed class LoanDetailState {
     class Success(val loanDetail: Loan) : LoanDetailState()
     object Error : LoanDetailState()
+    class Approved(val isApproved:Boolean) : LoanDetailState()
 }

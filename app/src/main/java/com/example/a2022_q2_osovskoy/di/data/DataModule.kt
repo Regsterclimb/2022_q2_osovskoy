@@ -5,10 +5,10 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import com.example.a2022_q2_osovskoy.App
-import com.example.a2022_q2_osovskoy.data.datasourse.local.appconfig.AppConfigDataSource
-import com.example.a2022_q2_osovskoy.data.datasourse.local.appconfig.AppConfigDataSourceImpl
-import com.example.a2022_q2_osovskoy.data.datasourse.local.token.TokenDataSource
-import com.example.a2022_q2_osovskoy.data.datasourse.local.token.TokenDataSourceImpl
+import com.example.a2022_q2_osovskoy.data.datasourse.local.AppConfigDataSource
+import com.example.a2022_q2_osovskoy.data.datasourse.local.AppConfigDataSourceImpl
+import com.example.a2022_q2_osovskoy.data.datasourse.local.TokenDataSource
+import com.example.a2022_q2_osovskoy.data.datasourse.local.TokenDataSourceImpl
 import com.example.a2022_q2_osovskoy.data.datasourse.remote.AuthDataSource
 import com.example.a2022_q2_osovskoy.data.datasourse.remote.AuthRemoteDataSourceImpl
 import com.example.a2022_q2_osovskoy.data.datasourse.remote.LoansDataSource
@@ -52,7 +52,6 @@ interface DataModule {
         @[AppScope BasicSharedPrefs]
         fun provideSharedPreferences(context: Context): SharedPreferences =
             context.getSharedPreferences(SHARED_PREFS_KEY, MODE_PRIVATE)
-
     }
 
     @Binds

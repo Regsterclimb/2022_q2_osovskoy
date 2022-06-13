@@ -40,15 +40,14 @@ class LoanDetailFragment : DaggerFragment(R.layout.loan_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.getLoan(arguments?.get("id") as Long)
-
+        viewModel.getLoan(arguments?.get(LOAN_ID) as Long)
         viewModel.loanState.observe(viewLifecycleOwner, ::handleLoanDetailState)
     }
 
     private fun handleLoanDetailState(state: LoanDetailState) {
         when (state) {
             is LoanDetailState.Success -> setUpViews(state.loanDetail)
+            is LoanDetailState.Approved -> handleApprovedState(state.isApproved)
             is LoanDetailState.Error -> {
                 Toast.makeText(requireContext(), R.string.simpleError, Toast.LENGTH_SHORT).show()
             }
@@ -57,15 +56,17 @@ class LoanDetailFragment : DaggerFragment(R.layout.loan_details_fragment) {
 
     private fun setUpViews(loan: Loan) {
         with(binding) {
-            detailAmount.text = loan.amount.toString().addRub()
+            detailAmount.text = loan.Long.toString().addRub()
             detailDate.text = loan.date
             detailPercent.text = loan.percent.toString().addPercent()
             detailState.text = loan.state
             detailId.text = loan.id.toString()
+        }
+    }
 
-            approvalContainer.run {
-                if (loan.state == "APPROVED") show() else hide()
-            }
+    private fun handleApprovedState(loanIsApproved: Boolean) {
+        binding.approvalContainer.run {
+            if (loanIsApproved) show() else hide()
         }
     }
 
@@ -79,5 +80,9 @@ class LoanDetailFragment : DaggerFragment(R.layout.loan_details_fragment) {
                 )
             )
         )
+    }
+
+    companion object {
+        const val LOAN_ID = "id"
     }
 }

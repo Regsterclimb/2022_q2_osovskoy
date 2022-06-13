@@ -10,7 +10,7 @@ import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.RegistrationFragmentBinding
 import com.example.a2022_q2_osovskoy.extentions.*
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.registration.RegState
+import com.example.a2022_q2_osovskoy.presentation.registration.RegEvent
 import com.example.a2022_q2_osovskoy.presentation.registration.RegistrationViewModel
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
@@ -41,20 +41,16 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
         }
         setUpRegistrationButton()
         setAuthTextClick()
-        viewModel.regState.observe(viewLifecycleOwner, ::handleRegState)
+        viewModel.regEvent.observe(viewLifecycleOwner, ::handleRegState)
     }
 
-    private fun handleRegState(state: RegState) {
-        when (state) {
-            RegState.Loading -> loadingEvent(true)
-
-            RegState.InputError.Name -> binding.regNameInput.showErrorResId(R.string.inputName)
-
-            RegState.InputError.Password -> binding.regPasswordInput.showErrorResId(R.string.inputPassword)
-
-            is RegState.Success -> navigateToAuth()
-
-            is RegState.Error -> errorEvent()
+    private fun handleRegState(event: RegEvent) {
+        when (event) {
+            RegEvent.Loading -> loadingEvent(true)
+            RegEvent.InputError.Name -> binding.regNameInput.showErrorResId(R.string.inputName)
+            RegEvent.InputError.Password -> binding.regPasswordInput.showErrorResId(R.string.inputPassword)
+            is RegEvent.Success -> navigateToAuth()
+            is RegEvent.Error -> errorEvent()
         }
     }
 

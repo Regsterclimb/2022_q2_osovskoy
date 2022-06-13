@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.data.datasourse.local.token
+package com.example.a2022_q2_osovskoy.data.datasourse.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -14,7 +14,6 @@ class TokenDataSourceImpl @Inject constructor(
         const val BEARER_DEFAULT_VALUE = ""
     }
 
-    //todo() can drop NullPointer
     override fun get(): String {
         val bearer = encryptedSharedPreferences.getString(BEARER_KEY, BEARER_DEFAULT_VALUE)
         if (bearer != null) return bearer else throw NullPointerException()

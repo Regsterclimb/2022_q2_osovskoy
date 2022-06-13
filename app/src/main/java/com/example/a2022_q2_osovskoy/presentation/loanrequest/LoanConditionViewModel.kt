@@ -20,14 +20,14 @@ class LoanConditionViewModel @Inject constructor(
     val loanCondition = _loanConditionValue
 
     fun updateAppConfig(appConfig: AppConfig) {
-            updateAppConfigUseCase(appConfig)
+        updateAppConfigUseCase(appConfig)
     }
 
     init {
         refreshConditions()
     }
 
-    fun refreshConditions() {
+    private fun refreshConditions() {
         viewModelScope.launch {
             _loanConditionValue.value = handleResultState(getLoanConditionUseCase())
         }

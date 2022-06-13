@@ -12,7 +12,7 @@ import com.example.a2022_q2_osovskoy.databinding.LoanRequestFragmentBinding
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.extentions.*
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestState
+import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestEvent
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -40,29 +40,23 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
 
         setUpTextInput()
         setupEditText()
-        viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanRequestState)
+        viewModel.loanRequestEvent.observe(viewLifecycleOwner, ::handleLoanRequestState)
     }
 
-    private fun handleLoanRequestState(state: LoanRequestState) {
+    private fun handleLoanRequestState(event: LoanRequestEvent) {
         with(binding) {
-            when (state) {
-                is LoanRequestState.Success -> handleSuccessEvent(state.loan.id)
-
-                is LoanRequestState.Loading -> handleLoadingEvent(true)
-
-                is LoanRequestState.Error -> handleLoadingEvent(false)
-
-                is LoanRequestState.LoanConditionReceieved -> {
-                    handleHaveConditionEvent(state.loanCondition)
+            when (event) {
+                is LoanRequestEvent.Success -> handleSuccessEvent(event.loan.id)
+                is LoanRequestEvent.Loading -> handleLoadingEvent(true)
+                is LoanRequestEvent.Error -> handleLoadingEvent(false)
+                is LoanRequestEvent.LoanConditionReceived -> {
+                    handleHaveConditionEvent(event.loanCondition)
                 }
-
-                LoanRequestState.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
-
-                LoanRequestState.InputError.LastName -> {
+                LoanRequestEvent.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
+                LoanRequestEvent.InputError.LastName -> {
                     loanLastNameInput.showErrorResId(R.string.inputLastNameEmpty)
                 }
-
-                LoanRequestState.InputError.Phone -> loanPhoneInput.showErrorResId(R.string.inputPhoneEmpty)
+                LoanRequestEvent.InputError.Phone -> loanPhoneInput.showErrorResId(R.string.inputPhoneEmpty)
             }
         }
     }

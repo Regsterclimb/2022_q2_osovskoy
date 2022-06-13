@@ -10,7 +10,7 @@ import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.AuthFragmentBinding
 import com.example.a2022_q2_osovskoy.extentions.*
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.auth.AuthState
+import com.example.a2022_q2_osovskoy.presentation.auth.AuthEvent
 import com.example.a2022_q2_osovskoy.presentation.auth.AuthViewModel
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
@@ -39,26 +39,23 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
             authNameEdit.onFocusChange { hideKeyBoard(requireContext(), view) }
             authPasswordEdit.onFocusChange { hideKeyBoard(requireContext(), view) }
         }
-
         setUpAuthButton()
         setUpRegistrationText()
-        viewModel.authState.observe(viewLifecycleOwner, ::handleAuthState)
+        viewModel.authEvent.observe(viewLifecycleOwner, ::handleAuthState)
     }
 
-    private fun handleAuthState(state: AuthState) {
-        when (state) {
-            is AuthState.Loading -> loadingEvent(true)
-
-            is AuthState.Success -> navigateForward()
-
-            is AuthState.Error -> {
+    private fun handleAuthState(event: AuthEvent) {
+        when (event) {
+            is AuthEvent.Loading -> loadingEvent(true)
+            is AuthEvent.Success -> navigateForward()
+            is AuthEvent.Error -> {
                 loadingEvent(false)
                 binding.authNameInput.showErrorResId(R.string.authError)
             }
-            is AuthState.InputError.Name -> {
+            is AuthEvent.InputError.Name -> {
                 binding.authNameInput.showErrorResId(R.string.inputName)
             }
-            is AuthState.InputError.Password -> {
+            is AuthEvent.InputError.Password -> {
                 binding.authPasswordInput.showErrorResId(R.string.inputPassword)
             }
         }

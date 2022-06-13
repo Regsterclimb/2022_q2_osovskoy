@@ -1,6 +1,5 @@
 package com.example.a2022_q2_osovskoy.presentation.loanhistory
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +22,6 @@ class LoansHistoryViewModel @Inject constructor(private val getLoansUseCase: Get
 
     fun refreshLoans() {
         viewModelScope.launch {
-            Log.d("LoansHistoryViewModel", getLoansUseCase().toString())
             _loansState.value = handleResultState(getLoansUseCase())
         }
     }

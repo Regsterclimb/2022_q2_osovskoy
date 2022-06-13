@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.data.datasourse.local.appconfig
+package com.example.a2022_q2_osovskoy.data.datasourse.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -18,8 +18,7 @@ class AppConfigDataSourceImpl @Inject constructor(
     override fun get(): AppConfig =
         when (sharedPreferences.getInt(APP_CONFIG, APP_CONFIG_DEFAULT)) {
             0 -> AppConfig.UNAUTHORIZED
-            1 -> AppConfig.AUTHORIZED
-            2 -> AppConfig.UNINSTRUCTED
+            1 -> AppConfig.UNINSTRUCTED
             else -> AppConfig.BASE
         }
 

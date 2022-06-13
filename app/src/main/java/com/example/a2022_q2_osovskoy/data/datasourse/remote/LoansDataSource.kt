@@ -1,7 +1,7 @@
 package com.example.a2022_q2_osovskoy.data.datasourse.remote
 
-import com.example.a2022_q2_osovskoy.data.model.network.LoanConditionResponse
-import com.example.a2022_q2_osovskoy.data.model.network.LoanResponse
+import com.example.a2022_q2_osovskoy.data.datasourse.network.model.LoanConditionResponse
+import com.example.a2022_q2_osovskoy.data.datasourse.network.model.LoanResponse
 import com.example.a2022_q2_osovskoy.domain.entity.LoanRequest
 
 interface LoansDataSource {

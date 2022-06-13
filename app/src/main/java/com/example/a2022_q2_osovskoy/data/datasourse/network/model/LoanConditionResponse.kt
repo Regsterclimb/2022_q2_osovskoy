@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.data.model.network
+package com.example.a2022_q2_osovskoy.data.datasourse.network.model
 
 import com.google.gson.annotations.SerializedName
 

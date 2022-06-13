@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.data.datasourse.local.appconfig
+package com.example.a2022_q2_osovskoy.data.datasourse.local
 
 import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 

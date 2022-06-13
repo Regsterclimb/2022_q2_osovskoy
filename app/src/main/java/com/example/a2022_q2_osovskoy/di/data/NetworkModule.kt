@@ -1,6 +1,6 @@
 package com.example.a2022_q2_osovskoy.di.data
 
-import com.example.a2022_q2_osovskoy.data.datasourse.local.token.TokenDataSource
+import com.example.a2022_q2_osovskoy.data.datasourse.local.TokenDataSource
 import com.example.a2022_q2_osovskoy.di.annotations.ShiftLabBaseUrl
 import dagger.Module
 import dagger.Provides

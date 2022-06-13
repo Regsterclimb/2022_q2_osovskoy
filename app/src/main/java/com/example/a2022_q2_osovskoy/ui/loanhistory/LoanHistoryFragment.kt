@@ -30,7 +30,6 @@ class LoanHistoryFragment : DaggerFragment(R.layout.loan_history_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         with(binding) {
             loansRecycler.adapter = LoansAdapter {
                 navigateToDetails(it)
@@ -51,9 +50,9 @@ class LoanHistoryFragment : DaggerFragment(R.layout.loan_history_fragment) {
                 is LoansState.Success -> {
                     (binding.loansRecycler.adapter as LoansAdapter).submitList(loansState.loans)
                 }
-                is LoansState.Error -> {}
-                is LoansState.Empty -> {}
-                is LoansState.Loading -> {}
+                is LoansState.Error -> {TODO()}
+                is LoansState.Empty -> {TODO()}
+                is LoansState.Loading -> {TODO()}
             }
         }
     }
