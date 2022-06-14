@@ -19,6 +19,8 @@ class NetworkModule {
         const val CONNECT_TIMEOUT = 10L
         const val WRITE_TIMEOUT = 15L
         const val READ_TIMEOUT = 30L
+        const val NO_AUTH_HEADER = "No-Authentication"
+        const val AUTHORIZATION_HEADER = "Authorization"
     }
 
     @Provides
@@ -35,14 +37,14 @@ class NetworkModule {
     fun provideAuthInterceptor(tokenDataSource: TokenDataSource): Interceptor =
         Interceptor { chain ->
             var request = chain.request()
-            if (request.header("No-Authentication") == null) {
-
+            if (request.header(NO_AUTH_HEADER) == null) {
                 request = request.newBuilder()
-                    .addHeader("Authorization", tokenDataSource.get())
+                    .addHeader(AUTHORIZATION_HEADER, tokenDataSource.get())
                     .build()
             }
             chain.proceed(request)
         }
+
 
     @Provides
     @ShiftLabBaseUrl

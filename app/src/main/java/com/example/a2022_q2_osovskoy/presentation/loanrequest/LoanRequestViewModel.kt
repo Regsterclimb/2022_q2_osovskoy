@@ -76,7 +76,7 @@ class LoanRequestViewModel @Inject constructor(
 
     private fun handleLoanResultRequest(result: ResultState<Loan>): LoanRequestEvent =
         when (result) {
-            is ResultState.Success -> LoanRequestEvent.Success(result.data)
+            is ResultState.Success -> LoanRequestEvent.Success(result.data ?: Loan(1,2.2,"24","1234",8.8))
             is ResultState.Error -> LoanRequestEvent.Error
         }
 }

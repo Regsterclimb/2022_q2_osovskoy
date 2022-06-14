@@ -35,7 +35,7 @@ class LoanConditionViewModel @Inject constructor(
 
     private fun handleResultState(result: ResultState<LoanCondition>): LoanConditionState =
         when (result) {
-            is ResultState.Success -> LoanConditionState.Success(result.data)
+            is ResultState.Success -> LoanConditionState.Success(result.data ?: LoanCondition(1,15,8.8))
             is ResultState.Error -> LoanConditionState.Error
         }
 }

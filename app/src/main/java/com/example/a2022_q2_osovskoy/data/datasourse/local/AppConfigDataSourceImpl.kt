@@ -13,12 +13,13 @@ class AppConfigDataSourceImpl @Inject constructor(
     companion object {
         const val APP_CONFIG = "app_config_key"
         const val APP_CONFIG_DEFAULT = 0
+        const val APP_CONFIG_UNINSTRUCTED = 1
     }
 
     override fun get(): AppConfig =
         when (sharedPreferences.getInt(APP_CONFIG, APP_CONFIG_DEFAULT)) {
-            0 -> AppConfig.UNAUTHORIZED
-            1 -> AppConfig.UNINSTRUCTED
+            APP_CONFIG_DEFAULT -> AppConfig.UNAUTHORIZED
+            APP_CONFIG_UNINSTRUCTED -> AppConfig.UNINSTRUCTED
             else -> AppConfig.BASE
         }
 

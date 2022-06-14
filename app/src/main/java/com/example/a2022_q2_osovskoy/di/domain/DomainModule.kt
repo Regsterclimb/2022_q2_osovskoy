@@ -20,5 +20,4 @@ interface DomainModule {
 
     @Binds
     fun bindLoansRepository(impl: LoansRepositoryImpl): LoansRepository
-
 }

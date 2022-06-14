@@ -17,5 +17,4 @@ class LoansRemoteDataSourceImpl @Inject constructor(private val loansApi: LoansA
     override suspend fun getLoanById(loanId: Long): LoanResponse = loansApi.getLoanById(loanId)
 
     override suspend fun getLoanCondition(): LoanConditionResponse = loansApi.getLoanCondition()
-
 }

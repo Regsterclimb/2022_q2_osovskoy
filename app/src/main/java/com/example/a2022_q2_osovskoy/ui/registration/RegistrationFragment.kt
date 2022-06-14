@@ -30,6 +30,7 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
 
     private val binding by viewBinding(RegistrationFragmentBinding::bind)
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

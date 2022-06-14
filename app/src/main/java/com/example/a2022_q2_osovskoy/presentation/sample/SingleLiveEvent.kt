@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.utils.sample
+package com.example.a2022_q2_osovskoy.presentation.sample
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

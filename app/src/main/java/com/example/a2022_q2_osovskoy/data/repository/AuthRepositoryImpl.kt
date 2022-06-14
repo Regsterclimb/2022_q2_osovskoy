@@ -5,7 +5,7 @@ import com.example.a2022_q2_osovskoy.data.datasourse.remote.AuthDataSource
 import com.example.a2022_q2_osovskoy.domain.entity.BaseUser
 import com.example.a2022_q2_osovskoy.domain.entity.ResultState
 import com.example.a2022_q2_osovskoy.domain.repository.AuthRepository
-import com.example.a2022_q2_osovskoy.extentions.execute
+import com.example.a2022_q2_osovskoy.extentions.myExecute
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -24,11 +24,13 @@ class AuthRepositoryImpl @Inject constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: RuntimeException) {
-            ResultState.Error()
+            ResultState.Error(e)
         }
     }
 
-    override suspend fun register(baseUser: BaseUser): ResultState<Unit> = dispatcher.execute {
-        authDataSource.register(baseUser)
+    override suspend fun register(baseUser: BaseUser) {
+        dispatcher.myExecute {
+            authDataSource.register(baseUser)
+        }
     }
 }

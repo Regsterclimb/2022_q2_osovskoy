@@ -27,7 +27,23 @@ class LoansHistoryViewModel @Inject constructor(private val getLoansUseCase: Get
     }
 
     private fun handleResultState(state: ResultState<List<Loan>>): LoansState = when (state) {
-        is ResultState.Success -> LoansState.Success(state.data)
-        is ResultState.Error -> LoansState.Error
+        is ResultState.Success -> {
+            if (state.data != null) {
+                LoansState.Success(loans = state.data)
+            } else {
+                LoansState.Empty
+            }
+        }
+        is ResultState.Error -> LoansState.Error.BadRequest /*handleError(state.error ?: NullPointerException())*/
     }
+
+    /*private fun handleError(e: Throwable): LoansState = when (e) {
+        is BadRequestException ->
+    }*/
+    /*class BadRequestException : RuntimeException() // такой пользователь уже найден
+class UnauthorizedException : RuntimeException() // неавторизованный пользователь
+class ForbiddenException : RuntimeException() // означает ограничение или отсутствие доступа к материалу на странице, которую вы пытаетесь загрузить.
+
+class NotFoundException : RuntimeException() // пусто
+class ServerIsNotRespondingException : RuntimeException() //сервер не отвечает*/
 }

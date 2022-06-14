@@ -7,5 +7,5 @@ interface AuthRepository {
 
     suspend fun login(baseUser: BaseUser): ResultState<Unit>
 
-    suspend fun register(baseUser: BaseUser): ResultState<Unit>
+    suspend fun register(baseUser: BaseUser)
 }

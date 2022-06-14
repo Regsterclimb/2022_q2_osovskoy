@@ -22,7 +22,7 @@ class LoanDetailViewModel @Inject constructor(private val getLoanByIdUseCase: Ge
     }
 
     private fun handleResultState(result: ResultState<Loan>): LoanDetailState = when (result) {
-        is ResultState.Success -> LoanDetailState.Success(result.data)
+        is ResultState.Success -> LoanDetailState.Success(result.data ?: Loan(1,2.2,"24","1234",8.8))
         is ResultState.Error -> LoanDetailState.Error
     }
 }

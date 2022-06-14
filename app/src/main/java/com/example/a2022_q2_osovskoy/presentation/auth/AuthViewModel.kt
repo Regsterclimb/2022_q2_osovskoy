@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.BaseUser
 import com.example.a2022_q2_osovskoy.domain.entity.ResultState
 import com.example.a2022_q2_osovskoy.domain.usecase.auth.LogInUseCase
-import com.example.a2022_q2_osovskoy.utils.sample.SingleLiveEvent
+import com.example.a2022_q2_osovskoy.presentation.sample.SingleLiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
