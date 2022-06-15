@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
-import com.example.a2022_q2_osovskoy.domain.entity.ResultState
-import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLoanConditionUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.UpdateAppConfigUseCase
 import kotlinx.coroutines.launch
@@ -29,13 +27,7 @@ class LoanConditionViewModel @Inject constructor(
 
     private fun refreshConditions() {
         viewModelScope.launch {
-            _loanConditionValue.value = handleResultState(getLoanConditionUseCase())
+            _loanConditionValue.value = LoanConditionState.Success(getLoanConditionUseCase())
         }
     }
-
-    private fun handleResultState(result: ResultState<LoanCondition>): LoanConditionState =
-        when (result) {
-            is ResultState.Success -> LoanConditionState.Success(result.data ?: LoanCondition(1,15,8.8))
-            is ResultState.Error -> LoanConditionState.Error
-        }
 }

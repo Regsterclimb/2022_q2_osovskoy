@@ -8,6 +8,7 @@
 
         <item name="backgroundColor">@color/mirage</item>
         <item name="dividerColor">@color/blue_diane</item>
+        <item name="colorError">@color/design_default_color_error</item>
         <item name="colorSurface">@color/mirage</item>
         <item name="colorSecondary">@color/red_damask</item>
 

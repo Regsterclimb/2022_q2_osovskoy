@@ -3,7 +3,6 @@ package com.example.a2022_q2_osovskoy.presentation.loanrequest
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.a2022_q2_osovskoy.domain.entity.LoanRequest
-import com.example.a2022_q2_osovskoy.domain.entity.ResultState
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.domain.usecase.RequestLoanUseCase
@@ -17,7 +16,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
@@ -112,7 +110,7 @@ class LoanRequestViewModelTest {
 
         assertEquals(expected, actual)
     }
-
+        //todo()
     @Test
     fun `WHEN loanRequestState Expect Error`() = runTest {
         val period = 45
@@ -124,9 +122,9 @@ class LoanRequestViewModelTest {
 
         val loanRequest = LoanRequest(maxAmount, name, lastname, percent, period, phone)
 
-        val resultState: ResultState<Loan> = ResultState.Error()
+        /*val resultState: ResultState<Loan> = ResultState.Error()
 
-        Mockito.`when`(requestLoanUseCase(loanRequest)).thenReturn(resultState)
+        Mockito.`when`(requestLoanUseCase(loanRequest)).thenReturn(resultState)*/
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
         viewModel.loanRequestEvent.observeForever(observer)
 
@@ -137,7 +135,7 @@ class LoanRequestViewModelTest {
         verify(observer).onChanged(LoanRequestEvent.Loading)
         verify(observer).onChanged(expected)
     }
-
+    //todo()
     @Test
     fun `WHEN loanRequestState Expect Success `() = runTest {
         val period = 45
@@ -150,8 +148,8 @@ class LoanRequestViewModelTest {
         val loanRequest = LoanRequest(maxAmount, name, lastname, percent, period, phone)
         val loan = Loan(135, 15000.0, "25.12.2021", "APPROVED", 8.5)
 
-        val resultState: ResultState<Loan> = ResultState.Success(loan)
-        Mockito.`when`(requestLoanUseCase(loanRequest)).thenReturn(resultState)
+        /*val resultState: ResultState<Loan> = ResultState.Success(loan)
+        Mockito.`when`(requestLoanUseCase(loanRequest)).thenReturn(resultState)*/
 
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
         viewModel.loanRequestEvent.observeForever(observer)

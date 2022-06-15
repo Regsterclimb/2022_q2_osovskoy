@@ -7,9 +7,9 @@ import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.data.datasourse.local.database.model.LoanEntity
 import com.example.a2022_q2_osovskoy.data.datasourse.network.model.LoanConditionResponse
 import com.example.a2022_q2_osovskoy.data.datasourse.network.model.LoanResponse
-import com.example.a2022_q2_osovskoy.domain.entity.ResultState
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
+import com.example.a2022_q2_osovskoy.utils.exceptions.*
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -35,50 +35,27 @@ fun LoanResponse.toLoanEntity(): LoanEntity =
 fun LoanEntity.toLoan(): Loan =
     Loan(id, amount, date = date.substring(0, date.indexOf("T")), state, percent)
 
-suspend fun <T> CoroutineDispatcher.execute(block: suspend () -> T) : ResultState<T>  = withContext(this) {
+suspend fun <T> CoroutineDispatcher.execute(block: suspend () -> T) = withContext(this) {
     try {
-        ResultState.Success(block.invoke())
+        block.invoke()
     } catch (e: CancellationException) {
         throw e
-    } catch (e: HttpException) {
-        when (e.code()) {
-            400 -> ResultState.Error(BadRequestException())
-            401 -> ResultState.Error(UnauthorizedException())
-            403 -> ResultState.Error(ForbiddenException())
-            404 -> ResultState.Error(NotFoundException())
-            in 500..599 -> ResultState.Error(ServerIsNotRespondingException())
-            else -> ResultState.Error(e)
-        }
-    } catch (e: Throwable) {
-        ResultState.Error(e)
+    }catch (e:IOException){
+        throw e
     }
-}
-
-suspend fun <T> CoroutineDispatcher.myExecute(block: suspend () -> T) = withContext(this) {
-    try {
-        ResultState.Success(block.invoke())
-    } catch (e: CancellationException) {
-        throw e
-    } catch (e: HttpException) {
+    catch (e: HttpException) {
         when (e.code()) {
             400 -> throw BadRequestException()
             401 -> throw UnauthorizedException()
             403 -> throw ForbiddenException()
             404 -> throw NotFoundException()
             in 500..599 -> throw ServerIsNotRespondingException()
-            else -> ResultState.Error(e)
+            else -> throw e
         }
     } catch (e: Throwable) {
         throw e
     }
 }
-
-class BadRequestException : RuntimeException() // такой пользователь уже найден
-class UnauthorizedException : RuntimeException() // неавторизованный пользователь
-class ForbiddenException : RuntimeException() // означает ограничение или отсутствие доступа к материалу на странице, которую вы пытаетесь загрузить.
-
-class NotFoundException : RuntimeException() // пусто
-class ServerIsNotRespondingException : RuntimeException() //сервер не отвечает
 
 fun provideMasterKey(context: Context) =
     MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)

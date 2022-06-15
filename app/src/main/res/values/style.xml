@@ -14,6 +14,10 @@
         <item name="android:textColor">?colorPrimary</item>
     </style>
 
+    <style name="ErrorText" parent="SecondaryText">
+        <item name="android:textColor">?colorError</item>
+    </style>
+
     <style name="PrimaryText">
         <item name="android:textSize">@dimen/text_16</item>
         <item name="android:textColor">?colorPrimaryVariant</item>
@@ -41,7 +45,7 @@
     <style name="SecondaryText">
         <item name="android:textSize">@dimen/text_14</item>
         <item name="android:textColor">?colorPrimaryVariant</item>
-        <item name="android:maxLines">2</item>
+        <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:fontFamily">"sans-serif"</item>
     </style>

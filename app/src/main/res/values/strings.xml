@@ -50,5 +50,12 @@
     <string name="requestDetailsButtonText">Детали займа</string>
     <string name="loanInstruction">вводим имя фамилию телефон и получаем свой займ</string>
     <string name="simpleError">Ошибка</string>
+    <string name="notFoundError">пользователь не найден</string>
+    <string name="badRequestError">имя уже занято</string>
+    <string name="forbiddenError">нет доступа</string>
+    <string name="unauthorized">нужна авторизация</string>
+    <string name="serverIsNotRespondingError"> сервер не отвечает,попробуйте позже</string>
+    <string name="noInternetError"> нет интернет соединения</string>
+    <string name="unknownError"> что то пошло не так</string>
 
 </resources>

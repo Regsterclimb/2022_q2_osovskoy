@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.LoanRequest
-import com.example.a2022_q2_osovskoy.domain.entity.ResultState
-import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.domain.usecase.RequestLoanUseCase
 import kotlinx.coroutines.launch
@@ -59,7 +57,7 @@ class LoanRequestViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             _loanRequestState.value = LoanRequestEvent.Loading
-            _loanRequestState.value = handleLoanResultRequest(
+            _loanRequestState.value = LoanRequestEvent.Success(
                 requestLoanUseCase(
                     LoanRequest(
                         amount = amount,
@@ -73,10 +71,4 @@ class LoanRequestViewModel @Inject constructor(
             )
         }
     }
-
-    private fun handleLoanResultRequest(result: ResultState<Loan>): LoanRequestEvent =
-        when (result) {
-            is ResultState.Success -> LoanRequestEvent.Success(result.data ?: Loan(1,2.2,"24","1234",8.8))
-            is ResultState.Error -> LoanRequestEvent.Error
-        }
 }

@@ -3,6 +3,7 @@ package com.example.a2022_q2_osovskoy.ui.auth
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -10,7 +11,7 @@ import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.AuthFragmentBinding
 import com.example.a2022_q2_osovskoy.extentions.*
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.auth.AuthEvent
+import com.example.a2022_q2_osovskoy.presentation.auth.AuthState
 import com.example.a2022_q2_osovskoy.presentation.auth.AuthViewModel
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
@@ -41,24 +42,32 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
         }
         setUpAuthButton()
         setUpRegistrationText()
-        viewModel.authEvent.observe(viewLifecycleOwner, ::handleAuthState)
+        viewModel.authState.observe(viewLifecycleOwner, ::handleAuthState)
     }
 
-    private fun handleAuthState(event: AuthEvent) {
-        when (event) {
-            is AuthEvent.Loading -> loadingEvent(true)
-            is AuthEvent.Success -> navigateForward()
-            is AuthEvent.Error -> {
-                loadingEvent(false)
-                binding.authNameInput.showErrorResId(R.string.authError)
-            }
-            is AuthEvent.InputError.Name -> {
+    private fun handleAuthState(state: AuthState) {
+        when (state) {
+            is AuthState.Error -> handleAuthStateErrors(state)
+            is AuthState.InputError.Name -> {
                 binding.authNameInput.showErrorResId(R.string.inputName)
             }
-            is AuthEvent.InputError.Password -> {
+            is AuthState.InputError.Password -> {
                 binding.authPasswordInput.showErrorResId(R.string.inputPassword)
             }
+            AuthState.Loading -> loadingEvent(true)
+            AuthState.Success -> navigateForward()
+            AuthState.Typing -> handleTyping()
         }
+    }
+    private fun handleAuthStateErrors(stateError: AuthState.Error) {
+        when (stateError) {
+            is AuthState.Error.BadRequest -> setErrorText(R.string.badRequestError)
+            AuthState.Error.Forbidden -> setErrorText(R.string.forbiddenError)
+            AuthState.Error.NotFound -> setErrorText(R.string.notFoundError)
+            AuthState.Error.ServerIsNotResponding -> setErrorText(R.string.serverIsNotRespondingError)
+            AuthState.Error.Unauthorized -> setErrorText(R.string.serverIsNotRespondingError)
+        }
+        loadingEvent(false)
     }
 
     private fun navigateForward() {
@@ -70,6 +79,13 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
                     isSingleTop = true)
             )
         )
+    }
+    //вынести в extention
+    private fun setErrorText(@StringRes id: Int) {
+        binding.authErrorText.apply {
+            setText(id)
+            show()
+        }
     }
 
     private fun setUpAuthButton() {
@@ -94,6 +110,14 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
                     )
                 )
             )
+        }
+    }
+
+    private fun handleTyping() {
+        with(binding) {
+            authNameInput.clearErrorOnAnyInput()
+            authPasswordInput.clearErrorOnAnyInput()
+            authErrorText.hide()
         }
     }
 

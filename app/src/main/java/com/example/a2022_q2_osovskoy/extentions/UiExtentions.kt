@@ -40,6 +40,11 @@ fun TextInputLayout.clearErrorOnAnyInput() =
         this.clearError()
     }
 
+fun TextInputLayout.changeState( changer : () ->Unit) =
+    this.editText?.doAfterTextChanged {
+        changer.invoke()
+    }
+
 fun View.hide() {
     this.isVisible = false
 }

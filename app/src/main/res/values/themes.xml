@@ -6,6 +6,7 @@
         <item name="colorOnPrimary">@color/white</item>
 
         <item name="backgroundColor">@color/surfaceCard</item>
+        <item name="colorError">@color/design_default_color_error</item>
         <item name="colorSecondary">@color/primary_some_500</item>
         <item name="colorSurface">@color/primary_black</item>
 

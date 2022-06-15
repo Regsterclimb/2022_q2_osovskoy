@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.a2022_q2_osovskoy.domain.entity.ResultState
-import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLoansUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,19 +20,8 @@ class LoansHistoryViewModel @Inject constructor(private val getLoansUseCase: Get
 
     fun refreshLoans() {
         viewModelScope.launch {
-            _loansState.value = handleResultState(getLoansUseCase())
+            _loansState.value = LoansState.Success(getLoansUseCase())
         }
-    }
-
-    private fun handleResultState(state: ResultState<List<Loan>>): LoansState = when (state) {
-        is ResultState.Success -> {
-            if (state.data != null) {
-                LoansState.Success(loans = state.data)
-            } else {
-                LoansState.Empty
-            }
-        }
-        is ResultState.Error -> LoansState.Error.BadRequest /*handleError(state.error ?: NullPointerException())*/
     }
 
     /*private fun handleError(e: Throwable): LoansState = when (e) {

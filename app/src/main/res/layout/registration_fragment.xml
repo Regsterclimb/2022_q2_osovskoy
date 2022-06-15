@@ -83,6 +83,15 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/regErrorText"
+                android:layout_width="match_parent"
+                style="@style/ErrorText"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                tools:text="произошла ошибка" />
+
             <Button
                 android:id="@+id/regButton"
                 style="@style/RegisterButton"

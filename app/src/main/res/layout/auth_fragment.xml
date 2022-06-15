@@ -86,6 +86,15 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/authErrorText"
+                android:layout_width="match_parent"
+                style="@style/ErrorText"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                tools:text="произошла ошибка" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/authButton"
                 style="@style/AuthButton"
