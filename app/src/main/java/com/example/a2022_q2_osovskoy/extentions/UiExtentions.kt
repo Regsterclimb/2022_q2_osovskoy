@@ -40,7 +40,7 @@ fun TextInputLayout.clearErrorOnAnyInput() =
         this.clearError()
     }
 
-fun TextInputLayout.changeState( changer : () ->Unit) =
+fun TextInputLayout.setState(changer : () ->Unit) =
     this.editText?.doAfterTextChanged {
         changer.invoke()
     }
@@ -64,6 +64,14 @@ fun provideOnBackPressedCallBack(navigate: () -> Unit): OnBackPressedCallback =
             navigate()
         }
     }
+
+fun TextInputLayout.onFocusChange(hideKeyboard: () -> Unit){
+    this.editText?.setOnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) {
+            hideKeyboard()
+        }
+    }
+}
 
 fun EditText.onFocusChange(hideKeyboard: () -> Unit) {
     this.setOnFocusChangeListener { _, hasFocus ->

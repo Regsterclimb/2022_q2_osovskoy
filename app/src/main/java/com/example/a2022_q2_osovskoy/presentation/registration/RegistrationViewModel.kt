@@ -18,8 +18,20 @@ class RegistrationViewModel @Inject constructor(private val registerUseCase: Reg
     private val _regState = MutableLiveData<RegState>()
     val regState: LiveData<RegState> = _regState
 
-    fun setTyping() {
-        _regState.value = RegState.Typing
+    private val handler = CoroutineExceptionHandler { _, throwable ->
+        handleErrors(throwable)
+    }
+
+    private fun handleErrors(exception: Throwable) {
+        _regState.value = when (exception) {
+            is BadRequestException -> RegState.Error.BadRequest
+            is UnauthorizedException -> RegState.Error.Unauthorized
+            is ForbiddenException -> RegState.Error.Forbidden
+            is NotFoundException -> RegState.Error.NotFound
+            is ServerIsNotRespondingException -> RegState.Error.ServerIsNotResponding
+            is IOException -> RegState.Error.NoInternetConnection
+            else -> RegState.Error.Unknown
+        }
     }
 
     fun tryReg(name: String, password: String) {
@@ -44,19 +56,7 @@ class RegistrationViewModel @Inject constructor(private val registerUseCase: Reg
         }
     }
 
-    private val handler = CoroutineExceptionHandler { _, throwable ->
-        handleErrors(throwable)
-    }
-
-    private fun handleErrors(exception: Throwable) {
-        _regState.value = when (exception) {
-            is BadRequestException -> RegState.Error.BadRequest
-            is UnauthorizedException -> RegState.Error.Unauthorized
-            is ForbiddenException -> RegState.Error.Forbidden
-            is NotFoundException -> RegState.Error.NotFound
-            is ServerIsNotRespondingException -> RegState.Error.ServerIsNotResponding
-            is IOException -> RegState.Error.NoInternetConnection
-            else -> RegState.Error.Unknown
-        }
+    fun setTyping() {
+        _regState.value = RegState.Typing
     }
 }

@@ -31,17 +31,13 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
 
     private val binding by viewBinding(RegistrationFragmentBinding::bind)
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            regNameInput.changeState { viewModel.setTyping() }
-            regPasswordInput.changeState { viewModel.setTyping() }
-            regNameEdit.onFocusChange { hideKeyBoard(requireContext(), view) }
-            regPasswordEdit.onFocusChange { hideKeyBoard(requireContext(), view) }
+            setupTextInput(this)
+            setUpRegistrationButton(this)
+            setAuthTextClick(this)
         }
-        setUpRegistrationButton()
-        setAuthTextClick()
         viewModel.regState.observe(viewLifecycleOwner, ::handleRegState)
     }
 
@@ -50,7 +46,7 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
             RegState.Loading -> loadingEvent(true)
             RegState.InputError.Name -> binding.regNameInput.showErrorResId(R.string.inputName)
             RegState.InputError.Password -> binding.regPasswordInput.showErrorResId(R.string.inputPassword)
-            RegState.Typing -> handleTyping()
+            RegState.Typing -> binding.regErrorText.hide()
             is RegState.Success -> navigateToAuth()
             is RegState.Error -> handleRegStateErrors(state)
         }
@@ -78,7 +74,7 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
         )
     }
 
-    private fun setUpRegistrationButton() {
+    private fun setUpRegistrationButton(binding: RegistrationFragmentBinding) {
         with(binding) {
             regButton.setOnClickListener {
                 viewModel.tryReg(
@@ -89,7 +85,7 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
         }
     }
 
-    private fun setAuthTextClick() {
+    private fun setAuthTextClick(binding: RegistrationFragmentBinding) {
         binding.authText.setOnClickListener {
             navigate(NavCommand(
                 NavCommands.DeepLink(
@@ -97,14 +93,6 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
                     isModal = true,
                     isSingleTop = true))
             )
-        }
-    }
-
-    private fun handleTyping() {
-        with(binding) {
-            regNameInput.clearErrorOnAnyInput()
-            regPasswordInput.clearErrorOnAnyInput()
-            regErrorText.hide()
         }
     }
 
@@ -121,5 +109,20 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
             regProgressBar.isVisible = isLoading
         }
         hideKeyBoard(requireContext(), view)
+    }
+
+    private fun setupTextInput(binding: RegistrationFragmentBinding) {
+        with(binding) {
+            regNameInput.apply {
+                clearErrorOnAnyInput()
+                setState { viewModel.setTyping() }
+                onFocusChange { hideKeyBoard(requireContext(), view) }
+            }
+            regPasswordInput.apply {
+                clearErrorOnAnyInput()
+                setState { viewModel.setTyping() }
+                onFocusChange { hideKeyBoard(requireContext(), view) }
+            }
+        }
     }
 }

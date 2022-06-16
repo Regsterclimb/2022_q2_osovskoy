@@ -30,10 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="@id/loansSwipeRefresh"
-            app:layout_constraintEnd_toEndOf="@id/loansSwipeRefresh"
-            app:layout_constraintStart_toStartOf="@id/loansSwipeRefresh"
-            app:layout_constraintTop_toBottomOf="@id/loansSwipeRefresh" />
+            app:layout_constraintBottom_toBottomOf="@id/loanConditionSwipeRefresh"
+            app:layout_constraintEnd_toEndOf="@id/loanConditionSwipeRefresh"
+            app:layout_constraintStart_toStartOf="@id/loanConditionSwipeRefresh"
+            app:layout_constraintTop_toBottomOf="@id/loanConditionSwipeRefresh" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

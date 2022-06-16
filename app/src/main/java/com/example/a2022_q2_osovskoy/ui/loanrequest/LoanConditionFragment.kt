@@ -3,8 +3,7 @@ package com.example.a2022_q2_osovskoy.ui.loanrequest
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.core.view.isVisible
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -12,7 +11,10 @@ import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanConditionFragmentBinding
 import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
+import com.example.a2022_q2_osovskoy.extentions.hide
+import com.example.a2022_q2_osovskoy.extentions.show
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
+import com.example.a2022_q2_osovskoy.presentation.loanrequest.Instruction
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanConditionState
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanConditionViewModel
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
@@ -24,7 +26,7 @@ import javax.inject.Inject
 
 class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
 
-    private val viewBinding by viewBinding(LoanConditionFragmentBinding::bind)
+    private val binding by viewBinding(LoanConditionFragmentBinding::bind)
 
     @Inject
     lateinit var multiViewModelFactory: MultiViewModelFactory
@@ -35,46 +37,125 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupConditionRecycler()
+        setupViews()
         viewModel.updateAppConfig(AppConfig.BASE)
-
         viewModel.loanCondition.observe(viewLifecycleOwner, ::handleLoanConditionState)
-        setUpListeners()
+        viewModel.instructionState.observe(viewLifecycleOwner, ::handleInstruction)
     }
 
     private fun handleLoanConditionState(state: LoanConditionState) {
         when (state) {
             is LoanConditionState.Success -> {
-                setupViews(state.loanCondition)
-                setupOpenRequestButton(state.loanCondition)
+                showSuccess(state.loanCondition)
             }
-            is LoanConditionState.Error -> {
-                Toast.makeText(requireContext(), R.string.simpleError, Toast.LENGTH_SHORT).show()
-            }
+            is LoanConditionState.Error -> handleConditionsStateErrors(state)
+            LoanConditionState.Loading -> showLoading()
         }
     }
 
-    private fun setupViews(condition: LoanCondition) {
-        with(viewBinding) {
-            mainAmount.text = condition.maxAmount.toString()
-            mainPercent.text = condition.percent.toString()
-            mainPeriod.text = condition.period.toString()
+    private fun handleConditionsStateErrors(stateError: LoanConditionState.Error) {
+        when (stateError) {
+            is LoanConditionState.Error.BadRequest -> setErrorText(R.string.badRequestError)
+            LoanConditionState.Error.Forbidden -> setErrorText(R.string.forbiddenError)
+            LoanConditionState.Error.NotFound -> setErrorText(R.string.notFoundError)
+            LoanConditionState.Error.ServerIsNotResponding -> setErrorText(R.string.serverIsNotRespondingError)
+            LoanConditionState.Error.Unauthorized -> setErrorText(R.string.serverIsNotRespondingError)
+            LoanConditionState.Error.NoInternetConnection -> setErrorText(R.string.noInternetError)
+            LoanConditionState.Error.Unknown -> setErrorText(R.string.unknownError)
+        }
+        showError()
+    }
+
+    private fun setErrorText(@StringRes id: Int) {
+        binding.conditionErrorText.apply {
+            setText(id)
+            show()
         }
     }
 
-    private fun setUpListeners() {
-        with(viewBinding) {
+    private fun setupConditionRecycler() {
+        binding.loanConditionRecycler.apply {
+            adapter = getLoanConditionAdapter()
+            itemAnimator = null
+        }
+    }
+
+    private fun showLoading() {
+        with(binding) {
+            loanConditionRecycler.hide()
+            conditionErrorText.hide()
+            conditionProgressBar.show()
+        }
+    }
+
+    private fun showError() {
+        with(binding) {
+            loanConditionRecycler.hide()
+            conditionErrorText.show()
+            conditionProgressBar.hide()
+        }
+    }
+
+    private fun showSuccess(loanCondition: LoanCondition) {
+        with(binding) {
+            loanConditionRecycler.show()
+            conditionErrorText.hide()
+            conditionProgressBar.hide()
+            (loanConditionRecycler.adapter as LoanConditionAdapter).submitList(
+                listOf(loanCondition)
+            )
+        }
+    }
+
+    private fun getLoanConditionAdapter(): LoanConditionAdapter =
+        LoanConditionAdapter { condition ->
+            val requestDirection =
+                LoanConditionFragmentDirections
+                    .actionLoanConditionFragmentToLoanRequestFragment(
+                        condition.maxAmount,
+                        condition.percent.toString(),
+                        condition.period
+                    )
+            findNavController().navigate(requestDirection)
+        }
+
+    private fun setupViews() {
+        with(binding) {
             logoutButton.setOnClickListener {
                 viewModel.updateAppConfig(AppConfig.UNAUTHORIZED)
                 navigateToAuth()
             }
-
             openHistory.setOnClickListener {
                 navigateToHistory()
             }
+            loanConditionSwipeRefresh.apply {
+                setOnRefreshListener {
+                    viewModel.refreshConditions()
+                    isRefreshing = false
+                }
+            }
+        }
+    }
 
+    private fun handleInstruction(instruction: Instruction) {
+        if (instruction.show){
+            binding.instructionValue.show()
+        } else
+        {
+            binding.instructionValue.hide()
+        }
+        setupInstructionButton(instruction.show)
+    }
+
+    private fun setupInstructionButton(show: Boolean) {
+        with(binding) {
             showInstructionButton.setOnClickListener {
-                instruction.isVisible = !instruction.isVisible
+                if (show) {
+                    viewModel.showInstruction(false)
+                } else {
+                    viewModel.showInstruction(true)
+                }
             }
         }
     }
@@ -89,20 +170,6 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
                 )
             )
         )
-    }
-
-    private fun setupOpenRequestButton(condition: LoanCondition) {
-        val requestDirection =
-            LoanConditionFragmentDirections
-                .actionLoanConditionFragmentToLoanRequestFragment(
-                    condition.maxAmount,
-                    condition.percent.toString(),
-                    condition.period
-                )
-
-        viewBinding.openRequestButton.setOnClickListener {
-            findNavController().navigate(requestDirection)
-        }
     }
 
     private fun navigateToAuth() {

@@ -16,9 +16,9 @@ class NetworkModule {
 
     companion object {
         const val BASE_URL = "https://shiftlab.cft.ru:7777"
-        const val CONNECT_TIMEOUT = 10L
-        const val WRITE_TIMEOUT = 15L
-        const val READ_TIMEOUT = 30L
+        const val CONNECT_TIMEOUT = 5L
+        const val WRITE_TIMEOUT = 5L
+        const val READ_TIMEOUT = 5L
         const val NO_AUTH_HEADER = "No-Authentication"
         const val AUTHORIZATION_HEADER = "Authorization"
     }
@@ -44,7 +44,6 @@ class NetworkModule {
             }
             chain.proceed(request)
         }
-
 
     @Provides
     @ShiftLabBaseUrl

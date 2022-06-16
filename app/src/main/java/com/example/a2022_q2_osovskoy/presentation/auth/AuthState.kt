@@ -11,6 +11,8 @@ sealed class AuthState {
         object Forbidden : Error()
         object NotFound : Error()
         object ServerIsNotResponding : Error()
+        object NoInternetConnection : AuthState.Error()
+        object Unknown : AuthState.Error()
     }
 
     sealed class InputError : AuthState() {

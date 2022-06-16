@@ -2,6 +2,7 @@ package com.example.a2022_q2_osovskoy.ui.loanrequest
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,7 +13,7 @@ import com.example.a2022_q2_osovskoy.databinding.LoanRequestFragmentBinding
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.extentions.*
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
-import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestEvent
+import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestState
 import com.example.a2022_q2_osovskoy.presentation.loanrequest.LoanRequestViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -32,42 +33,62 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.handleLoanCondition(args.amount, args.percent, args.period)
+        viewModel.setLoanCondition(args.amount, args.percent, args.period)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setUpTextInput()
-        setupEditText()
-        viewModel.loanRequestEvent.observe(viewLifecycleOwner, ::handleLoanRequestState)
+        setupTextInput()
+        viewModel.loanRequestState.observe(viewLifecycleOwner, ::handleLoanRequestState)
+        viewModel.loanCondition.observe(viewLifecycleOwner, ::handleLoanCondition)
     }
 
-    private fun handleLoanRequestState(event: LoanRequestEvent) {
+    private fun handleLoanRequestState(state: LoanRequestState) {
         with(binding) {
-            when (event) {
-                is LoanRequestEvent.Success -> handleSuccessEvent(event.loan.id)
-                is LoanRequestEvent.Loading -> handleLoadingEvent(true)
-                is LoanRequestEvent.Error -> handleLoadingEvent(false)
-                is LoanRequestEvent.LoanConditionReceived -> {
-                    handleHaveConditionEvent(event.loanCondition)
+            when (state) {
+                is LoanRequestState.Success -> handleSuccessEvent(state.loan.id)
+                is LoanRequestState.Loading -> handleLoadingEvent(true)
+                is LoanRequestState.Error -> handleRequestStateErrors(state)
+                LoanRequestState.Typing -> binding.requestErrorText.hide()
+                is LoanRequestState.LoanConditionReceived -> {
+                    handleLoanCondition(state.loanCondition)
                 }
-                LoanRequestEvent.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
-                LoanRequestEvent.InputError.LastName -> {
+                LoanRequestState.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
+                LoanRequestState.InputError.LastName -> {
                     loanLastNameInput.showErrorResId(R.string.inputLastNameEmpty)
                 }
-                LoanRequestEvent.InputError.Phone -> loanPhoneInput.showErrorResId(R.string.inputPhoneEmpty)
+                LoanRequestState.InputError.Phone -> loanPhoneInput.showErrorResId(R.string.inputPhoneEmpty)
             }
         }
     }
 
-    private fun setUpLoanRequestButton(condition: LoanCondition) {
+    private fun handleRequestStateErrors(stateError: LoanRequestState.Error) {
+        when (stateError) {
+            is LoanRequestState.Error.BadRequest -> setErrorText(R.string.badRequestError)
+            LoanRequestState.Error.Forbidden -> setErrorText(R.string.forbiddenError)
+            LoanRequestState.Error.NotFound -> setErrorText(R.string.notFoundError)
+            LoanRequestState.Error.Unauthorized -> setErrorText(R.string.serverIsNotRespondingError)
+            LoanRequestState.Error.NoInternetConnection -> setErrorText(R.string.noInternetError)
+            LoanRequestState.Error.Unknown -> setErrorText(R.string.unknownError)
+            LoanRequestState.Error.ServerIsNotResponding -> {
+                setErrorText(R.string.serverIsNotRespondingError)
+            }
+        }
+        handleLoadingEvent(false)
+    }
+
+    private fun setErrorText(@StringRes id: Int) {
+        binding.requestErrorText.apply {
+            setText(id)
+            show()
+        }
+    }
+
+    private fun setUpLoanRequestButton(loanCondition: LoanCondition) {
         with(binding) {
             requestLoanButton.setOnClickListener {
                 viewModel.trySendRequest(
-                    amount = condition.maxAmount,
-                    percent = condition.percent,
-                    period = condition.period,
+                    loanCondition = loanCondition,
                     name = loanNameInput.getTrimmedText(),
                     lastName = loanLastNameInput.getTrimmedText(),
                     phone = loanPhoneInput.getTrimmedText(),
@@ -76,7 +97,7 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
         }
     }
 
-    private fun handleHaveConditionEvent(condition: LoanCondition) {
+    private fun handleLoanCondition(condition: LoanCondition) {
         setUpLoanRequestButton(condition)
         with(binding) {
             requestAmount.text = condition.maxAmount.toString().addRub()
@@ -100,24 +121,22 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
         )
     }
 
-    private fun setUpTextInput() {
+    private fun setupTextInput() {
         with(binding) {
-            loanNameInput.clearErrorOnAnyInput()
-            loanLastNameInput.clearErrorOnAnyInput()
-            loanPhoneInput.clearErrorOnAnyInput()
-        }
-    }
-
-    private fun setupEditText() {
-        with(binding) {
-            loanNameEdit.onFocusChange {
-                hideKeyBoard(requireContext(), view)
+            loanNameInput.apply {
+                clearErrorOnAnyInput()
+                setState { viewModel.setTyping() }
+                onFocusChange { hideKeyBoard(requireContext(), view) }
             }
-            loanLastNameEdit.onFocusChange {
-                hideKeyBoard(requireContext(), view)
+            loanLastNameInput.apply {
+                clearErrorOnAnyInput()
+                setState { viewModel.setTyping() }
+                onFocusChange { hideKeyBoard(requireContext(), view) }
             }
-            loanPhoneEdit.onFocusChange {
-                hideKeyBoard(requireContext(), view)
+            loanPhoneInput.apply {
+                clearErrorOnAnyInput()
+                setState { viewModel.setTyping() }
+                onFocusChange { hideKeyBoard(requireContext(), view) }
             }
         }
     }

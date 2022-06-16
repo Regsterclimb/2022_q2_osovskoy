@@ -130,8 +130,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/loanInputLastName"
+                android:layout_marginTop="16dp"
                 android:textColorHint="?colorPrimaryVariant"
-                android:textStyle="italic"
                 app:boxStrokeColor="?colorSecondary"
                 app:endIconMode="clear_text">
 
@@ -150,8 +150,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/loanInputPhone"
+                android:layout_marginTop="16dp"
                 android:textColorHint="?colorPrimaryVariant"
-                android:textStyle="italic"
                 app:boxStrokeColor="?colorSecondary"
                 app:endIconMode="clear_text">
 
@@ -162,11 +162,24 @@
                     android:layout_height="wrap_content"
                     android:inputType="phone" />
 
+                <TextView
+                    android:id="@+id/requestErrorText"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    style="@style/ErrorText"
+                    android:layout_marginTop="12dp"
+                    tools:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    tools:text="ошибка тут" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/requestLoanButton"
                 style="@style/MainButton"
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_gravity="center"

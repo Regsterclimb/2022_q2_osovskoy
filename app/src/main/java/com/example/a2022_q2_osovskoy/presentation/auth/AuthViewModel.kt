@@ -1,19 +1,41 @@
 package com.example.a2022_q2_osovskoy.presentation.auth
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.BaseUser
 import com.example.a2022_q2_osovskoy.domain.usecase.auth.LogInUseCase
-import com.example.a2022_q2_osovskoy.presentation.sample.SingleLiveEvent
 import com.example.a2022_q2_osovskoy.utils.exceptions.*
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import okio.IOException
 import javax.inject.Inject
 
 class AuthViewModel @Inject constructor(private val logInUseCase: LogInUseCase) : ViewModel() {
 
-    private val _authState = SingleLiveEvent<AuthState>()
+    private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
+
+    private val handler = CoroutineExceptionHandler { _, throwable ->
+        handleErrors(throwable)
+    }
+
+    private fun handleErrors(exception: Throwable) {
+        _authState.value = when (exception) {
+            is BadRequestException -> AuthState.Error.BadRequest
+            is UnauthorizedException -> AuthState.Error.Unauthorized
+            is ForbiddenException -> AuthState.Error.Forbidden
+            is NotFoundException -> AuthState.Error.NotFound
+            is ServerIsNotRespondingException -> AuthState.Error.ServerIsNotResponding
+            is IOException -> AuthState.Error.NoInternetConnection
+            else -> AuthState.Error.Unknown
+        }
+    }
+
+    fun setTyping() {
+        _authState.value = AuthState.Typing
+    }
 
     fun tryAuth(name: String, password: String) {
         when {
@@ -30,22 +52,13 @@ class AuthViewModel @Inject constructor(private val logInUseCase: LogInUseCase) 
     }
 
     private fun executeAuthRequest(name: String, password: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             val baseUser = BaseUser(name, password)
             _authState.value = AuthState.Loading
             logInUseCase(baseUser)
-            _authState.value =AuthState.Success
+            _authState.value = AuthState.Success
         }
     }
 
-    private fun handleErrors(exception: Throwable) {
-        when (exception) {
-            is BadRequestException -> _authState.value = AuthState.Error.BadRequest
-            is UnauthorizedException -> _authState.value = AuthState.Error.Unauthorized
-            is ForbiddenException -> _authState.value = AuthState.Error.Forbidden
-            is NotFoundException -> _authState.value = AuthState.Error.NotFound
-            is ServerIsNotRespondingException -> _authState.value =
-                AuthState.Error.ServerIsNotResponding
-        }
-    }
+
 }

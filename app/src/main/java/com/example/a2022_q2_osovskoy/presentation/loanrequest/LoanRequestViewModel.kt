@@ -7,64 +7,88 @@ import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.LoanRequest
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.domain.usecase.RequestLoanUseCase
+import com.example.a2022_q2_osovskoy.utils.exceptions.*
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import okio.IOException
 import javax.inject.Inject
 
 class LoanRequestViewModel @Inject constructor(
     private val requestLoanUseCase: RequestLoanUseCase,
 ) : ViewModel() {
 
-    private val _loanRequestState = MutableLiveData<LoanRequestEvent>()
-    val loanRequestEvent: LiveData<LoanRequestEvent> = _loanRequestState
+    private val _loanRequestState = MutableLiveData<LoanRequestState>()
+    val loanRequestState: LiveData<LoanRequestState> = _loanRequestState
 
-    fun handleLoanCondition(amount: Long, percent: String, period: Int) {
-        _loanRequestState.value =
-            LoanRequestEvent.LoanConditionReceived(LoanCondition(period, amount, percent.toDouble()))
+    private val _loanCondition = MutableLiveData(LoanCondition(0, 0, 0.0))
+    val loanCondition: LiveData<LoanCondition> = _loanCondition
+
+    private val handler = CoroutineExceptionHandler { _, throwable ->
+        handleErrorState(throwable)
+    }
+
+    private fun handleErrorState(exception: Throwable) {
+        _loanRequestState.value = when (exception) {
+            is BadRequestException -> LoanRequestState.Error.BadRequest
+            is UnauthorizedException -> LoanRequestState.Error.Unauthorized
+            is ForbiddenException -> LoanRequestState.Error.Forbidden
+            is NotFoundException -> LoanRequestState.Error.NotFound
+            is ServerIsNotRespondingException -> LoanRequestState.Error.ServerIsNotResponding
+            is IOException -> LoanRequestState.Error.NoInternetConnection
+            else -> LoanRequestState.Error.Unknown
+        }
+    }
+
+    fun setTyping() {
+        _loanRequestState.value = LoanRequestState.Typing
+    }
+
+    fun setLoanCondition(amount: Long, percent: String, period: Int) {
+        _loanCondition.value = LoanCondition(
+            period,
+            amount,
+            percent.toDouble())
     }
 
     fun trySendRequest(
-        amount: Long,
-        percent: Double,
-        period: Int,
+        loanCondition:LoanCondition,
         name: String,
         lastName: String,
         phone: String,
     ) {
         when {
             name.isEmpty() -> {
-                _loanRequestState.value = LoanRequestEvent.InputError.Name
+                _loanRequestState.value = LoanRequestState.InputError.Name
             }
             lastName.isEmpty() -> {
-                _loanRequestState.value = LoanRequestEvent.InputError.LastName
+                _loanRequestState.value = LoanRequestState.InputError.LastName
             }
             phone.isEmpty() -> {
-                _loanRequestState.value = LoanRequestEvent.InputError.Phone
+                _loanRequestState.value = LoanRequestState.InputError.Phone
             }
             name.isNotEmpty() && lastName.isNotEmpty() && phone.isNotEmpty() -> {
-                sendLoanRequest(amount, name, lastName, phone, percent, period)
+                sendRequest( name, lastName, phone,loanCondition)
             }
-            else -> LoanRequestEvent.Error
+            else -> LoanRequestState.Error.Unknown
         }
     }
 
-    private fun sendLoanRequest(
-        amount: Long,
+    private fun sendRequest(
         name: String,
         lastName: String,
         phone: String,
-        percent: Double,
-        period: Int,
+        loanCondition: LoanCondition,
     ) {
-        viewModelScope.launch {
-            _loanRequestState.value = LoanRequestEvent.Loading
-            _loanRequestState.value = LoanRequestEvent.Success(
+        viewModelScope.launch(handler) {
+            _loanRequestState.value = LoanRequestState.Loading
+            _loanRequestState.value = LoanRequestState.Success(
                 requestLoanUseCase(
                     LoanRequest(
-                        amount = amount,
+                        amount = loanCondition.maxAmount,
                         firstName = name,
                         lastName = lastName,
-                        percent = percent,
-                        period = period,
+                        percent = loanCondition.percent,
+                        period = loanCondition.period,
                         phoneNumber = phone
                     )
                 )

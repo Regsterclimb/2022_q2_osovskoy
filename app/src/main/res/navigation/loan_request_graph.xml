@@ -12,8 +12,11 @@
         tools:layout="@layout/loan_condition_fragment">
         <action
             android:id="@+id/action_loanConditionFragment_to_loanRequestFragment"
-            app:destination="@id/loanRequestFragment" />
-
+            app:destination="@id/loanRequestFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <deepLink app:uri="app://loanRequest" />
 
     </fragment>
@@ -26,7 +29,10 @@
 
         <action
             android:id="@+id/action_loanRequestFragment_to_loanSuccessFragment"
-            app:destination="@id/loanSuccessFragment"/>
+            app:destination="@id/loanSuccessFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in" />
 
         <argument
             android:name="amount"

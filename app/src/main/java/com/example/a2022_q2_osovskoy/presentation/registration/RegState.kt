@@ -3,6 +3,8 @@ package com.example.a2022_q2_osovskoy.presentation.registration
 sealed class RegState : Error() {
     object Success : RegState()
     object Typing : RegState()
+    object Loading : RegState()
+
     sealed class Error : RegState() {
         object BadRequest : Error()
         object Unauthorized : Error()
@@ -12,7 +14,6 @@ sealed class RegState : Error() {
         object NoInternetConnection : Error()
         object Unknown : Error()
     }
-    object Loading : RegState()
 
     sealed class InputError : RegState() {
         object Name : InputError()

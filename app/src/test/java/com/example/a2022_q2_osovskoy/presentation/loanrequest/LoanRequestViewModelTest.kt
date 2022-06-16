@@ -27,7 +27,7 @@ class LoanRequestViewModelTest {
 
     lateinit var requestLoanUseCase: RequestLoanUseCase
 
-    lateinit var observer: Observer<LoanRequestEvent>
+    lateinit var observer: Observer<LoanRequestState>
 
     @Before
     fun setUp() {
@@ -44,10 +44,10 @@ class LoanRequestViewModelTest {
 
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
 
-        viewModel.handleLoanCondition(maxAmount, percent, period)
-        viewModel.loanRequestEvent.observeForever(observer)
+        viewModel.setLoanCondition(maxAmount, percent, period)
+        viewModel.loanRequestState.observeForever(observer)
 
-        val expected = LoanRequestEvent.LoanConditionReceived(LoanCondition(45, 15000, 8.5))
+        val expected = LoanRequestState.LoanConditionReceived(LoanCondition(45, 15000, 8.5))
 
         verify(observer).onChanged(expected)
     }
@@ -65,9 +65,9 @@ class LoanRequestViewModelTest {
 
         viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
 
-        val expected = LoanRequestEvent.InputError.Name
+        val expected = LoanRequestState.InputError.Name
 
-        val actual = viewModel.loanRequestEvent.value
+        val actual = viewModel.loanRequestState.value
 
         assertEquals(expected, actual)
     }
@@ -85,9 +85,9 @@ class LoanRequestViewModelTest {
         viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
 
 
-        val expected = LoanRequestEvent.InputError.LastName
+        val expected = LoanRequestState.InputError.LastName
 
-        val actual = viewModel.loanRequestEvent.value
+        val actual = viewModel.loanRequestState.value
 
         assertEquals(expected, actual)
     }
@@ -104,9 +104,9 @@ class LoanRequestViewModelTest {
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
         viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
 
-        val expected = LoanRequestEvent.InputError.Phone
+        val expected = LoanRequestState.InputError.Phone
 
-        val actual = viewModel.loanRequestEvent.value
+        val actual = viewModel.loanRequestState.value
 
         assertEquals(expected, actual)
     }
@@ -126,13 +126,13 @@ class LoanRequestViewModelTest {
 
         Mockito.`when`(requestLoanUseCase(loanRequest)).thenReturn(resultState)*/
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
-        viewModel.loanRequestEvent.observeForever(observer)
+        viewModel.loanRequestState.observeForever(observer)
 
         viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
 
-        val expected = LoanRequestEvent.Error
+        val expected = LoanRequestState.Error
 
-        verify(observer).onChanged(LoanRequestEvent.Loading)
+        verify(observer).onChanged(LoanRequestState.Loading)
         verify(observer).onChanged(expected)
     }
     //todo()
@@ -152,13 +152,13 @@ class LoanRequestViewModelTest {
         Mockito.`when`(requestLoanUseCase(loanRequest)).thenReturn(resultState)*/
 
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
-        viewModel.loanRequestEvent.observeForever(observer)
+        viewModel.loanRequestState.observeForever(observer)
 
         viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
 
-        val expected = LoanRequestEvent.Success(loan)
+        val expected = LoanRequestState.Success(loan)
 
-        verify(observer).onChanged(LoanRequestEvent.Loading)
+        verify(observer).onChanged(LoanRequestState.Loading)
         verify(observer).onChanged(expected)
     }
 }

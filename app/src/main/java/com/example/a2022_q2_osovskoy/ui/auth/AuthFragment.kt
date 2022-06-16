@@ -35,13 +35,10 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            authNameInput.clearErrorOnAnyInput()
-            authPasswordInput.clearErrorOnAnyInput()
-            authNameEdit.onFocusChange { hideKeyBoard(requireContext(), view) }
-            authPasswordEdit.onFocusChange { hideKeyBoard(requireContext(), view) }
+            setupInputText(this)
+            setUpAuthButton(this)
+            setUpRegistrationText(this)
         }
-        setUpAuthButton()
-        setUpRegistrationText()
         viewModel.authState.observe(viewLifecycleOwner, ::handleAuthState)
     }
 
@@ -56,9 +53,10 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
             }
             AuthState.Loading -> loadingEvent(true)
             AuthState.Success -> navigateForward()
-            AuthState.Typing -> handleTyping()
+            AuthState.Typing -> binding.authErrorText.hide()
         }
     }
+
     private fun handleAuthStateErrors(stateError: AuthState.Error) {
         when (stateError) {
             is AuthState.Error.BadRequest -> setErrorText(R.string.badRequestError)
@@ -66,6 +64,8 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
             AuthState.Error.NotFound -> setErrorText(R.string.notFoundError)
             AuthState.Error.ServerIsNotResponding -> setErrorText(R.string.serverIsNotRespondingError)
             AuthState.Error.Unauthorized -> setErrorText(R.string.serverIsNotRespondingError)
+            AuthState.Error.NoInternetConnection -> setErrorText(R.string.noInternetError)
+            AuthState.Error.Unknown -> setErrorText(R.string.unknownError)
         }
         loadingEvent(false)
     }
@@ -80,7 +80,7 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
             )
         )
     }
-    //вынести в extention
+
     private fun setErrorText(@StringRes id: Int) {
         binding.authErrorText.apply {
             setText(id)
@@ -88,7 +88,7 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
         }
     }
 
-    private fun setUpAuthButton() {
+    private fun setUpAuthButton(binding: AuthFragmentBinding) {
         with(binding) {
             authButton.setOnClickListener {
                 viewModel.tryAuth(
@@ -99,7 +99,7 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
         }
     }
 
-    private fun setUpRegistrationText() {
+    private fun setUpRegistrationText(binding: AuthFragmentBinding) {
         binding.registrationText.setOnClickListener {
             navigate(
                 NavCommand(
@@ -113,19 +113,26 @@ class AuthFragment : DaggerFragment(R.layout.auth_fragment) {
         }
     }
 
-    private fun handleTyping() {
-        with(binding) {
-            authNameInput.clearErrorOnAnyInput()
-            authPasswordInput.clearErrorOnAnyInput()
-            authErrorText.hide()
-        }
-    }
-
     private fun loadingEvent(isLoading: Boolean) {
         with(binding) {
             authContainer.isVisible = !isLoading
             authProgressBar.isVisible = isLoading
         }
         hideKeyBoard(requireContext(), view)
+    }
+
+    private fun setupInputText(binding: AuthFragmentBinding) {
+        with(binding) {
+            authNameInput.apply {
+                clearErrorOnAnyInput()
+                setState { viewModel.setTyping() }
+                onFocusChange { hideKeyBoard(requireContext(), view) }
+            }
+            authPasswordInput.apply {
+                clearErrorOnAnyInput()
+                setState { viewModel.setTyping() }
+                onFocusChange { hideKeyBoard(requireContext(), view) }
+            }
+        }
     }
 }

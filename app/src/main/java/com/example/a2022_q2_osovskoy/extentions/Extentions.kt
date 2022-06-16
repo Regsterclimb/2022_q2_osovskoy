@@ -40,7 +40,7 @@ suspend fun <T> CoroutineDispatcher.execute(block: suspend () -> T) = withContex
         block.invoke()
     } catch (e: CancellationException) {
         throw e
-    }catch (e:IOException){
+    }catch (e: IOException){
         throw e
     }
     catch (e: HttpException) {
