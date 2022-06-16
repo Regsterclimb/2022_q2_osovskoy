@@ -18,5 +18,4 @@ class LoanDetailViewModel @Inject constructor(private val getLoanByIdUseCase: Ge
             _loanState.value = LoanDetailState.Success(getLoanByIdUseCase(loanId))
         }
     }
-
 }

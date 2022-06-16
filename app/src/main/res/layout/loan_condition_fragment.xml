@@ -19,15 +19,6 @@
             tools:context=".ui.loanrequest.LoanConditionFragment">
 
             <Button
-                android:id="@+id/logoutButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exit"
-                app:layout_constraintEnd_toEndOf="@id/requestContainer"
-                app:layout_constraintStart_toStartOf="@id/requestContainer"
-                app:layout_constraintTop_toTopOf="@id/requestContainer" />
-
-            <Button
                 android:id="@+id/openHistory"
                 style="@style/MainButton"
                 android:layout_width="0dp"
@@ -35,17 +26,18 @@
                 android:text="@string/loanConditionHistoryButton"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintStart_toEndOf="@+id/showInstructionButton"
-                app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
+                app:layout_constraintTop_toTopOf="@id/guidelineTop" />
 
             <Button
                 android:id="@+id/showInstructionButton"
                 style="@style/MainButton"
                 android:layout_width="0dp"
                 android:layout_height="58dp"
-                android:text="Инструкция"
+                android:text="@string/instruction"
                 app:layout_constraintEnd_toStartOf="@id/openHistory"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
+                app:layout_constraintTop_toTopOf="@id/guidelineTop" />
+
             <TableLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -59,19 +51,20 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/conditionChooseImage"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         app:srcCompat="@drawable/apply" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/conditionChooseText"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="60dp"
                         android:gravity="center_vertical"
-                        android:text="Выбрать заявку из доступных, понадобиться имя фамилия и телефон" />
+                        android:text="@string/conditionChooseText" />
                 </TableRow>
 
                 <TableRow
@@ -79,18 +72,18 @@
                     android:layout_height="match_parent" >
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/conditionApproval"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         app:srcCompat="@drawable/wait_approve" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/conditionApprovalText"
                         android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:layout_height="60dp"
                         android:gravity="center_vertical"
-                        android:text="Дождаться подверждения вашей заявки  не более 15 минут" />
+                        android:text="@string/conditionApprovalText" />
                 </TableRow>
 
                 <TableRow
@@ -98,19 +91,20 @@
                     android:layout_height="match_parent" >
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/getMoneyImage"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         app:srcCompat="@drawable/take_money" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/conditionGetMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="В деталях заявки будет информация как получить деньги" />
+                        android:text="@string/conditionGetMoney" />
                 </TableRow>
+
             </TableLayout>
 
             <TextView

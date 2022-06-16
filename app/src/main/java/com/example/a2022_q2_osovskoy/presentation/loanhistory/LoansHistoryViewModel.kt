@@ -4,33 +4,76 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLoansUseCase
+import com.example.a2022_q2_osovskoy.domain.usecase.GetLocalLoansUseCase
+import com.example.a2022_q2_osovskoy.domain.usecase.UpdateAppConfigUseCase
+import com.example.a2022_q2_osovskoy.utils.exceptions.*
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import okio.IOException
 import javax.inject.Inject
 
-class LoansHistoryViewModel @Inject constructor(private val getLoansUseCase: GetLoansUseCase) :
+class LoansHistoryViewModel @Inject constructor(
+    private val getLoansUseCase: GetLoansUseCase,
+    private val updateAppConfigUseCase: UpdateAppConfigUseCase,
+    private val getLocalLoansUseCase: GetLocalLoansUseCase,
+) :
     ViewModel() {
 
     private val _loansState = MutableLiveData<LoansState>()
     val loansState: LiveData<LoansState> = _loansState
 
+    private val handler = CoroutineExceptionHandler { _, throwable ->
+        handleErrors(throwable)
+    }
+
+    private fun handleErrors(exception: Throwable) {
+        _loansState.value = when (exception) {
+            is BadRequestException -> LoansState.Error.BadRequest
+            is UnauthorizedException -> LoansState.Error.Unauthorized
+            is ForbiddenException -> LoansState.Error.Forbidden
+            is NotFoundException -> LoansState.Error.NotFound
+            is ServerIsNotRespondingException -> LoansState.Error.ServerIsNotResponding
+            is IOException -> LoansState.Error.NoInternetConnection
+            else -> LoansState.Error.Unknown
+        }
+    }
+
     init {
         refreshLoans()
     }
 
-    fun refreshLoans() {
-        viewModelScope.launch {
-            _loansState.value = LoansState.Success(getLoansUseCase())
+    fun getLocalLoans() {
+        viewModelScope.launch(handler) {
+            setLoading()
+            val list = getLocalLoansUseCase()
+            _loansState.value = if (list.isNotEmpty()) {
+                LoansState.Success.Local(list)
+            } else {
+                LoansState.Empty
+            }
         }
     }
 
-    /*private fun handleError(e: Throwable): LoansState = when (e) {
-        is BadRequestException ->
-    }*/
-    /*class BadRequestException : RuntimeException() // такой пользователь уже найден
-class UnauthorizedException : RuntimeException() // неавторизованный пользователь
-class ForbiddenException : RuntimeException() // означает ограничение или отсутствие доступа к материалу на странице, которую вы пытаетесь загрузить.
+    fun refreshLoans() {
+        viewModelScope.launch(handler) {
+            setLoading()
+            val list = getLoansUseCase()
+            _loansState.value = if (list.isNotEmpty()) {
+                LoansState.Success.Remote(list)
+            } else {
+                LoansState.Empty
+            }
+        }
+    }
 
-class NotFoundException : RuntimeException() // пусто
-class ServerIsNotRespondingException : RuntimeException() //сервер не отвечает*/
+    fun updateAppConfig(appConfig: AppConfig) {
+        updateAppConfigUseCase(appConfig)
+    }
+
+    private fun setLoading() {
+        _loansState.value = LoansState.Loading
+    }
+
 }

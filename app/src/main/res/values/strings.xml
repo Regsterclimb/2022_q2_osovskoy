@@ -62,5 +62,10 @@
     <string name="conditionPeriodRow">Срок:</string>
     <string name="loanConditionHistoryButton">заявки</string>
     <string name="loanConditionTitle">Доступные заявки</string>
+    <string name="instruction">Инструкция</string>
+    <string name="conditionGetMoney">В деталях подтвержденной заявки будет информация как получить деньги</string>
+    <string name="conditionChooseText">Выбрать заявку из доступных, понадобиться имя фамилия и телефон</string>
+    <string name="conditionApprovalText">Дождаться подверждения вашей заявки не более 15 минут</string>
+    <string name="emptyList">список пуст</string>
 
 </resources>

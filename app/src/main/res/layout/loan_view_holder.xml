@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/loanItemId"
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -16,28 +16,20 @@
         tools:text="@tools:sample/lorem" />
 
     <TextView
-        android:id="@+id/loanStatusTitle"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/status"
-        app:layout_constraintBottom_toTopOf="@+id/loanItemStatus"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
-        app:layout_constraintTop_toTopOf="@id/guidelineTop" />
-
-    <TextView
         android:id="@+id/loanItemStatus"
         android:layout_width="110dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
         tools:text="APPROVAL" />
 
     <TextView
         android:id="@+id/loanItemDate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/loanItemAmount"
         app:layout_constraintEnd_toEndOf="@id/barrierStatus"
         app:layout_constraintStart_toEndOf="@+id/barrierId"
@@ -90,5 +82,5 @@
         android:layout_height="wrap_content"
         app:barrierDirection="left"
         app:barrierMargin="-16dp"
-        app:constraint_referenced_ids="loanStatusTitle,loanItemStatus" />
+        app:constraint_referenced_ids="loanItemStatus" />
 </androidx.constraintlayout.widget.ConstraintLayout>

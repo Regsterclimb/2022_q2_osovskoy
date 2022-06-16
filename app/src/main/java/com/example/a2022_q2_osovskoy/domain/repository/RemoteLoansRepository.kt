@@ -4,7 +4,7 @@ import com.example.a2022_q2_osovskoy.domain.entity.LoanRequest
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 
-interface LoansRepository {
+interface RemoteLoansRepository {
 
     suspend fun requestLoan(loanRequest: LoanRequest): Loan
 

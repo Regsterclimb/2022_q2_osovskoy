@@ -15,9 +15,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import okio.IOException
 import retrofit2.HttpException
-import java.net.InetSocketAddress
-import java.net.Socket
-import java.net.SocketAddress
 
 //todo()
 fun String.addPercent() = "$this %"
@@ -72,17 +69,4 @@ fun provideFlatNavOptionsBuilder(isSingleTop: Boolean): NavOptions.Builder =
         .setPopExitAnim(R.anim.slide_out_right)
         .setLaunchSingleTop(isSingleTop)
 
-@Suppress("BlockingMethodInNonBlockingContext")
-suspend fun hasInternetConnection(dispatcher: CoroutineDispatcher): Boolean =
-    withContext(dispatcher) {
-        try {
-            val timeoutMs = 1500
-            val sock = Socket()
-            val socket: SocketAddress = InetSocketAddress("8.8.8.8", 53)
-            sock.connect(socket, timeoutMs)
-            sock.close()
-            true
-        } catch (e: IOException) {
-            false
-        }
-    }
+

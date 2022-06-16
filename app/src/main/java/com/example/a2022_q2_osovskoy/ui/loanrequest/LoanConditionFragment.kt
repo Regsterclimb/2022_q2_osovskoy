@@ -122,10 +122,6 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
 
     private fun setupViews() {
         with(binding) {
-            logoutButton.setOnClickListener {
-                viewModel.updateAppConfig(AppConfig.UNAUTHORIZED)
-                navigateToAuth()
-            }
             openHistory.setOnClickListener {
                 navigateToHistory()
             }
@@ -165,18 +161,6 @@ class LoanConditionFragment : DaggerFragment(R.layout.loan_condition_fragment) {
             NavCommand(
                 NavCommands.DeepLink(
                     url = (Uri.parse(NavDestination.DEEP_HISTORY)),
-                    isModal = true,
-                    isSingleTop = true
-                )
-            )
-        )
-    }
-
-    private fun navigateToAuth() {
-        navigate(
-            NavCommand(
-                NavCommands.DeepLink(
-                    url = (Uri.parse(NavDestination.DEEP_AUTH)),
                     isModal = true,
                     isSingleTop = true
                 )
