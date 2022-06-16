@@ -100,9 +100,19 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
     private fun handleLoanCondition(condition: LoanCondition) {
         setUpLoanRequestButton(condition)
         with(binding) {
-            requestAmount.text = condition.maxAmount.toString().addRub()
-            requestPercent.text = condition.percent.toString().addPercent()
-            requestPeriod.text = condition.period.toString().addDays()
+            requestAmount.apply {
+                text = condition.maxAmount.toString()
+                append(getString(R.string.addRub))
+            }
+            requestPercent.apply {
+                text = condition.percent.toString()
+                append(getString(R.string.addPercent))
+            }
+            requestPeriod.apply {
+                text = condition.period.toString()
+                append(getString(R.string.addDays))
+            }
+
         }
     }
 

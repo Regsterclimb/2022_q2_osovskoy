@@ -3,14 +3,18 @@ package com.example.a2022_q2_osovskoy.ui.loandetail
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanDetailsFragmentBinding
-import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
-import com.example.a2022_q2_osovskoy.extentions.*
+import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanDetail
+import com.example.a2022_q2_osovskoy.extentions.changeStatus
+import com.example.a2022_q2_osovskoy.extentions.hide
+import com.example.a2022_q2_osovskoy.extentions.provideOnBackPressedCallBack
+import com.example.a2022_q2_osovskoy.extentions.show
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
 import com.example.a2022_q2_osovskoy.presentation.loandetail.LoanDetailState
 import com.example.a2022_q2_osovskoy.presentation.loandetail.LoanDetailViewModel
@@ -40,27 +44,112 @@ class LoanDetailFragment : DaggerFragment(R.layout.loan_details_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getLoan(arguments?.get(LOAN_ID) as Long)
+        binding.loanDetailsSwipeRefresh.apply {
+            setOnRefreshListener {
+                viewModel.getRemoteLoan(arguments?.get(LOAN_ID) as Long)
+                isRefreshing = false
+            }
+        }
+        viewModel.getRemoteLoan(arguments?.get(LOAN_ID) as Long)
         viewModel.loanState.observe(viewLifecycleOwner, ::handleLoanDetailState)
     }
 
     private fun handleLoanDetailState(state: LoanDetailState) {
         when (state) {
-            is LoanDetailState.Success -> setUpViews(state.loanDetail)
+            is LoanDetailState.Success -> handleSuccess(state)
             is LoanDetailState.Approved -> handleApprovedState(state.isApproved)
-            is LoanDetailState.Error -> {
-                Toast.makeText(requireContext(), R.string.simpleError, Toast.LENGTH_SHORT).show()
+            is LoanDetailState.Error -> handleErrors(state)
+            LoanDetailState.Loading -> showLoading()
+        }
+    }
+
+    private fun handleSuccess(state: LoanDetailState.Success) {
+        Log.d("handleSuccess", state.toString())
+        showSuccess()
+        with(binding) {
+            when (state) {
+                is LoanDetailState.Success.Remote -> {
+                    setUpViews(state.remoteLoanDetail)
+                    detailsError.hide()
+                }
+                is LoanDetailState.Success.Local -> {
+                    setUpViews(state.localLoanDetail)
+                    detailsError.show()
+                }
             }
         }
     }
 
-    private fun setUpViews(loan: Loan) {
+    private fun handleErrors(stateError: LoanDetailState.Error) {
+        when (stateError) {
+            is LoanDetailState.Error.BadRequest -> setErrorText(R.string.badRequestError)
+            LoanDetailState.Error.Forbidden -> setErrorText(R.string.forbiddenError)
+            LoanDetailState.Error.NotFound -> setErrorText(R.string.notFoundError)
+            LoanDetailState.Error.Unauthorized -> setErrorText(R.string.serverIsNotRespondingError)
+            LoanDetailState.Error.Unknown -> setErrorText(R.string.unknownError)
+            LoanDetailState.Error.ServerNotResponding -> {
+                setErrorText(R.string.serverIsNotRespondingError)
+            }
+            LoanDetailState.Error.NoInternetConnection -> {
+                handleNoInternetState(arguments?.get(LOAN_ID) as Long)
+            }
+        }
+        showError()
+    }
+
+    private fun setErrorText(@StringRes id: Int) {
+        binding.detailsError.apply {
+            setText(id)
+            show()
+        }
+    }
+
+    private fun handleNoInternetState(id: Long) {
+        setErrorText(R.string.noInternetError)
+        viewModel.getLocalLoan(id)
+    }
+
+    private fun showError() {
         with(binding) {
-            detailAmount.text = loan.Long.toString().addRub()
+            detailsError.show()
+            detailsProgressBar.hide()
+        }
+    }
+
+    private fun showSuccess() {
+        with(binding) {
+            loanInfoTable.show()
+            detailsError.hide()
+            detailsProgressBar.hide()
+        }
+    }
+
+    private fun showLoading() {
+        with(binding) {
+            loanInfoTable.hide()
+            detailsError.hide()
+            approvalContainer.hide()
+            detailsProgressBar.show()
+        }
+    }
+
+    private fun setUpViews(loan: LoanDetail) {
+        with(binding) {
+            detailAmount.text = String.format(loan.amount.toString() + getString(R.string.addRub))
             detailDate.text = loan.date
-            detailPercent.text = loan.percent.toString().addPercent()
-            detailState.text = loan.state
+            detailState.changeStatus(loan.state)
+            detailPeriod.apply {
+                text = loan.period.toString()
+                append(getString(R.string.addDays))
+            }
+            detailsName.text = loan.name
+            detailsLastName.text = loan.lastName
+            detailsLastPhone.text = loan.phoneNumber
             detailId.text = loan.id.toString()
+            detailPercent.apply {
+                text = loan.percent.toString()
+                append(getString(R.string.addPercent))
+            }
         }
     }
 

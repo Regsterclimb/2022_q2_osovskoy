@@ -43,7 +43,6 @@ class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
         )
     }
 
-    //todo()
     private fun navigateOnEvent(appConfigEvent: AppConfigEvent) = when (appConfigEvent) {
             is AppConfigEvent.NavigateToLoanRequest-> openFragmentOnEvent(appConfigEvent.navDest)
             is AppConfigEvent.NavigateToRegistration -> openFragmentOnEvent(appConfigEvent.navDest)

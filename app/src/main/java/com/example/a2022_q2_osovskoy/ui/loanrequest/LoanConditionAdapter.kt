@@ -10,9 +10,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.databinding.LoanConditionHolderBinding
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
-import com.example.a2022_q2_osovskoy.extentions.addDays
-import com.example.a2022_q2_osovskoy.extentions.addPercent
-import com.example.a2022_q2_osovskoy.extentions.addRub
 
 class LoanConditionAdapter(private val onLoanClick: (loanCondition: LoanCondition) -> Unit) :
     ListAdapter<LoanCondition, LoanConditionViewHolder>(
@@ -34,9 +31,18 @@ class LoanConditionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
 
     fun bind(loanCondition: LoanCondition, onRequestClick: (loanCondition: LoanCondition) -> Unit) {
         with(binding) {
-            mainAmount.text = loanCondition.maxAmount.toString().addRub()
-            mainPercent.text = loanCondition.percent.toString().addPercent()
-            mainPeriod.text = loanCondition.period.toString().addDays()
+            mainAmount.apply {
+                text = loanCondition.maxAmount.toString()
+                append(itemView.context.getString(R.string.addRub))
+            }
+            mainPercent.apply {
+                text = loanCondition.percent.toString()
+                append(itemView.context.getString(R.string.addPercent))
+            }
+            mainPeriod.apply {
+                text = loanCondition.period.toString()
+                append(itemView.context.getString(R.string.addDays))
+            }
             openRequestButton.setOnClickListener {
                 onRequestClick(loanCondition)
             }

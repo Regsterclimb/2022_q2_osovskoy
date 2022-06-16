@@ -18,8 +18,7 @@ class LoansHistoryViewModel @Inject constructor(
     private val getLoansUseCase: GetLoansUseCase,
     private val updateAppConfigUseCase: UpdateAppConfigUseCase,
     private val getLocalLoansUseCase: GetLocalLoansUseCase,
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _loansState = MutableLiveData<LoansState>()
     val loansState: LiveData<LoansState> = _loansState

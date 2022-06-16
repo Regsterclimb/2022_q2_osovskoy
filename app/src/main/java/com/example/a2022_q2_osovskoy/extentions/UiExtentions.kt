@@ -4,12 +4,12 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import com.example.a2022_q2_osovskoy.R
 import com.google.android.material.textfield.TextInputLayout
 
 fun TextInputLayout.getTrimmedText(): String =
@@ -28,10 +28,20 @@ fun TextInputLayout.clearError() {
     this.error = null
 }
 
-fun TextView.changeColor(statusState: String) = when (statusState) {
-    "APPROVED" -> this.setTextColor(Color.GREEN)
-    "REGISTERED" -> this.setTextColor(Color.BLUE)
-    "REJECTED" -> this.setTextColor(Color.RED)
+fun TextView.changeStatus(status: String) = when (status) {
+    "APPROVED" -> {
+        this.setTextColor(Color.GREEN)
+        this.setText(this.context.getString(R.string.approved))
+    }
+    "REGISTERED" -> {
+        this.setTextColor(Color.BLUE)
+        this.setText(this.context.getString(R.string.registered))
+    }
+    "REJECTED" -> {
+        this.setTextColor(Color.RED)
+        this.setText(this.context.getString(R.string.rejected))
+    }
+
     else -> Unit
 }
 
@@ -67,14 +77,6 @@ fun provideOnBackPressedCallBack(navigate: () -> Unit): OnBackPressedCallback =
 
 fun TextInputLayout.onFocusChange(hideKeyboard: () -> Unit){
     this.editText?.setOnFocusChangeListener { _, hasFocus ->
-        if (!hasFocus) {
-            hideKeyboard()
-        }
-    }
-}
-
-fun EditText.onFocusChange(hideKeyboard: () -> Unit) {
-    this.setOnFocusChangeListener { _, hasFocus ->
         if (!hasFocus) {
             hideKeyboard()
         }
