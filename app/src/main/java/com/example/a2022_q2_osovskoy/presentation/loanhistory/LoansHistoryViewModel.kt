@@ -36,6 +36,7 @@ class LoansHistoryViewModel @Inject constructor(
             is ServerIsNotRespondingException -> LoansState.Error.ServerIsNotResponding
             is IOException -> LoansState.Error.NoInternetConnection
             else -> LoansState.Error.Unknown
+
         }
     }
 

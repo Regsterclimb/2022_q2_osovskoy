@@ -25,6 +25,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        dev {
+            dimension "version"
+            versionNameSuffix " dev"
+            applicationIdSuffix ".dev"
+        }
+        live {
+            dimension "version"
+            versionNameSuffix " live"
+            applicationIdSuffix ".live"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -44,6 +59,7 @@ dependencies {
     def room_version = "2.4.2"
     def okhttpVers = "4.9.3"
     def navVersion = "2.4.2"
+    def retrofitVersion = "2.9.0"
 
     implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -63,7 +79,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
 
     //dagger
@@ -97,5 +114,6 @@ dependencies {
     //mockito
     testImplementation 'org.mockito.kotlin:mockito-kotlin:3.1.0'
     testImplementation "org.mockito:mockito-inline:3.11.2"
+
 
 }

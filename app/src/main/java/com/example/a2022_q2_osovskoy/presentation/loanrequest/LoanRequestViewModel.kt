@@ -51,7 +51,7 @@ class LoanRequestViewModel @Inject constructor(
     }
 
     fun trySendRequest(
-        loanCondition:LoanCondition,
+        loanCondition: LoanCondition,
         name: String,
         lastName: String,
         phone: String,
@@ -67,7 +67,7 @@ class LoanRequestViewModel @Inject constructor(
                 _loanRequestState.value = LoanRequestState.InputError.Phone
             }
             name.isNotEmpty() && lastName.isNotEmpty() && phone.isNotEmpty() -> {
-                sendRequest( name, lastName, phone,loanCondition)
+                sendRequest(name, lastName, phone, loanCondition)
             }
             else -> LoanRequestState.Error.Unknown
         }

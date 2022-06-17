@@ -105,10 +105,4 @@ fun provideFlatNavOptionsBuilder(isSingleTop: Boolean): NavOptions.Builder =
         .setPopExitAnim(R.anim.slide_out_right)
         .setLaunchSingleTop(isSingleTop)
 
-fun String.addPercent() = "$this %"
-
-fun String.addRub() = "$this Rub"
-
-fun String.addDays() = "$this дн."
-
 

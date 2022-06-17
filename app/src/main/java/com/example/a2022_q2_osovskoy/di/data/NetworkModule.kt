@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-@Module(includes = [RetrofitModule::class])
+@Module(includes = [RetrofitModule::class,ApiModule::class])
 class NetworkModule {
 
     companion object {

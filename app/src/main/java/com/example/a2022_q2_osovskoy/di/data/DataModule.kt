@@ -15,7 +15,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 
-@Module(includes = [NetworkModule::class, RoomDataBaseModule::class, SharedPrefModule::class])
+@Module(includes = [
+    NetworkModule::class,
+    RoomDataBaseModule::class,
+    SharedPrefModule::class]
+)
 interface DataModule {
 
     companion object {
