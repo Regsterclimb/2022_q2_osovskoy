@@ -32,7 +32,7 @@ interface DataModule {
     fun bindAppConfigDataSource(impl: AppConfigDataSourceImpl): AppConfigDataSource
 
     @Binds
-    fun bindLoansLocalDataSource(impl: LoansLocalDataSourceImpl) : LoansLocalDataSource
+    fun bindLoansLocalDataSource(impl: LoansLocalDataSourceImpl): LoansLocalDataSource
 
     @Binds
     fun bindLoginDataSource(implRemote: AuthRemoteDataSourceImpl): AuthDataSource

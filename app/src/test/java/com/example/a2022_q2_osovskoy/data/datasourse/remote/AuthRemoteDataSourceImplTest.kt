@@ -15,13 +15,15 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+import org.mockito.Mockito
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class AuthRemoteDataSourceImplTest {
 
-    lateinit var authApi: AuthApi
+    private lateinit var authApi: AuthApi
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -31,22 +33,35 @@ class AuthRemoteDataSourceImplTest {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         authApi = mock()
     }
-    //todo()
+
+
+    @Suppress("BlockingMethodInNonBlockingContext")
     @Test
-    fun `WHEN login Expect correct Result`() = runTest{
+    fun `WHEN login Expect correct Result`() = runTest {
         val name = "Олег"
         val password = "1234"
         val responseString = "12355127328745"
 
-        val responseBody:ResponseBody = responseString.toResponseBody()
+        val responseBody: ResponseBody = responseString.toResponseBody()
 
         whenever(authApi.login(BaseUser(name, password))).thenReturn(responseBody)
 
-        val expected = responseString.toResponseBody()
+        val expected = "12355127328745"
 
-        val actual = authApi.login(BaseUser(name, password))
+        val actual = authApi.login(BaseUser("Олег", "1234")).string()
 
-        assertEquals(expected,actual)
+        assertEquals(expected, actual)
     }
 
+    @Test
+    fun `WHEN register Expect correct Result`() = runTest {
+        val baseUser = BaseUser("Олег", "1234")
+
+        val remoteRep = AuthRemoteDataSourceImpl(authApi)
+
+        remoteRep.register(baseUser)
+
+        verify(authApi, Mockito.times(1))
+            .register(BaseUser("Олег", "1234"))
+    }
 }

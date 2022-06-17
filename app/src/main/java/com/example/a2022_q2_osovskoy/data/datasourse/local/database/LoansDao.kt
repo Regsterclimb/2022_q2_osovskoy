@@ -16,7 +16,7 @@ interface LoansDao {
     suspend fun getAll(): List<LoanEntity>
 
     @Query("SELECT * FROM ${LoanEntity.TABLE_NAME} WHERE ${LoanEntity.ID} = :loanId")
-    suspend fun getLoanById(loanId: Long): LoanEntity
+    suspend fun getById(loanId: Long): LoanEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLoan(loanEntity: LoanEntity)

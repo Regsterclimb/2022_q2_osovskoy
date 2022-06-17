@@ -34,29 +34,31 @@ class LoansRemoteDataSourceImplTest {
 
     @Test
     fun `WHEN getAll Expect correct Result`() = runTest {
-        val loanResponse = LoanResponse(
-            "24",
-            "Олег",
-            "Олегович",
-            15000.0,
-            45,
-            "+1238493",
-            145,
-            "APPROVED",
-            8.5)
+        val responseList = listOf(
+            LoanResponse(
+                "24",
+                "Олег",
+                "Олегович",
+                15000.0,
+                45,
+                "+1238493",
+                145,
+                "APPROVED",
+                8.5))
 
-        whenever(loansApi.getAll()).thenReturn(listOf(loanResponse))
+        whenever(loansApi.getAll()).thenReturn(responseList)
 
-        val expected = listOf(LoanResponse(
-            "24",
-            "Олег",
-            "Олегович",
-            15000.0,
-            45,
-            "+1238493",
-            145,
-            "APPROVED",
-            8.5))
+        val expected = listOf(
+            LoanResponse(
+                "24",
+                "Олег",
+                "Олегович",
+                15000.0,
+                45,
+                "+1238493",
+                145,
+                "APPROVED",
+                8.5))
 
         val actual = loansApi.getAll()
 
@@ -78,13 +80,48 @@ class LoansRemoteDataSourceImplTest {
 
     @Test
     fun `WHEN requestLoan Expect correct Result`() = runTest {
-        val conditionResponse = LoanConditionResponse(45, 15000, 4.5)
+        val requestLoan = LoanRequest(
+            15000L,
+            "Олег",
+            "Олегович",
+            8.5,
+            45,
+            "1234838"
+        )
+        val loanResponse = LoanResponse(
+            "Олег",
+            "Олегович",
+            "24.12.2012",
+            15000.0,
+            45,
+            "1234838",
+            145,
+            "REGISTERED",
+            8.5
+        )
 
-        whenever(loansApi.getLoanCondition()).thenReturn(conditionResponse)
+        whenever(loansApi.request(requestLoan)).thenReturn(loanResponse)
 
-        val expected = LoanConditionResponse(45, 15000, 4.5)
+        val expected = LoanResponse(
+            "Олег",
+            "Олегович",
+            "24.12.2012",
+            15000.0,
+            45,
+            "1234838",
+            145,
+            "REGISTERED",
+            8.5
+        )
 
-        val actual = loansApi.getLoanCondition()
+        val actual = loansApi.request(LoanRequest(
+            15000L,
+            "Олег",
+            "Олегович",
+            8.5,
+            45,
+            "1234838"
+        ))
 
         assertEquals(expected, actual)
     }
@@ -92,7 +129,9 @@ class LoansRemoteDataSourceImplTest {
     @Test
     fun `WHEN getLoanById Expect correct Result`() = runTest {
         val loanId = 45L
-        val loanResponse = LoanResponse("24", "Олег",
+        val loanResponse = LoanResponse(
+            "24",
+            "Олег",
             "Олегович",
             15000.0,
             45,
@@ -103,52 +142,20 @@ class LoansRemoteDataSourceImplTest {
 
         whenever(loansApi.getLoanById(loanId)).thenReturn(loanResponse)
 
-        val expected = LoanResponse("24", "Олег",
+        val expected = LoanResponse(
+            "24",
+            "Олег",
             "Олегович",
             15000.0,
             45,
             "+1238493",
             45,
             "APPROVED",
-            8.5)
+            8.5
+        )
 
         val actual = loansApi.getLoanById(loanId)
 
         assertEquals(expected, actual)
     }
-    @Test
-    fun `WHEN loanRequest Expect correct Result`() = runTest {
-        val loanId = 45L
-        val loanRequest = LoanRequest(
-            15000L,
-            "Олег",
-            "Олегович",
-            8.5,
-            45,
-            "+1238493")
-        val loanResponse = LoanResponse("24", "Олег",
-            "Олегович",
-            15000.0,
-            45,
-            "+1238493",
-            45,
-            "APPROVED",
-            8.5)
-
-        whenever(loansApi.request(loanRequest)).thenReturn(loanResponse)
-
-        val expected = LoanResponse("24", "Олег",
-            "Олегович",
-            15000.0,
-            45,
-            "+1238493",
-            45,
-            "APPROVED",
-            8.5)
-
-        val actual = loansApi.request(loanRequest)
-
-        assertEquals(expected, actual)
-    }
-
 }
