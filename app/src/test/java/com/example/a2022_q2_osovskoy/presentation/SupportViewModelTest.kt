@@ -41,9 +41,9 @@ class SupportViewModelTest {
 
         val viewModel = SupportViewModel(getConfigUseCase)
 
-        val actual = viewModel.appAppConfigEvent.value
+        val actual = viewModel.appStartScreenEvent.value
 
-        val expected = AppConfigEvent.NavigateToRegistration(NavDestination.DEEP_REGISTRATION)
+        val expected = StartScreenEvent.NavigateToRegistration(NavDestination.DEEP_REGISTRATION)
 
         assertEquals(expected, actual)
     }
@@ -57,9 +57,9 @@ class SupportViewModelTest {
 
         val viewModel = SupportViewModel(getConfigUseCase)
 
-        val actual = viewModel.appAppConfigEvent.value
+        val actual = viewModel.appStartScreenEvent.value
 
-        val expected = AppConfigEvent.NavigateToLoanRequest(NavDestination.DEEP_LOAN_REQUEST)
+        val expected = StartScreenEvent.NavigateToLoanRequest(NavDestination.DEEP_LOAN_REQUEST)
 
         assertEquals(expected, actual)
     }
@@ -73,9 +73,9 @@ class SupportViewModelTest {
 
         val viewModel = SupportViewModel(getConfigUseCase)
 
-        val actual = viewModel.appAppConfigEvent.value
+        val actual = viewModel.appStartScreenEvent.value
 
-        val expected = AppConfigEvent.NavigateToHistory(NavDestination.DEEP_HISTORY)
+        val expected = StartScreenEvent.NavigateToHistory(NavDestination.DEEP_HISTORY)
 
         assertEquals(expected, actual)
     }

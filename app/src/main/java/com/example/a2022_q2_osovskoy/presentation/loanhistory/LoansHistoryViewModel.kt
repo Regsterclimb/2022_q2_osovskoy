@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
-import com.example.a2022_q2_osovskoy.domain.usecase.GetLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLocalLoansUseCase
+import com.example.a2022_q2_osovskoy.domain.usecase.GetRemoteLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.UpdateAppConfigUseCase
 import com.example.a2022_q2_osovskoy.utils.exceptions.*
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,7 +15,7 @@ import okio.IOException
 import javax.inject.Inject
 
 class LoansHistoryViewModel @Inject constructor(
-    private val getLoansUseCase: GetLoansUseCase,
+    private val getRemoteLoansUseCase: GetRemoteLoansUseCase,
     private val updateAppConfigUseCase: UpdateAppConfigUseCase,
     private val getLocalLoansUseCase: GetLocalLoansUseCase,
 ) : ViewModel() {
@@ -58,7 +58,7 @@ class LoansHistoryViewModel @Inject constructor(
     fun refreshLoans() {
         viewModelScope.launch(handler) {
             setLoading()
-            val list = getLoansUseCase()
+            val list = getRemoteLoansUseCase()
             _loansState.value = if (list.isNotEmpty()) {
                 LoansState.Success.Remote(list)
             } else {
@@ -74,5 +74,4 @@ class LoansHistoryViewModel @Inject constructor(
     private fun setLoading() {
         _loansState.value = LoansState.Loading
     }
-
 }

@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.BaseUser
-import com.example.a2022_q2_osovskoy.domain.usecase.auth.LogInUseCase
+import com.example.a2022_q2_osovskoy.domain.usecase.auth.LoginUseCase
 import com.example.a2022_q2_osovskoy.utils.exceptions.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import okio.IOException
 import javax.inject.Inject
 
-class AuthViewModel @Inject constructor(private val logInUseCase: LogInUseCase) : ViewModel() {
+class AuthViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel() {
 
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
@@ -29,7 +29,10 @@ class AuthViewModel @Inject constructor(private val logInUseCase: LogInUseCase) 
             is NotFoundException -> AuthState.Error.NotFound
             is ServerIsNotRespondingException -> AuthState.Error.ServerIsNotResponding
             is IOException -> AuthState.Error.NoInternetConnection
-            else -> AuthState.Error.Unknown
+            else -> {
+                exception.printStackTrace()
+                AuthState.Error.Unknown
+            }
         }
     }
 
@@ -53,12 +56,9 @@ class AuthViewModel @Inject constructor(private val logInUseCase: LogInUseCase) 
 
     private fun executeAuthRequest(name: String, password: String) {
         viewModelScope.launch(handler) {
-            val baseUser = BaseUser(name, password)
             _authState.value = AuthState.Loading
-            logInUseCase(baseUser)
+            loginUseCase(BaseUser(name, password))
             _authState.value = AuthState.Success
         }
     }
-
-
 }

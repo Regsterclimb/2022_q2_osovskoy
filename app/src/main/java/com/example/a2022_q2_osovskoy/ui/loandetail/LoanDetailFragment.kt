@@ -3,7 +3,6 @@ package com.example.a2022_q2_osovskoy.ui.loandetail
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
@@ -64,7 +63,6 @@ class LoanDetailFragment : DaggerFragment(R.layout.loan_details_fragment) {
     }
 
     private fun handleSuccess(state: LoanDetailState.Success) {
-        Log.d("handleSuccess", state.toString())
         showSuccess()
         with(binding) {
             when (state) {

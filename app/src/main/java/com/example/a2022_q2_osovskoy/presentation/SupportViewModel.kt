@@ -13,8 +13,8 @@ import javax.inject.Inject
 class SupportViewModel @Inject constructor(private val getAppConfigUseCase: GetAppConfigUseCase) :
     ViewModel() {
 
-    private val _appConfigState = SingleLiveEvent<AppConfigEvent>()
-    val appAppConfigEvent: LiveData<AppConfigEvent> = _appConfigState
+    private val _appConfigState = SingleLiveEvent<StartScreenEvent>()
+    val appStartScreenEvent: LiveData<StartScreenEvent> = _appConfigState
 
     init {
         viewModelScope.launch {
@@ -22,9 +22,9 @@ class SupportViewModel @Inject constructor(private val getAppConfigUseCase: GetA
         }
     }
 
-    private fun handleAppConfig(config: AppConfig): AppConfigEvent = when (config) {
-        AppConfig.UNAUTHORIZED -> AppConfigEvent.NavigateToRegistration(NavDestination.DEEP_REGISTRATION)
-        AppConfig.UNINSTRUCTED -> AppConfigEvent.NavigateToLoanRequest(NavDestination.DEEP_LOAN_REQUEST)
-        else -> AppConfigEvent.NavigateToHistory(NavDestination.DEEP_HISTORY)
+    private fun handleAppConfig(config: AppConfig): StartScreenEvent = when (config) {
+        AppConfig.UNAUTHORIZED -> StartScreenEvent.NavigateToRegistration(NavDestination.DEEP_REGISTRATION)
+        AppConfig.UNINSTRUCTED -> StartScreenEvent.NavigateToLoanRequest(NavDestination.DEEP_LOAN_REQUEST)
+        else -> StartScreenEvent.NavigateToHistory(NavDestination.DEEP_HISTORY)
     }
 }

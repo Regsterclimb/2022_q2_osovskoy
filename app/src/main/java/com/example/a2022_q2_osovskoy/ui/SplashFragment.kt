@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.a2022_q2_osovskoy.R
-import com.example.a2022_q2_osovskoy.presentation.AppConfigEvent
 import com.example.a2022_q2_osovskoy.presentation.MultiViewModelFactory
+import com.example.a2022_q2_osovskoy.presentation.StartScreenEvent
 import com.example.a2022_q2_osovskoy.presentation.SupportViewModel
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommand
 import com.example.a2022_q2_osovskoy.utils.navigation.NavCommands
@@ -26,7 +26,7 @@ class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.appAppConfigEvent.observe(viewLifecycleOwner) { event ->
+        viewModel.appStartScreenEvent.observe(viewLifecycleOwner) { event ->
                 navigateOnEvent(event)
         }
     }
@@ -43,9 +43,9 @@ class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
         )
     }
 
-    private fun navigateOnEvent(appConfigEvent: AppConfigEvent) = when (appConfigEvent) {
-            is AppConfigEvent.NavigateToLoanRequest-> openFragmentOnEvent(appConfigEvent.navDest)
-            is AppConfigEvent.NavigateToRegistration -> openFragmentOnEvent(appConfigEvent.navDest)
-            is AppConfigEvent.NavigateToHistory -> openFragmentOnEvent(appConfigEvent.navDest)
+    private fun navigateOnEvent(startScreenEvent: StartScreenEvent) = when (startScreenEvent) {
+            is StartScreenEvent.NavigateToLoanRequest-> openFragmentOnEvent(startScreenEvent.navDest)
+            is StartScreenEvent.NavigateToRegistration -> openFragmentOnEvent(startScreenEvent.navDest)
+            is StartScreenEvent.NavigateToHistory -> openFragmentOnEvent(startScreenEvent.navDest)
         }
 }

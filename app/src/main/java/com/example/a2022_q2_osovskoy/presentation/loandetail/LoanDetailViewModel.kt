@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class LoanDetailViewModel @Inject constructor(
     private val getRemoteLoanByIdUseCase: GetRemoteLoanByIdUseCase,
-    private val getLocalRemoteLoanByIdUseCase: GetLocalLoanByIdUseCase,
+    private val getLocalLoanByIdUseCase: GetLocalLoanByIdUseCase,
 ) : ViewModel() {
 
     private val _loanDetailState = MutableLiveData<LoanDetailState>()
@@ -39,7 +39,7 @@ class LoanDetailViewModel @Inject constructor(
     fun getLocalLoan(loanId: Long) {
         viewModelScope.launch(handler) {
             setLoading()
-            val detail = getLocalRemoteLoanByIdUseCase(loanId)
+            val detail = getLocalLoanByIdUseCase(loanId)
             _loanDetailState.value = LoanDetailState.Success.Local(detail)
             setApprove(detail)
         }

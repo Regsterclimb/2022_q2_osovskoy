@@ -7,8 +7,8 @@ sealed class LoansState {
     object Loading : LoansState()
 
     sealed class Success : LoansState() {
-        class Local(val localLoans:List<Loan>):Success()
-        class Remote(val remoteLoans:List<Loan>):Success()
+        data class Local(val localLoans:List<Loan>):Success()
+        data class Remote(val remoteLoans:List<Loan>):Success()
     }
 
     sealed class Error : LoansState() {

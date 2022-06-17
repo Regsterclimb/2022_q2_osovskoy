@@ -1,12 +1,10 @@
 package com.example.a2022_q2_osovskoy.presentation.loanrequest
 
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
-import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 
 sealed class LoanRequestState {
 
     data class Success(val loan: Loan) : LoanRequestState()
-    data class LoanConditionReceived(val loanCondition: LoanCondition) : LoanRequestState()
     object Loading : LoanRequestState()
     object Typing : LoanRequestState()
 

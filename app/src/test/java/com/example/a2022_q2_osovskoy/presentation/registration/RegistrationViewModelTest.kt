@@ -4,23 +4,19 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.a2022_q2_osovskoy.domain.entity.BaseUser
 import com.example.a2022_q2_osovskoy.domain.usecase.auth.RegisterUseCase
-import com.example.a2022_q2_osovskoy.utils.exceptions.BadRequestException
-import com.example.a2022_q2_osovskoy.utils.exceptions.ForbiddenException
-import com.example.a2022_q2_osovskoy.utils.exceptions.ServerIsNotRespondingException
-import com.example.a2022_q2_osovskoy.utils.exceptions.UnauthorizedException
+import com.example.a2022_q2_osovskoy.utils.exceptions.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import okio.IOException
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.mockito.Mockito
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
@@ -30,7 +26,7 @@ class RegistrationViewModelTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
-    lateinit var observer: Observer<RegState>
+    private lateinit var observer: Observer<RegState>
 
     @Before
     fun setUp() {
@@ -38,30 +34,43 @@ class RegistrationViewModelTest {
         registerUseCase = mock()
         observer = mock()
     }
-    //todo()
+
     @Test
-    fun `WHEN tryReg Expect regEvent RegStateLoading before RegStateSuccess `() = runTest {
-        val name = "Oлег"
-        val password = "1234"
-        /*val resultState: ResultState<Unit> = ResultState.Success(Unit)
-
-        Mockito.`when`(registerUseCase(BaseUser(name, password))).thenReturn(resultState)*/
+    fun `WHEN tryReg Expect regState RegStateTyping `() = runTest {
         val viewModel = RegistrationViewModel(registerUseCase)
-        viewModel.regState.observeForever(observer)
 
-        viewModel.tryReg(name, password)
+        viewModel.setTyping()
 
-        verify(observer).onChanged(RegState.Loading)
-        verify(observer).onChanged(RegState.Success)
+        val expected = RegState.Typing
+
+        val actual = viewModel.regState.value
+
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `WHEN tryReg Expect regEvent as RegStateInputErrorName`() = runTest {
+    fun `WHEN tryReg Expect regState RegStateSuccess `() = runTest {
+        val name = "Oлег"
+        val password = "1234"
+
+        whenever(registerUseCase(BaseUser(name, password))).thenReturn(Unit)
+        val viewModel = RegistrationViewModel(registerUseCase)
+
+        viewModel.tryReg(name, password)
+
+        val expected = RegState.Success
+
+        val actual = viewModel.regState.value
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `WHEN tryReg Expect regState as RegStateInputErrorName`() = runTest {
         val name = ""
         val password = "1234"
 
         val viewModel = RegistrationViewModel(registerUseCase)
-        viewModel.regState.observeForever(observer)
 
         viewModel.tryReg(name, password)
 
@@ -73,12 +82,11 @@ class RegistrationViewModelTest {
     }
 
     @Test
-    fun `WHEN tryReg Expect regEvent as RegStateInputErrorPassword`() = runTest {
+    fun `WHEN tryReg Expect regState as RegStateInputErrorPassword`() = runTest {
         val name = "Олег"
         val password = ""
 
         val viewModel = RegistrationViewModel(registerUseCase)
-        viewModel.regState.observeForever(observer)
 
         viewModel.tryReg(name, password)
 
@@ -90,79 +98,109 @@ class RegistrationViewModelTest {
     }
 
     @Test
-    fun `WHEN tryReg Expect regEvent error BadRequestException`() = runTest {
+    fun `WHEN tryReg Expect regState error BadRequestException`() = runTest {
         val name = "OЛЕГ"
         val password = "1234"
 
         val viewModel = RegistrationViewModel(registerUseCase)
-        Mockito.`when`(registerUseCase(BaseUser(name, password))).thenThrow(BadRequestException())
-        viewModel.regState.observeForever(observer)
+        whenever(registerUseCase(BaseUser(name, password))).thenThrow(BadRequestException())
 
         viewModel.tryReg(name, password)
 
-        verify(observer).onChanged(RegState.Loading)
-        verify(observer).onChanged(RegState.Error.BadRequest)
+        val expected = RegState.Error.BadRequest
+
+        val actual = viewModel.regState.value
+
+        assertEquals(expected, actual)
     }
+
     @Test
-    fun `WHEN tryReg Expect regEvent error NotFound`() = runTest {
+    fun `WHEN tryReg Expect regState error NotFound`() = runTest {
         val name = "OЛЕГ"
         val password = "1234"
 
         val viewModel = RegistrationViewModel(registerUseCase)
-        whenever(registerUseCase(BaseUser(name, password))).thenThrow()
-        viewModel.regState.observeForever(observer)
+        whenever(registerUseCase(BaseUser(name, password))).thenThrow(NotFoundException())
 
         viewModel.tryReg(name, password)
 
-        verify(observer).onChanged(RegState.Loading)
-        verify(observer).onChanged(RegState.Error.NotFound)
+        val expected = RegState.Error.NotFound
+
+        val actual = viewModel.regState.value
+
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `WHEN tryReg Expect regEvent error Unauthorized`() = runTest {
+    fun `WHEN tryReg Expect regState error Unauthorized`() = runTest {
         val name = "OЛЕГ"
         val password = "1234"
 
         val viewModel = RegistrationViewModel(registerUseCase)
+
         whenever(registerUseCase(BaseUser(name, password))).thenThrow(UnauthorizedException())
-        viewModel.regState.observeForever(observer)
 
         viewModel.tryReg(name, password)
 
-        verify(observer).onChanged(RegState.Loading)
-        verify(observer).onChanged(RegState.Error.Unauthorized)
+        val expected = RegState.Error.Unauthorized
+
+        val actual = viewModel.regState.value
+
+        assertEquals(expected, actual)
     }
+
     @Test
-    fun `WHEN tryReg Expect regEvent error Forbidden`() = runTest {
+    fun `WHEN tryReg Expect regState error Forbidden`() = runTest {
         val name = "OЛЕГ"
         val password = "1234"
 
         val viewModel = RegistrationViewModel(registerUseCase)
         whenever(registerUseCase(BaseUser(name, password))).thenThrow(ForbiddenException())
-        viewModel.regState.observeForever(observer)
 
         viewModel.tryReg(name, password)
 
-        verify(observer).onChanged(RegState.Loading)
-        verify(observer).onChanged(RegState.Error.Forbidden)
+        val expected = RegState.Error.Forbidden
+
+        val actual = viewModel.regState.value
+
+        assertEquals(expected, actual)
     }
+
     @Test
-    fun `WHEN tryReg Expect regEvent error ServerIsNotResponding`() = runTest {
+    fun `WHEN tryReg Expect regState error ServerIsNotResponding`() = runTest {
         val name = "OЛЕГ"
         val password = "1234"
 
         val viewModel = RegistrationViewModel(registerUseCase)
-        whenever(registerUseCase(BaseUser(name, password))).thenThrow(ServerIsNotRespondingException())
-        viewModel.regState.observeForever(observer)
+
+        whenever(registerUseCase(BaseUser(name,
+            password))).thenThrow(ServerIsNotRespondingException())
 
         viewModel.tryReg(name, password)
 
-        verify(observer).onChanged(RegState.Loading)
-        verify(observer).onChanged(RegState.Error.ServerIsNotResponding)
+        val expected = RegState.Error.ServerIsNotResponding
+
+        val actual = viewModel.regState.value
+
+        assertEquals(expected, actual)
     }
-    /*class BadRequestException : RuntimeException()
-    class UnauthorizedException : RuntimeException()
-    class ForbiddenException : RuntimeException()
-    class NotFoundException : RuntimeException()
-    class ServerIsNotRespondingException : RuntimeException()*/
+
+    @Test
+    fun `WHEN tryReg Expect regState error NoInternetConnection`() = runTest {
+        val name = "OЛЕГ"
+        val password = "1234"
+
+        val viewModel = RegistrationViewModel(registerUseCase)
+
+        whenever(registerUseCase(BaseUser(name,
+            password))).thenAnswer { throw IOException() }
+
+        viewModel.tryReg(name, password)
+
+        val expected = RegState.Error.NoInternetConnection
+
+        val actual = viewModel.regState.value
+
+        assertEquals(expected, actual)
+    }
 }

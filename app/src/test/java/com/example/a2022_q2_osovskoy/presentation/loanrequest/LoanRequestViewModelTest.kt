@@ -1,11 +1,12 @@
 package com.example.a2022_q2_osovskoy.presentation.loanrequest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import com.example.a2022_q2_osovskoy.domain.entity.LoanRequest
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanCondition
 import com.example.a2022_q2_osovskoy.domain.usecase.RequestLoanUseCase
+import com.example.a2022_q2_osovskoy.utils.exceptions.BadRequestException
+import com.example.a2022_q2_osovskoy.utils.exceptions.NotFoundException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -17,7 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class LoanRequestViewModelTest {
@@ -27,13 +28,10 @@ class LoanRequestViewModelTest {
 
     lateinit var requestLoanUseCase: RequestLoanUseCase
 
-    lateinit var observer: Observer<LoanRequestState>
-
     @Before
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         requestLoanUseCase = mock()
-        observer = mock()
     }
 
     @Test
@@ -45,25 +43,24 @@ class LoanRequestViewModelTest {
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
 
         viewModel.setLoanCondition(maxAmount, percent, period)
-        viewModel.loanRequestState.observeForever(observer)
 
-        val expected = LoanRequestState.LoanConditionReceived(LoanCondition(45, 15000, 8.5))
+        val expected = LoanCondition(45, 15000, 8.5)
 
-        verify(observer).onChanged(expected)
+        val actual = viewModel.loanCondition.value
+
+        assertEquals(expected, actual)
     }
 
     @Test
     fun `WHEN loanRequestState Expect InputErrorName`() = runTest {
-        val period = 45
-        val maxAmount = 15000L
-        val percent = 8.5
+        val loanCondition = LoanCondition(45, 15000L, 8.5)
         val name = ""
         val lastname = "Олегович"
         val phone = "12345678"
 
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
 
-        viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
+        viewModel.trySendRequest(loanCondition, name, lastname, phone)
 
         val expected = LoanRequestState.InputError.Name
 
@@ -74,15 +71,13 @@ class LoanRequestViewModelTest {
 
     @Test
     fun `WHEN loanRequestState Expect InputErrorLastName`() = runTest {
-        val period = 45
-        val maxAmount = 15000L
-        val percent = 8.5
+        val loanCondition = LoanCondition(45, 15000L, 8.5)
         val name = "Олег"
         val lastname = ""
         val phone = "12345678"
 
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
-        viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
+        viewModel.trySendRequest(loanCondition, name, lastname, phone)
 
 
         val expected = LoanRequestState.InputError.LastName
@@ -94,15 +89,13 @@ class LoanRequestViewModelTest {
 
     @Test
     fun `WHEN loanRequestState Expect InputErrorPhone`() = runTest {
-        val period = 45
-        val maxAmount = 15000L
-        val percent = 8.5
+        val loanCondition = LoanCondition(45, 15000L, 8.5)
         val name = "Олег"
         val lastname = "Олегович"
         val phone = ""
 
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
-        viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
+        viewModel.trySendRequest(loanCondition, name, lastname, phone)
 
         val expected = LoanRequestState.InputError.Phone
 
@@ -110,55 +103,94 @@ class LoanRequestViewModelTest {
 
         assertEquals(expected, actual)
     }
-        //todo()
-    @Test
-    fun `WHEN loanRequestState Expect Error`() = runTest {
-        val period = 45
-        val maxAmount = 15000L
-        val percent = 8.5
-        val name = "Олег"
-        val lastname = "Олегович"
-        val phone = "123456"
-
-        val loanRequest = LoanRequest(maxAmount, name, lastname, percent, period, phone)
-
-        /*val resultState: ResultState<Loan> = ResultState.Error()
-
-        Mockito.`when`(requestLoanUseCase(loanRequest)).thenReturn(resultState)*/
-        val viewModel = LoanRequestViewModel(requestLoanUseCase)
-        viewModel.loanRequestState.observeForever(observer)
-
-        viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
-
-        val expected = LoanRequestState.Error
-
-        verify(observer).onChanged(LoanRequestState.Loading)
-        verify(observer).onChanged(expected)
-    }
     //todo()
     @Test
     fun `WHEN loanRequestState Expect Success `() = runTest {
-        val period = 45
-        val maxAmount = 15000L
-        val percent = 8.5
-        val name = "Олег"
-        val lastname = "Олегович"
-        val phone = "123456"
+        val loanRequest = LoanRequest(
+            15000L,
+            "Олег",
+            "Олегович",
+            8.5,
+            45,
+            "123456"
+        )
 
-        val loanRequest = LoanRequest(maxAmount, name, lastname, percent, period, phone)
         val loan = Loan(135, 15000.0, "25.12.2021", "APPROVED", 8.5)
 
-        /*val resultState: ResultState<Loan> = ResultState.Success(loan)
-        Mockito.`when`(requestLoanUseCase(loanRequest)).thenReturn(resultState)*/
-
+        whenever(requestLoanUseCase(loanRequest)).thenReturn(loan)
         val viewModel = LoanRequestViewModel(requestLoanUseCase)
-        viewModel.loanRequestState.observeForever(observer)
 
-        viewModel.trySendRequest(maxAmount, percent, period, name, lastname, phone)
+        viewModel.trySendRequest(
+            LoanCondition(45, 15000L, 8.5),
+            "Олег",
+            "Олегович",
+            "123456"
+        )
 
-        val expected = LoanRequestState.Success(loan)
+        val expected = LoanRequestState.Success(
+            Loan(135,15000.0,"25.12.2021", "APPROVED", 8.5)
+        )
 
-        verify(observer).onChanged(LoanRequestState.Loading)
-        verify(observer).onChanged(expected)
+        val actual = viewModel.loanRequestState.value
+
+        assertEquals(expected, actual)
     }
+
+    @Test
+    fun `WHEN loanRequestState Expect ErrorBadRequest`() = runTest {
+        val loanRequest = LoanRequest(
+            15000L,
+            "Олег",
+            "Олегович",
+            8.5,
+            45,
+            "123456"
+        )
+
+        whenever(requestLoanUseCase(loanRequest)).thenThrow(BadRequestException())
+        val viewModel = LoanRequestViewModel(requestLoanUseCase)
+
+        viewModel.trySendRequest(
+            LoanCondition(45, 15000L, 8.5),
+            "Олег",
+            "Олегович",
+            "123456"
+        )
+
+        val expected = LoanRequestState.Error.BadRequest
+
+        val actual = viewModel.loanRequestState.value
+
+        assertEquals(expected, actual)
+    }
+
+    //todo() доделать errors
+    @Test
+    fun `WHEN loanRequestState Expect ErrorNotFound`() = runTest {
+        val loanRequest = LoanRequest(
+            15000L,
+            "Олег",
+            "Олегович",
+            8.5,
+            45,
+            "123456"
+        )
+
+        whenever(requestLoanUseCase(loanRequest)).thenThrow(NotFoundException())
+        val viewModel = LoanRequestViewModel(requestLoanUseCase)
+
+        viewModel.trySendRequest(
+            LoanCondition(45, 15000L, 8.5),
+            "Олег",
+            "Олегович",
+            "123456"
+        )
+
+        val expected = LoanRequestState.Error.NotFound
+
+        val actual = viewModel.loanRequestState.value
+
+        assertEquals(expected, actual)
+    }
+
 }

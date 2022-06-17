@@ -50,9 +50,6 @@ class LoanRequestFragment : DaggerFragment(R.layout.loan_request_fragment) {
                 is LoanRequestState.Loading -> handleLoadingEvent(true)
                 is LoanRequestState.Error -> handleRequestStateErrors(state)
                 LoanRequestState.Typing -> binding.requestErrorText.hide()
-                is LoanRequestState.LoanConditionReceived -> {
-                    handleLoanCondition(state.loanCondition)
-                }
                 LoanRequestState.InputError.Name -> loanNameInput.showErrorResId(R.string.inputNameEmpty)
                 LoanRequestState.InputError.LastName -> {
                     loanLastNameInput.showErrorResId(R.string.inputLastNameEmpty)
