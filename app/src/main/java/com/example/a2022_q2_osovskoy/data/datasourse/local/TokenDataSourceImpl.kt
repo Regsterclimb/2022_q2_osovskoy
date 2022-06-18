@@ -14,10 +14,9 @@ class TokenDataSourceImpl @Inject constructor(
         const val BEARER_DEFAULT_VALUE = ""
     }
 
-    override fun get(): String {
-        val bearer = encryptedSharedPreferences.getString(BEARER_KEY, BEARER_DEFAULT_VALUE)
-        if (bearer != null) return bearer else throw NullPointerException()
-    }
+    override fun get(): String =
+        encryptedSharedPreferences.getString(BEARER_KEY, BEARER_DEFAULT_VALUE)
+            ?: BEARER_DEFAULT_VALUE
 
     override suspend fun update(token: String) {
         encryptedSharedPreferences.edit {

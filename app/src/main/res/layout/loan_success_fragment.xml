@@ -22,6 +22,7 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/loanSuccessImage"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:src="@drawable/success_event" />
@@ -33,10 +34,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="@string/SuccessTitle" />
+                android:text="@string/successTitle" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/successSecondary"
                 style="@style/PrimaryText"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"

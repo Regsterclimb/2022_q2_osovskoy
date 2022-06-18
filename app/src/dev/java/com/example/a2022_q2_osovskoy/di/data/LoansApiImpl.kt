@@ -20,29 +20,11 @@ class LoansApiImpl(private val delegate: BehaviorDelegate<LoansApi>) : LoansApi 
             "APPROVED",
             8.5)
 
-        /*val loanRequest = LoanRequest(
-            15000L,
-            "Олег",
-            "Олегович",
-            8.5,
-            45,
-            "1234838")*/
-
         return delegate.returningResponse(response).request(loanRequest)
     }
 
     override suspend fun getAll(): List<LoanResponse> {
-        val responseList = listOf(
-            LoanResponse(
-                "24.12.14T.123",
-                "Олег",
-                "Олегович",
-                15000.0,
-                45,
-                "+1238493",
-                145,
-                "APPROVED",
-                8.5))
+        val responseList = getLoanResponseList()
 
         return delegate.returningResponse(responseList).getAll()
     }
@@ -67,4 +49,37 @@ class LoansApiImpl(private val delegate: BehaviorDelegate<LoansApi>) : LoansApi 
 
         return delegate.returningResponse(loanConditionResponse).getLoanCondition()
     }
+
+    private fun getLoanResponseList(): List<LoanResponse> = listOf(
+        LoanResponse(
+            "24.12.14T.123",
+            "Олег",
+            "Олегович",
+            15000.0,
+            45,
+            "+1238493",
+            144,
+            "APPROVED",
+            8.5),
+        LoanResponse(
+            "24.12.14T.123",
+            "Олег",
+            "Lorem",
+            15000.0,
+            45,
+            "88005553535",
+            145,
+            "REGISTERED",
+            8.5),
+        LoanResponse(
+            "24.12.14T.123",
+            "Lorem",
+            "Olegovich",
+            15000.0,
+            45,
+            "880088003535",
+            146,
+            "REJECTED",
+            8.5)
+    )
 }

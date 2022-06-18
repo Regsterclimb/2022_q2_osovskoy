@@ -17,7 +17,7 @@ import javax.inject.Inject
 class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
 
     @Inject
-    lateinit var multiViewModelFactory: MultiViewModelFactory
+    lateinit var  multiViewModelFactory: MultiViewModelFactory
 
     private val viewModel by lazy {
         ViewModelProvider(this, multiViewModelFactory)[SupportViewModel::class.java]
@@ -27,7 +27,7 @@ class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.appStartScreenEvent.observe(viewLifecycleOwner) { event ->
-                navigateOnEvent(event)
+            navigateOnEvent(event)
         }
     }
 
@@ -44,8 +44,8 @@ class SplashFragment : DaggerFragment(R.layout.splash_fragment) {
     }
 
     private fun navigateOnEvent(startScreenEvent: StartScreenEvent) = when (startScreenEvent) {
-            is StartScreenEvent.NavigateToLoanRequest-> openFragmentOnEvent(startScreenEvent.navDest)
-            is StartScreenEvent.NavigateToRegistration -> openFragmentOnEvent(startScreenEvent.navDest)
-            is StartScreenEvent.NavigateToHistory -> openFragmentOnEvent(startScreenEvent.navDest)
-        }
+        is StartScreenEvent.NavigateToLoanRequest -> openFragmentOnEvent(startScreenEvent.navDest)
+        is StartScreenEvent.NavigateToRegistration -> openFragmentOnEvent(startScreenEvent.navDest)
+        is StartScreenEvent.NavigateToHistory -> openFragmentOnEvent(startScreenEvent.navDest)
+    }
 }

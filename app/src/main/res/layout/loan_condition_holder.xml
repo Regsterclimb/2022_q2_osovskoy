@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="@id/guidelineTop" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/mainImage"
         android:layout_width="80dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/bannerContainer"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         app:barrierDirection="right"
         app:barrierMargin="16dp"
-        app:constraint_referenced_ids="imageView" />
+        app:constraint_referenced_ids="mainImage" />
 
     <TextView
         android:id="@+id/requestAmountRow"

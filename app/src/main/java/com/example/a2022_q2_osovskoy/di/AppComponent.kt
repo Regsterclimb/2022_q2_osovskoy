@@ -12,8 +12,7 @@ import dagger.android.support.AndroidSupportInjectionModule
     AndroidSupportInjectionModule::class,
     DataModule::class,
     DomainModule::class,
-    ActivityModule::class,
-])
+    ActivityModule::class])
 @AppScope
 interface AppComponent : AndroidInjector<App> {
 

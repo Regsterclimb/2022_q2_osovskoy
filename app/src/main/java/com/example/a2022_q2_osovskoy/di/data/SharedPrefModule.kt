@@ -14,8 +14,8 @@ import dagger.Provides
 class SharedPrefModule {
 
     companion object {
-        private const val SHARED_PREFS_KEY = "my_prefs"
-        private const val SECRET_SHARED_PREFS_KEY = "secret_shared_prefs"
+        const val SHARED_PREFS_KEY = "my_prefs"
+        const val SECRET_SHARED_PREFS_KEY = "secret_shared_prefs"
     }
 
     @Provides

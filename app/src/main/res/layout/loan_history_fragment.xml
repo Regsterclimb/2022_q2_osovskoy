@@ -34,24 +34,24 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="номер"
+        android:text="@string/historyId"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrierRequestNewButton" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/historyDateAndAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
-        android:text="дата,сумма"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        android:text="@string/historyDateAmount"
+        app:layout_constraintEnd_toStartOf="@+id/historyStatus"
         app:layout_constraintStart_toEndOf="@id/historyLoanId"
         app:layout_constraintTop_toTopOf="@id/barrierRequestNewButton" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/historyStatus"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="historyLoanId,textView3,textView4" />
+        app:constraint_referenced_ids="historyLoanId,historyDateAndAmount,historyStatus" />
 
     <ProgressBar
         android:id="@+id/historyProgressBar"

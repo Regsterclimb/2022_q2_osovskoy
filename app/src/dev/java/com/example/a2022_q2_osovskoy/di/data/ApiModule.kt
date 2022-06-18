@@ -13,10 +13,9 @@ import java.util.concurrent.TimeUnit
 @Module
 class ApiModule {
 
-
     private fun getMockAuthRetrofit(retrofit: Retrofit): AuthApi {
         val networkBehavior = NetworkBehavior.create()
-        networkBehavior.setDelay(100L,TimeUnit.MILLISECONDS)
+        networkBehavior.setDelay(500L,TimeUnit.MILLISECONDS)
 
         val mockRetrofit = MockRetrofit.Builder(retrofit).networkBehavior(networkBehavior).build()
 

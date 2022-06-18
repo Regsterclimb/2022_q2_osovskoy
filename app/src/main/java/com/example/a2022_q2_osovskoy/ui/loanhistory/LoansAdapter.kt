@@ -32,7 +32,10 @@ class LoanViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(loan: Loan, onLoanClick: (loanId: Long) -> Unit) {
         with(loan) {
             with(binding) {
-                loanItemAmount.text = amount.toString()
+                loanItemAmount.apply {
+                    text = amount.toLong().toString()
+                    append(context.getString(R.string.addRub))
+                }
                 loanItemDate.text = date
                 loanItemId.text = id.toString()
                 loanItemStatus.apply {

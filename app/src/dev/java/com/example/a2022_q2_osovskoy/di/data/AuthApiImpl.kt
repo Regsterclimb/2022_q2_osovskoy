@@ -22,5 +22,4 @@ class AuthApiImpl(private val delegate: BehaviorDelegate<AuthApi>) : AuthApi {
     override suspend fun register(baseUser: BaseUser) {
         delegate.returningResponse(Unit).register(baseUser)
     }
-
 }

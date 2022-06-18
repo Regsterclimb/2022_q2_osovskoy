@@ -25,7 +25,7 @@
     <string name="loanInputAmount">сумма</string>
     <string name="loanInputPeriod">срок</string>
     <string name="requestSuccessText">Заявка оформлена</string>
-    <string name="status">Статус</string>
+    <string name="status">статус</string>
     <string name="settings">settings</string>
     <string name="cardRequestText">Ваша Банковская карта[Visa,MasterCard] под рукой, нужны только именные карты с CVV2 кодом на обороте</string>
     <string name="passportText">Цветной скан или копия Российского Паспорта ИНН, актуальная прописка на территории РФ</string>
@@ -45,7 +45,7 @@
     <string name="requestPercentRow">Процент :</string>
     <string name="requestPeriodRow">Срок:</string>
     <string name="requestButtonText">Оформить Займ</string>
-    <string name="SuccessTitle">УСПЕХ!</string>
+    <string name="successTitle">УСПЕХ!</string>
     <string name="requestHistoryButtonText">посмотреть историю</string>
     <string name="requestDetailsButtonText">Детали займа</string>
     <string name="loanInstruction">вводим имя фамилию телефон и получаем свой займ</string>
@@ -77,5 +77,7 @@
     <string name="addPercent">%</string>
     <string name="addRub">руб</string>
     <string name="addDays">дн.</string>
+    <string name="historyId">номер</string>
+    <string name="historyDateAmount">дата,сумма</string>
 
 </resources>
