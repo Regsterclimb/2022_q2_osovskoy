@@ -10,7 +10,7 @@ abstract class KTestCase(
     dataProducer = { action -> action?.invoke(Unit) }
 ) {
     private companion object {
-        const val FLAKY_SAFETY_TIMEOUT = 5000L
+        const val FLAKY_SAFETY_TIMEOUT = 10000L
 
         fun getBuilder(): Kaspresso.Builder =
             Kaspresso.Builder.simple().apply {

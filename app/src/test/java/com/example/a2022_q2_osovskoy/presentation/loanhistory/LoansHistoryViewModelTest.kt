@@ -2,6 +2,7 @@ package com.example.a2022_q2_osovskoy.presentation.loanhistory
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLocalLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.GetRemoteLoansUseCase
@@ -19,8 +20,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+import org.mockito.Mockito
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
@@ -43,7 +46,19 @@ class LoansHistoryViewModelTest {
         observer = mock()
     }
 
-    //todo() void method appconfig change
+    @Test
+    fun `WHEN updateAppConfig Expect correct Result`() = runTest {
+        val appConfig = AppConfig.BASE
+        val viewModel = LoansHistoryViewModel(
+            getRemoteLoansUseCase,
+            updateAppConfigUseCase,
+            getLocalLoansUseCase)
+
+        viewModel.updateAppConfig(appConfig)
+
+        verify(updateAppConfigUseCase, Mockito.times(1)).invoke(AppConfig.BASE)
+    }
+
 
     @Test
     fun `WHEN getLocalLoans Expect loansState SuccessLocal`() = runTest {
@@ -85,7 +100,7 @@ class LoansHistoryViewModelTest {
     }
 
     @Test
-    fun `WHEN getLocalLoans Expect loansState ErrorUnknow`() = runTest {
+    fun `WHEN getLocalLoans Expect loansState ErrorUnknown`() = runTest {
 
         whenever(getLocalLoansUseCase()).doAnswer { throw Throwable() }
         val viewModel = LoansHistoryViewModel(

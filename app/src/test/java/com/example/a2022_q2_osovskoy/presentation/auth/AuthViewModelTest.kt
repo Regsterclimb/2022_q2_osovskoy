@@ -17,6 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 
@@ -37,11 +38,11 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryReg Expect authStateInputErrorName`() = runTest {
+    fun `WHEN tryAuth Expect authState InputErrorName`() = runTest {
         val name = ""
         val password = "1234"
 
-        whenever(loginUseCase(BaseUser(name, password)))
+        whenever(loginUseCase(BaseUser(name, password))).thenReturn(Unit)
         val viewModel = AuthViewModel(loginUseCase)
 
         viewModel.tryAuth(name, password)
@@ -54,11 +55,11 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryReg Expect authStateInputErrorPassword`() = runTest {
+    fun `WHEN tryAuth Expect authState InputErrorPassword`() = runTest {
         val name = "Олег"
         val password = ""
 
-        whenever(loginUseCase(BaseUser(name, password)))
+        whenever(loginUseCase(BaseUser(name, password))).thenReturn(Unit)
         val viewModel = AuthViewModel(loginUseCase)
 
         viewModel.tryAuth(name, password)
@@ -71,7 +72,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryAuth Expect authStateTyping`() = runTest {
+    fun `WHEN tryAuth Expect authState Typing`() = runTest {
         val viewModel = AuthViewModel(loginUseCase)
 
         viewModel.setTyping()
@@ -84,7 +85,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryReg Expect authStateSuccess`() = runTest {
+    fun `WHEN tryAuth Expect authState Success`() = runTest {
         val name = "Oлег"
         val password = "1234"
 
@@ -101,14 +102,13 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryAuth Expect authStateBadRequest`() = runTest {
+    fun `WHEN tryAuth Expect authState BadRequest`() = runTest {
         val name = "Oлег"
         val password = "1234"
         val base = BaseUser(name, password)
 
-        val viewModel = AuthViewModel(loginUseCase)
-
         whenever(loginUseCase(base)).thenThrow(BadRequestException())
+        val viewModel = AuthViewModel(loginUseCase)
 
         viewModel.tryAuth(name, password)
 
@@ -120,7 +120,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryAuth Expect authStateUnauthorized`() = runTest {
+    fun `WHEN tryAuth Expect authState Unauthorized`() = runTest {
         val name = "Oлег"
         val password = "1234"
         val base = BaseUser(name, password)
@@ -139,14 +139,13 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryAuth Expect authStateForbidden`() = runTest {
+    fun `WHEN tryAuth Expect authState Forbidden`() = runTest {
         val name = "Oлег"
         val password = "1234"
         val base = BaseUser(name, password)
 
-        val viewModel = AuthViewModel(loginUseCase)
-
         whenever(loginUseCase(base)).thenThrow(ForbiddenException())
+        val viewModel = AuthViewModel(loginUseCase)
 
         viewModel.tryAuth(name, password)
 
@@ -158,7 +157,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryAuth Expect authStateNotFoundException`() = runTest {
+    fun `WHEN tryAuth Expect authState NotFoundException`() = runTest {
         val name = "Oлег"
         val password = "1234"
         val base = BaseUser(name, password)
@@ -177,7 +176,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryAuth Expect authStateServerIsNotResponding`() = runTest {
+    fun `WHEN tryAuth Expect authState ServerIsNotResponding`() = runTest {
         val name = "Oлег"
         val password = "1234"
         val base = BaseUser(name, password)
@@ -196,7 +195,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `WHEN tryAuth Expect authStateNoInternetConnection`() = runTest {
+    fun `WHEN tryAuth Expect authState NoInternetConnection`() = runTest {
         val name = "Oлег"
         val password = "1234"
         val base = BaseUser(name, password)
@@ -212,5 +211,18 @@ class AuthViewModelTest {
         val actual = viewModel.authState.value
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `WHEN tryAuth Expect authState Loading`() = runTest {
+        val name = "Oлег"
+        val password = "1234"
+
+        whenever(loginUseCase(BaseUser(name, password))).thenReturn(Unit)
+        val viewModel = AuthViewModel(loginUseCase)
+        viewModel.authState.observeForever(observer)
+        viewModel.tryAuth(name, password)
+
+        verify(observer).onChanged(AuthState.Loading)
     }
 }

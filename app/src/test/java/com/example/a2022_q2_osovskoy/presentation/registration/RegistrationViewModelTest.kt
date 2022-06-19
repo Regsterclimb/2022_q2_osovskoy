@@ -17,6 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
@@ -63,6 +64,20 @@ class RegistrationViewModelTest {
         val actual = viewModel.regState.value
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `WHEN tryReg Expect regState RegStateLoading `() = runTest {
+        val name = "Oлег"
+        val password = "1234"
+
+        whenever(registerUseCase(BaseUser(name, password))).thenReturn(Unit)
+        val viewModel = RegistrationViewModel(registerUseCase)
+        viewModel.regState.observeForever(observer)
+
+        viewModel.tryReg(name, password)
+
+        verify(observer).onChanged(RegState.Loading)
     }
 
     @Test

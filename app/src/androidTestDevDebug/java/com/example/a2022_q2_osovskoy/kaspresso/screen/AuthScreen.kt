@@ -12,7 +12,6 @@ object AuthScreen : Screen<AuthScreen>() {
 
     val authTitle = KTextView { withId(R.id.authTitle) }
     val authSignUp = KTextView { withId(R.id.authSignUpText) }
-    val authScroll = KScrollView{withId(R.id.authScroll)}
 
     val authNameInput = KTextInputLayout { withId(R.id.authNameInput) }
     val authNameEdit = KEditText { withId(R.id.authNameEdit) }

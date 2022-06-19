@@ -153,9 +153,7 @@ class LoanConditionScreenTest : KTestCase() {
             step("click onRequest") {
                 LoanConditionScreen {
                     conditionList {
-                        scrollTo()
                         childAt<LoanConditionScreen.LoanConditionHolder>(0) {
-                            scrollTo()
                             requestButton {
                                 isDisplayed()
                                 click()

@@ -284,7 +284,7 @@ class AuthScreenTest : KTestCase() {
                     }
                     step("check nav") {
                         LoanConditionScreen {
-                            swipeRefresh.isDisplayed()
+                            conditionTitle.isDisplayed()
                         }
                     }
                 }

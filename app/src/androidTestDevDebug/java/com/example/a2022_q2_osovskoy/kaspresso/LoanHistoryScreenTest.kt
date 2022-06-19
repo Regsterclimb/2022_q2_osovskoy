@@ -170,8 +170,6 @@ class LoanHistoryScreenTest : KTestCase() {
     private fun navToHistory() {
         LoanConditionScreen {
             openHistory {
-                scrollTo()
-                isDisplayed()
                 click()
             }
         }

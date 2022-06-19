@@ -5,7 +5,6 @@ import com.agoda.kakao.image.KImageView
 import com.agoda.kakao.recycler.KRecyclerItem
 import com.agoda.kakao.recycler.KRecyclerView
 import com.agoda.kakao.screen.Screen
-import com.agoda.kakao.swiperefresh.KSwipeRefreshLayout
 import com.agoda.kakao.tabs.KTabLayout
 import com.agoda.kakao.text.KButton
 import com.agoda.kakao.text.KTextView
@@ -19,8 +18,6 @@ object LoanConditionScreen : Screen<LoanConditionScreen>() {
     val instructionTab = KTabLayout { withId(R.id.instructionValue) }
 
     val conditionTitle = KTextView { withId(R.id.conditionTitle) }
-
-    val swipeRefresh = KSwipeRefreshLayout {withId(R.id.loanConditionSwipeRefresh)}
 
     val conditionList = KRecyclerView(
         builder = { withId(R.id.loanConditionRecycler) },

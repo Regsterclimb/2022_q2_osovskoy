@@ -2,7 +2,6 @@ package com.example.a2022_q2_osovskoy.ui.registration
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
@@ -43,7 +42,6 @@ class RegistrationFragment : DaggerFragment(R.layout.registration_fragment) {
     }
 
     private fun handleRegState(state: RegState) {
-        Log.e("RegistrationFragment",state.toString())
         when (state) {
             RegState.Loading -> loadingEvent(true)
             RegState.InputError.Name -> binding.regNameInput.showErrorResId(R.string.inputName)

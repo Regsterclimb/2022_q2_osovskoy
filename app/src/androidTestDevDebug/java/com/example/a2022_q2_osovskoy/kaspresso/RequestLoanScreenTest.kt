@@ -40,9 +40,13 @@ class RequestLoanScreenTest : KTestCase() {
     @TestCase("RequestScreen Test-1", "correct views shown")
     fun checkViews() {
         run {
-            step("nav to Request") {
+            step("nav to Auth") {
                 navToAuth()
+            }
+            step("nav to condition"){
                 navToCondition()
+            }
+            step("nav to Request"){
                 navToRequest()
             }
             step("check") {
@@ -110,9 +114,13 @@ class RequestLoanScreenTest : KTestCase() {
         val phone = ""
 
         run {
-            step("nav to Request") {
+            step("nav to Auth") {
                 navToAuth()
+            }
+            step("nav to condition"){
                 navToCondition()
+            }
+            step("nav to Request"){
                 navToRequest()
             }
             step("type fields") {
@@ -157,9 +165,13 @@ class RequestLoanScreenTest : KTestCase() {
         val phone = "1234"
 
         run {
-            step("nav to Request") {
+            step("nav to Auth") {
                 navToAuth()
+            }
+            step("nav to condition"){
                 navToCondition()
+            }
+            step("nav to Request"){
                 navToRequest()
             }
             step("type fields") {
@@ -208,9 +220,13 @@ class RequestLoanScreenTest : KTestCase() {
         val phone = "1234"
 
         run {
-            step("nav to Request") {
+            step("nav to Auth") {
                 navToAuth()
+            }
+            step("nav to condition"){
                 navToCondition()
+            }
+            step("nav to Request"){
                 navToRequest()
             }
             step("type fields") {
@@ -259,9 +275,13 @@ class RequestLoanScreenTest : KTestCase() {
         val phone = ""
 
         run {
-            step("nav to Request") {
+            step("nav to Auth") {
                 navToAuth()
+            }
+            step("nav to condition"){
                 navToCondition()
+            }
+            step("nav to Request"){
                 navToRequest()
             }
             step("type fields") {
@@ -310,9 +330,13 @@ class RequestLoanScreenTest : KTestCase() {
         val phone = "88005553535"
 
         run {
-            step("nav to Request") {
+            step("nav to Auth") {
                 navToAuth()
+            }
+            step("nav to condition"){
                 navToCondition()
+            }
+            step("nav to Request"){
                 navToRequest()
             }
             step("type fields") {
@@ -343,7 +367,6 @@ class RequestLoanScreenTest : KTestCase() {
                         step("nav to Success") {
                             RequestSuccessScreen{
                                 successTitle{
-                                    scrollTo()
                                     isDisplayed()
                                 }
                             }
@@ -354,13 +377,11 @@ class RequestLoanScreenTest : KTestCase() {
         }
     }
 
-
     private fun navToRequest() {
         LoanConditionScreen {
             conditionList {
                 scrollTo()
                 childAt<LoanConditionScreen.LoanConditionHolder>(0) {
-                    scrollTo()
                     requestButton {
                         isDisplayed()
                         click()

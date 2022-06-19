@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.example.a2022_q2_osovskoy.domain.entity.loan.LoanDetail
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLocalLoanByIdUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.GetRemoteLoanByIdUseCase
+import com.example.a2022_q2_osovskoy.utils.exceptions.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -39,7 +40,7 @@ class LoanDetailViewModelTest {
     }
 
     @Test
-    fun `WHEN getLocalLoan Expect loansState SuccessLocal`() = runTest {
+    fun `WHEN getLocalLoan Expect loansState Success Local`() = runTest {
         val loanDetail = LoanDetail(
             "Олег",
             145,
@@ -88,7 +89,6 @@ class LoanDetailViewModelTest {
         viewModel.getLocalLoan(145)
 
         val expected = LoanDetailState.Approved(true)
-
 
         val actual = viewModel.loanState.value
 
@@ -262,9 +262,8 @@ class LoanDetailViewModelTest {
         verify(observer).onChanged(expected)
     }
 
-    //todo()ошибки
     @Test
-    fun `WHEN getRemoteLoan Expect loansState ErrorNoInternetConnection`() = runTest {
+    fun `WHEN getRemoteLoan Expect loansState Error NoInternetConnection`() = runTest {
 
         whenever(getRemoteLoanByIdUseCase(145)).thenAnswer { throw IOException() }
         val viewModel = LoanDetailViewModel(getRemoteLoanByIdUseCase, getLocalByIDLoanUseCase)
@@ -272,6 +271,79 @@ class LoanDetailViewModelTest {
         viewModel.getRemoteLoan(145)
 
         val expected = LoanDetailState.Error.NoInternetConnection
+
+        val actual = viewModel.loanState.value
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `WHEN getRemoteLoan Expect loansState ErrorNotFound`() = runTest {
+
+        whenever(getRemoteLoanByIdUseCase(145)).thenThrow(NotFoundException())
+        val viewModel = LoanDetailViewModel(getRemoteLoanByIdUseCase, getLocalByIDLoanUseCase)
+
+        viewModel.getRemoteLoan(145)
+
+        val expected = LoanDetailState.Error.NotFound
+
+        val actual = viewModel.loanState.value
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `WHEN getRemoteLoan Expect loansState ErrorBadRequest`() = runTest {
+
+        whenever(getRemoteLoanByIdUseCase(145)).thenThrow(BadRequestException())
+        val viewModel = LoanDetailViewModel(getRemoteLoanByIdUseCase, getLocalByIDLoanUseCase)
+
+        viewModel.getRemoteLoan(145)
+
+        val expected = LoanDetailState.Error.BadRequest
+
+        val actual = viewModel.loanState.value
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `WHEN getRemoteLoan Expect loansState ErrorUnauthorizedException`() = runTest {
+
+        whenever(getRemoteLoanByIdUseCase(145)).thenThrow(UnauthorizedException())
+        val viewModel = LoanDetailViewModel(getRemoteLoanByIdUseCase, getLocalByIDLoanUseCase)
+
+        viewModel.getRemoteLoan(145)
+
+        val expected = LoanDetailState.Error.Unauthorized
+
+        val actual = viewModel.loanState.value
+
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun `WHEN getRemoteLoan Expect loansState ErrorForbidden`() = runTest {
+
+        whenever(getRemoteLoanByIdUseCase(145)).thenThrow(ForbiddenException())
+        val viewModel = LoanDetailViewModel(getRemoteLoanByIdUseCase, getLocalByIDLoanUseCase)
+
+        viewModel.getRemoteLoan(145)
+
+        val expected = LoanDetailState.Error.Forbidden
+
+        val actual = viewModel.loanState.value
+
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun `WHEN getRemoteLoan Expect loansState ErrorServerNotResponding`() = runTest {
+
+        whenever(getRemoteLoanByIdUseCase(145)).thenThrow(ServerIsNotRespondingException())
+        val viewModel = LoanDetailViewModel(getRemoteLoanByIdUseCase, getLocalByIDLoanUseCase)
+
+        viewModel.getRemoteLoan(145)
+
+        val expected = LoanDetailState.Error.ServerNotResponding
 
         val actual = viewModel.loanState.value
 
