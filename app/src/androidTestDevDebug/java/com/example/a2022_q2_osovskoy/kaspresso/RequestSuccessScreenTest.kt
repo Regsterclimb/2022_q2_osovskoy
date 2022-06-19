@@ -2,6 +2,7 @@ package com.example.a2022_q2_osovskoy.kaspresso
 
 import android.content.Context
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.di.data.SharedPrefModule
@@ -13,7 +14,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class RequestSuccessScreenTest : KTestCase() {
 
     @get:Rule
@@ -47,18 +50,22 @@ class RequestSuccessScreenTest : KTestCase() {
                 step("check") {
                     loanSuccessImage.isDisplayed()
                     successTitle {
+                        scrollTo()
                         isDisplayed()
                         hasText(R.string.successTitle)
                     }
                     successSecondary {
+                        scrollTo()
                         isDisplayed()
                         hasText(R.string.requestSuccessText)
                     }
                     navToHistoryButton {
+                        scrollTo()
                         isDisplayed()
                         hasText(R.string.requestHistoryButtonText)
                     }
                     navToDetailButton {
+                        scrollTo()
                         isDisplayed()
                         hasText(R.string.requestDetailsButtonText)
                     }
@@ -80,6 +87,7 @@ class RequestSuccessScreenTest : KTestCase() {
             RequestSuccessScreen {
                 step("check") {
                     navToDetailButton {
+                        scrollTo()
                         isDisplayed()
                         click()
                     }
@@ -101,6 +109,7 @@ class RequestSuccessScreenTest : KTestCase() {
             RequestSuccessScreen {
                 step("click") {
                     navToHistoryButton {
+                        scrollTo()
                         isDisplayed()
                         click()
                     }
@@ -147,6 +156,7 @@ class RequestSuccessScreenTest : KTestCase() {
     private fun navToRequest() {
         LoanConditionScreen {
             conditionList {
+                scrollTo()
                 childAt<LoanConditionScreen.LoanConditionHolder>(0) {
                     requestButton {
                         isDisplayed()
@@ -160,6 +170,7 @@ class RequestSuccessScreenTest : KTestCase() {
     private fun navToAuth() {
         RegScreen {
             authText {
+                scrollTo()
                 isDisplayed()
                 click()
             }
@@ -181,6 +192,7 @@ class RequestSuccessScreenTest : KTestCase() {
             }
             closeSoftKeyboard()
             authButton {
+                scrollTo()
                 isDisplayed()
                 click()
             }

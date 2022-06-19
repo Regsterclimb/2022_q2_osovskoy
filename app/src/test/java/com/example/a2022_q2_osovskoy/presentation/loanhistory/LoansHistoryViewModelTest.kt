@@ -42,6 +42,7 @@ class LoansHistoryViewModelTest {
         getRemoteLoansUseCase = mock()
         observer = mock()
     }
+
     //todo() void method appconfig change
 
     @Test

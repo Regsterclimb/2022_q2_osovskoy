@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.di.data.SharedPrefModule
+import com.example.a2022_q2_osovskoy.kaspresso.model.LoanConditionTest
 import com.example.a2022_q2_osovskoy.kaspresso.screen.AuthScreen
 import com.example.a2022_q2_osovskoy.kaspresso.screen.LoanConditionScreen
 import com.example.a2022_q2_osovskoy.kaspresso.screen.LoanRequestScreen
@@ -59,6 +60,7 @@ class LoanConditionScreenTest : KTestCase() {
                     }
                     instructionTab.isVisible()
                     conditionTitle {
+                        scrollTo()
                         hasText(R.string.loanConditionTitle)
                         isDisplayed()
                     }
@@ -67,6 +69,7 @@ class LoanConditionScreenTest : KTestCase() {
             }
         }
     }
+
     private val loanConditionList =
         listOf(LoanConditionTest("45дн.", "15000руб", "8.5%"))
 
@@ -76,6 +79,7 @@ class LoanConditionScreenTest : KTestCase() {
             LoanConditionScreen {
                 conditionList {
                     childAt<LoanConditionScreen.LoanConditionHolder>(index) {
+                        scrollTo()
                         requestAmountRow {
                             isDisplayed()
                             hasText(R.string.conditionAmountRow)
@@ -149,7 +153,9 @@ class LoanConditionScreenTest : KTestCase() {
             step("click onRequest") {
                 LoanConditionScreen {
                     conditionList {
+                        scrollTo()
                         childAt<LoanConditionScreen.LoanConditionHolder>(0) {
+                            scrollTo()
                             requestButton {
                                 isDisplayed()
                                 click()
@@ -178,6 +184,7 @@ class LoanConditionScreenTest : KTestCase() {
             step("click OpenHistory") {
                 LoanConditionScreen {
                     openHistory {
+                        scrollTo()
                         isDisplayed()
                         click()
                     }
@@ -188,6 +195,7 @@ class LoanConditionScreenTest : KTestCase() {
     private fun navToAuth() {
         RegScreen {
             authText {
+                scrollTo()
                 isDisplayed()
                 click()
             }
@@ -209,6 +217,7 @@ class LoanConditionScreenTest : KTestCase() {
             }
             closeSoftKeyboard()
             authButton {
+                scrollTo()
                 isDisplayed()
                 click()
             }

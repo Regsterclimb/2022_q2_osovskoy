@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.kaspresso.authtest
+package com.example.a2022_q2_osovskoy.kaspresso
 
 import android.content.Context
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -41,6 +41,7 @@ class AuthScreenTest : KTestCase() {
     private fun openAuth() {
         RegScreen {
             authText {
+                scrollTo()
                 isDisplayed()
                 click()
             }
@@ -65,6 +66,7 @@ class AuthScreenTest : KTestCase() {
                         isDisplayed()
                     }
                     authNameInput {
+                        scrollTo()
                         hasHint(R.string.inputName)
                         isDisplayed()
                     }
@@ -72,6 +74,7 @@ class AuthScreenTest : KTestCase() {
                         isDisplayed()
                     }
                     authPasswordInput {
+                        scrollTo()
                         hasHint(R.string.inputPassword)
                         isDisplayed()
                     }
@@ -79,10 +82,12 @@ class AuthScreenTest : KTestCase() {
                         isDisplayed()
                     }
                     authButton {
+                        scrollTo()
                         hasText(R.string.authButtonText)
                         isDisplayed()
                     }
                     regText {
+                        scrollTo()
                         hasText(R.string.startAuthText)
                         isDisplayed()
                     }
@@ -109,17 +114,20 @@ class AuthScreenTest : KTestCase() {
                     }
                     closeSoftKeyboard()
                     authPasswordEdit {
+                        scrollTo()
                         typeText(passwordInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     step("click") {
                         authButton {
+                            scrollTo()
                             click()
                             isDisplayed()
                         }
                         step("check error") {
                             authNameInput {
+                                scrollTo()
                                 hasError(R.string.inputName)
                                 isDisplayed()
                             }
@@ -143,22 +151,26 @@ class AuthScreenTest : KTestCase() {
             step("type fields") {
                 AuthScreen {
                     authNameEdit {
+                        scrollTo()
                         typeText(nameInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     authPasswordEdit {
+                        scrollTo()
                         typeText(passwordInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     step("click") {
                         authButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
                         step("check error") {
                             authNameInput {
+                                scrollTo()
                                 hasError(R.string.inputName)
                                 isDisplayed()
                             }
@@ -182,22 +194,26 @@ class AuthScreenTest : KTestCase() {
             step("type fields") {
                 AuthScreen {
                     authNameEdit {
+                        scrollTo()
                         typeText(nameInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     authPasswordEdit {
+                        scrollTo()
                         typeText(passwordInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     step("click") {
                         authButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
                         step("check error") {
                             authPasswordInput {
+                                scrollTo()
                                 hasError(R.string.inputPassword)
                                 isDisplayed()
                             }
@@ -218,12 +234,14 @@ class AuthScreenTest : KTestCase() {
             step("click on reg") {
                 AuthScreen {
                     regText {
+                        scrollTo()
                         isDisplayed()
                         click()
                     }
                     step("check nav") {
                         RegScreen {
                             regTitle {
+                                scrollTo()
                                 hasText(R.string.regTitle)
                                 isDisplayed()
                             }
@@ -246,17 +264,20 @@ class AuthScreenTest : KTestCase() {
             step("type fields") {
                 AuthScreen {
                     authNameEdit {
+                        scrollTo()
                         typeText(nameInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     authPasswordEdit {
+                        scrollTo()
                         typeText(passwordInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     step("click") {
                         authButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }

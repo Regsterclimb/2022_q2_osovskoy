@@ -37,7 +37,7 @@ class LoansApiImpl(private val delegate: BehaviorDelegate<LoansApi>) : LoansApi 
             15000.0,
             45,
             "+1238493",
-            145,
+            144,
             "APPROVED",
             8.5)
 

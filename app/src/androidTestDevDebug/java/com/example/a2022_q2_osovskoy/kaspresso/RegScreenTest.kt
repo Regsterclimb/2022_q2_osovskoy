@@ -1,4 +1,4 @@
-package com.example.a2022_q2_osovskoy.kaspresso.regtest
+package com.example.a2022_q2_osovskoy.kaspresso
 
 import android.content.Context
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -48,10 +48,12 @@ class RegScreenTest : KTestCase() {
                         isDisplayed()
                     }
                     regSignUp {
+                        scrollTo()
                         hasText(R.string.regUp)
                         isDisplayed()
                     }
                     regNameInput {
+                        scrollTo()
                         hasHint(R.string.inputName)
                         isDisplayed()
                     }
@@ -59,6 +61,7 @@ class RegScreenTest : KTestCase() {
                         isDisplayed()
                     }
                     regPasswordInput {
+                        scrollTo()
                         hasHint(R.string.inputPassword)
                         isDisplayed()
                     }
@@ -66,10 +69,12 @@ class RegScreenTest : KTestCase() {
                         isDisplayed()
                     }
                     regButton {
+                        scrollTo()
                         hasText(R.string.registrationButtonText)
                         isDisplayed()
                     }
                     authText {
+                        scrollTo()
                         hasText(R.string.startRegistrationText)
                         isDisplayed()
                     }
@@ -88,24 +93,28 @@ class RegScreenTest : KTestCase() {
             step("type empty") {
                 RegScreen {
                     regNameEdit {
+                        scrollTo()
                         typeText(nameInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     regPasswordEdit {
+                        scrollTo()
                         typeText(passwordInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     step("click") {
                         regButton {
-                            click()
+                            scrollTo()
                             isDisplayed()
+                            click()
                         }
                         step("check error") {
                             regNameInput {
-                                hasError(R.string.inputName)
+                                scrollTo()
                                 isDisplayed()
+                                hasError(R.string.inputName)
                             }
                         }
                     }
@@ -129,17 +138,20 @@ class RegScreenTest : KTestCase() {
                     }
                     closeSoftKeyboard()
                     regPasswordEdit {
+                        scrollTo()
                         typeText(passwordInput)
                         isDisplayed()
                     }
                     closeSoftKeyboard()
                     step("click") {
                         regButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
                         step("check error") {
                             regNameInput {
+                                scrollTo()
                                 hasError(R.string.inputName)
                                 isDisplayed()
                             }
@@ -171,6 +183,7 @@ class RegScreenTest : KTestCase() {
                     closeSoftKeyboard()
                     step("click") {
                         regButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
@@ -204,9 +217,10 @@ class RegScreenTest : KTestCase() {
                         typeText(passwordInput)
                         isDisplayed()
                     }
+                    closeSoftKeyboard()
                     step("click") {
-                        closeSoftKeyboard()
                         regButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
@@ -232,6 +246,7 @@ class RegScreenTest : KTestCase() {
                 RegScreen {
                     step("click"){
                         authText{
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
@@ -239,6 +254,7 @@ class RegScreenTest : KTestCase() {
                     step("check navigation") {
                         AuthScreen {
                             authTitle {
+                                scrollTo()
                                 hasText(R.string.authTitle)
                                 isDisplayed()
                             }

@@ -27,8 +27,8 @@
     <string name="requestSuccessText">Заявка оформлена</string>
     <string name="status">статус</string>
     <string name="settings">settings</string>
-    <string name="cardRequestText">Ваша Банковская карта[Visa,MasterCard] под рукой, нужны только именные карты с CVV2 кодом на обороте</string>
-    <string name="passportText">Цветной скан или копия Российского Паспорта ИНН, актуальная прописка на территории РФ</string>
+    <string name="cardRequestText">Ваша Банковская карта[Visa,MasterCard] под рукой</string>
+    <string name="passportText">Цветной скан или копия Российского Паспорта, ИНН</string>
     <string name="requestTitle">Чтобы получить займ вам понадобится</string>
     <string name="getMoney">Прийти в отеделение нашего банка и получить деньги</string>
     <string name="applyLoanButton">новая заявка</string>
@@ -71,6 +71,7 @@
     <string name="detailsLastName">Фамилия</string>
     <string name="detailsPhone">Телефон</string>
     <string name="id">Id</string>
+    <string name="detailStatus">Статус</string>
     <string name="approved">ОДОБРЕНА</string>
     <string name="registered">ПРИНЯТА</string>
     <string name="rejected">ОТКЛОНЕНА</string>

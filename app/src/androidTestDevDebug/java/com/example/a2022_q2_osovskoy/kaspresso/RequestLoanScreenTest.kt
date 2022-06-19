@@ -2,13 +2,11 @@ package com.example.a2022_q2_osovskoy.kaspresso
 
 import android.content.Context
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.di.data.SharedPrefModule
-import com.example.a2022_q2_osovskoy.kaspresso.screen.AuthScreen
-import com.example.a2022_q2_osovskoy.kaspresso.screen.LoanConditionScreen
-import com.example.a2022_q2_osovskoy.kaspresso.screen.LoanRequestScreen
-import com.example.a2022_q2_osovskoy.kaspresso.screen.RegScreen
+import com.example.a2022_q2_osovskoy.kaspresso.screen.*
 import com.example.a2022_q2_osovskoy.kaspresso.screen.annotation.TestCase
 import com.example.a2022_q2_osovskoy.kaspresso.setting.KTestCase
 import com.example.a2022_q2_osovskoy.ui.MainActivity
@@ -16,7 +14,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class RequestLoanScreenTest : KTestCase() {
 
     @get:Rule
@@ -170,22 +170,26 @@ class RequestLoanScreenTest : KTestCase() {
                     }
                     closeSoftKeyboard()
                     loanLastNameEdit {
+                        scrollTo()
                         isDisplayed()
                         typeText(lastName)
                     }
                     closeSoftKeyboard()
                     loanPhoneEdit {
+                        scrollTo()
                         isDisplayed()
                         typeText(phone)
                     }
                     closeSoftKeyboard()
                     step("click") {
                         requestLoanButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
                         step("check error") {
                             loanNameInput {
+                                scrollTo()
                                 isDisplayed()
                                 hasError(R.string.inputNameEmpty)
                             }
@@ -217,22 +221,26 @@ class RequestLoanScreenTest : KTestCase() {
                     }
                     closeSoftKeyboard()
                     loanLastNameEdit {
+                        scrollTo()
                         isDisplayed()
                         typeText(lastName)
                     }
                     closeSoftKeyboard()
                     loanPhoneEdit {
+                        scrollTo()
                         isDisplayed()
                         typeText(phone)
                     }
                     closeSoftKeyboard()
                     step("click") {
                         requestLoanButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
                         step("check error") {
                             loanLastNameInput {
+                                scrollTo()
                                 isDisplayed()
                                 hasError(R.string.inputLastNameEmpty)
                             }
@@ -264,22 +272,26 @@ class RequestLoanScreenTest : KTestCase() {
                     }
                     closeSoftKeyboard()
                     loanLastNameEdit {
+                        scrollTo()
                         isDisplayed()
                         typeText(lastName)
                     }
                     closeSoftKeyboard()
                     loanPhoneEdit {
+                        scrollTo()
                         isDisplayed()
                         typeText(phone)
                     }
                     closeSoftKeyboard()
                     step("click") {
                         requestLoanButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
                         step("check error") {
                             loanPhoneInput {
+                                scrollTo()
                                 isDisplayed()
                                 hasError(R.string.inputPhoneEmpty)
                             }
@@ -311,22 +323,30 @@ class RequestLoanScreenTest : KTestCase() {
                     }
                     closeSoftKeyboard()
                     loanLastNameEdit {
+                        scrollTo()
                         isDisplayed()
                         typeText(lastName)
                     }
                     closeSoftKeyboard()
                     loanPhoneEdit {
+                        scrollTo()
                         isDisplayed()
                         typeText(phone)
                     }
                     closeSoftKeyboard()
                     step("click") {
                         requestLoanButton {
+                            scrollTo()
                             isDisplayed()
                             click()
                         }
                         step("nav to Success") {
-
+                            RequestSuccessScreen{
+                                successTitle{
+                                    scrollTo()
+                                    isDisplayed()
+                                }
+                            }
                         }
                     }
                 }
@@ -338,7 +358,9 @@ class RequestLoanScreenTest : KTestCase() {
     private fun navToRequest() {
         LoanConditionScreen {
             conditionList {
+                scrollTo()
                 childAt<LoanConditionScreen.LoanConditionHolder>(0) {
+                    scrollTo()
                     requestButton {
                         isDisplayed()
                         click()
@@ -351,6 +373,7 @@ class RequestLoanScreenTest : KTestCase() {
     private fun navToAuth() {
         RegScreen {
             authText {
+                scrollTo()
                 isDisplayed()
                 click()
             }
@@ -367,11 +390,13 @@ class RequestLoanScreenTest : KTestCase() {
             }
             closeSoftKeyboard()
             authPasswordEdit {
+                scrollTo()
                 typeText(passwordInput)
                 isDisplayed()
             }
             closeSoftKeyboard()
             authButton {
+                scrollTo()
                 isDisplayed()
                 click()
             }

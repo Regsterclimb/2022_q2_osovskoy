@@ -8,14 +8,12 @@ import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.mock.MockRetrofit
 import retrofit2.mock.NetworkBehavior
-import java.util.concurrent.TimeUnit
 
 @Module
 class ApiModule {
 
     private fun getMockAuthRetrofit(retrofit: Retrofit): AuthApi {
         val networkBehavior = NetworkBehavior.create()
-        networkBehavior.setDelay(500L,TimeUnit.MILLISECONDS)
 
         val mockRetrofit = MockRetrofit.Builder(retrofit).networkBehavior(networkBehavior).build()
 

@@ -133,7 +133,7 @@ class LoanDetailFragment : DaggerFragment(R.layout.loan_details_fragment) {
 
     private fun setUpViews(loan: LoanDetail) {
         with(binding) {
-            detailAmount.text = String.format(loan.amount.toString() + getString(R.string.addRub))
+            detailAmount.text = String.format(loan.amount.toLong().toString() + getString(R.string.addRub))
             detailDate.text = loan.date
             detailState.changeStatus(loan.state)
             detailPeriod.apply {

@@ -2,13 +2,12 @@ package com.example.a2022_q2_osovskoy.kaspresso
 
 import android.content.Context
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.a2022_q2_osovskoy.R
 import com.example.a2022_q2_osovskoy.di.data.SharedPrefModule
-import com.example.a2022_q2_osovskoy.kaspresso.screen.AuthScreen
-import com.example.a2022_q2_osovskoy.kaspresso.screen.LoanConditionScreen
-import com.example.a2022_q2_osovskoy.kaspresso.screen.LoanHistoryScreen
-import com.example.a2022_q2_osovskoy.kaspresso.screen.RegScreen
+import com.example.a2022_q2_osovskoy.kaspresso.model.LoanItemTest
+import com.example.a2022_q2_osovskoy.kaspresso.screen.*
 import com.example.a2022_q2_osovskoy.kaspresso.screen.annotation.TestCase
 import com.example.a2022_q2_osovskoy.kaspresso.setting.KTestCase
 import com.example.a2022_q2_osovskoy.ui.MainActivity
@@ -16,7 +15,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class LoanHistoryScreenTest : KTestCase() {
 
     @get:Rule
@@ -82,6 +83,7 @@ class LoanHistoryScreenTest : KTestCase() {
     private fun checkLoans(listTest: List<LoanItemTest>) {
         listTest.forEachIndexed { index, loan ->
             LoanHistoryScreen {
+                loansList.isDisplayed()
                 loansList {
                     childAt<LoanHistoryScreen.LoanItemHolder>(index) {
                         loanItemId {
@@ -106,9 +108,69 @@ class LoanHistoryScreenTest : KTestCase() {
         }
     }
 
+    @Test
+    @TestCase("LoanHistoryScreen Test-2", "exit from acc")
+    fun checkExit() {
+        run {
+            step("nav to History") {
+                navToAuth()
+                navToCondition()
+                navToHistory()
+            }
+            LoanHistoryScreen {
+                step("check") {
+                    logoutButton {
+                        isDisplayed()
+                        click()
+                    }
+                }
+                step("check auth screen") {
+                    AuthScreen {
+                        authTitle {
+                            isDisplayed()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    @TestCase("LoanHistoryScreen Test-3", "nav to detail")
+    fun checkNavToDetail() {
+        run {
+            step("nav to History") {
+                navToAuth()
+                navToCondition()
+                navToHistory()
+            }
+            LoanHistoryScreen {
+                step("click") {
+                    clickOnFirstItem()
+                }
+            }
+            step("check auth screen") {
+                LoanDetailScreen {
+                    loanInfoTable.isDisplayed()
+                }
+            }
+        }
+    }
+
+    private fun clickOnFirstItem() {
+        LoanHistoryScreen {
+            loansList {
+                childAt<LoanHistoryScreen.LoanItemHolder>(0) {
+                    click()
+                }
+            }
+        }
+    }
+
     private fun navToHistory() {
         LoanConditionScreen {
             openHistory {
+                scrollTo()
                 isDisplayed()
                 click()
             }
@@ -118,6 +180,7 @@ class LoanHistoryScreenTest : KTestCase() {
     private fun navToAuth() {
         RegScreen {
             authText {
+                scrollTo()
                 isDisplayed()
                 click()
             }
@@ -139,6 +202,7 @@ class LoanHistoryScreenTest : KTestCase() {
             }
             closeSoftKeyboard()
             authButton {
+                scrollTo()
                 isDisplayed()
                 click()
             }
