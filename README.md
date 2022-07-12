@@ -1,3 +1,6 @@
+# Архитектура :  Clean,MVVM
+# Технологии : Retrofit+okhttp3,Room,Coroutines,jetpack navigation,Mockito,Kaspresso,Gson.
+
 Приложение для оформления займа
 
 Основные фичи:
@@ -29,4 +32,3 @@
 Изменить дизайн в соответствии с Material Design
 Добавить анимацию к SplashScreen
 Разделить на модули.
-
