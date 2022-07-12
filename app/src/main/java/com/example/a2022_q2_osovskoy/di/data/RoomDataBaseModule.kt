@@ -13,7 +13,12 @@ class RoomDataBaseModule {
 
     @Provides
     @AppScope
+    fun provideLoansDao(loansDataBase: LoansDataBase) = loansDataBase.getLoansDao()
+
+    @Provides
+    @AppScope
     fun provideRoomDataBase(context: Context): LoansDataBase =
         Room.databaseBuilder(context, LoansDataBase::class.java, LoanEntity.TABLE_NAME)
-            .fallbackToDestructiveMigration().build()
+            .fallbackToDestructiveMigration()
+            .build()
 }

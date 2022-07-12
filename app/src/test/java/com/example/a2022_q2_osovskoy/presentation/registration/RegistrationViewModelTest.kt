@@ -23,11 +23,11 @@ import org.mockito.kotlin.whenever
 @ExperimentalCoroutinesApi
 class RegistrationViewModelTest {
 
-    lateinit var registerUseCase: RegisterUseCase
+    private lateinit var registerUseCase: RegisterUseCase
+    private lateinit var observer: Observer<RegState>
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
-    private lateinit var observer: Observer<RegState>
 
     @Before
     fun setUp() {

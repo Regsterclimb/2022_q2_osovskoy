@@ -59,10 +59,15 @@ class LoanDetailViewModel @Inject constructor(
     }
 
     private fun setApprove(loanDetail: LoanDetail) {
-        if (loanDetail.state == "APPROVED") {
-            _loanDetailState.value = LoanDetailState.Approved(isApproved = true)
-        } else {
-            _loanDetailState.value = LoanDetailState.Approved(isApproved = false)
-        }
+        _loanDetailState.value =
+            if (loanDetail.state == APPROVED_STATE) {
+                LoanDetailState.Approved(isApproved = true)
+            } else {
+                LoanDetailState.Approved(isApproved = false)
+            }
+    }
+
+    companion object {
+        private const val APPROVED_STATE = "APPROVED"
     }
 }

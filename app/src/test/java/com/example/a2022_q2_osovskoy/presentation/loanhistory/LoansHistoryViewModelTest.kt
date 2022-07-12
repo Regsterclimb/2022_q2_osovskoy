@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
 import com.example.a2022_q2_osovskoy.domain.entity.loan.Loan
+import com.example.a2022_q2_osovskoy.domain.usecase.DeleteLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLocalLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.GetRemoteLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.UpdateAppConfigUseCase
@@ -29,9 +30,11 @@ import org.mockito.kotlin.whenever
 @ExperimentalCoroutinesApi
 class LoansHistoryViewModelTest {
 
-    lateinit var getLocalLoansUseCase: GetLocalLoansUseCase
-    lateinit var updateAppConfigUseCase: UpdateAppConfigUseCase
-    lateinit var getRemoteLoansUseCase: GetRemoteLoansUseCase
+    private lateinit var getLocalLoansUseCase: GetLocalLoansUseCase
+    private lateinit var updateAppConfigUseCase: UpdateAppConfigUseCase
+    private lateinit var getRemoteLoansUseCase: GetRemoteLoansUseCase
+    private lateinit var deleteLoansUseCase: DeleteLoansUseCase
+
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -43,6 +46,7 @@ class LoansHistoryViewModelTest {
         updateAppConfigUseCase = mock()
         getLocalLoansUseCase = mock()
         getRemoteLoansUseCase = mock()
+        deleteLoansUseCase = mock()
         observer = mock()
     }
 
@@ -52,7 +56,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.updateAppConfig(appConfig)
 
@@ -69,7 +74,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.getLocalLoans()
 
@@ -88,7 +94,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.getLocalLoans()
 
@@ -106,7 +113,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.getLocalLoans()
 
@@ -126,7 +134,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.refreshLoans()
 
@@ -147,7 +156,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.refreshLoans()
 
@@ -165,7 +175,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.refreshLoans()
 
@@ -183,7 +194,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.refreshLoans()
 
@@ -201,7 +213,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.refreshLoans()
 
@@ -219,7 +232,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.refreshLoans()
 
@@ -237,7 +251,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.refreshLoans()
 
@@ -255,7 +270,8 @@ class LoansHistoryViewModelTest {
         val viewModel = LoansHistoryViewModel(
             getRemoteLoansUseCase,
             updateAppConfigUseCase,
-            getLocalLoansUseCase)
+            getLocalLoansUseCase,
+            deleteLoansUseCase)
 
         viewModel.refreshLoans()
 

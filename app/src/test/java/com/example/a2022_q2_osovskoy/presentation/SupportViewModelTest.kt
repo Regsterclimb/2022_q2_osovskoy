@@ -20,7 +20,7 @@ import org.mockito.kotlin.mock
 @ExperimentalCoroutinesApi
 class SupportViewModelTest {
 
-    lateinit var getConfigUseCase:GetAppConfigUseCase
+    private lateinit var getConfigUseCase:GetAppConfigUseCase
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -30,7 +30,6 @@ class SupportViewModelTest {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         getConfigUseCase = mock()
     }
-
 
     @Test
     fun `WHEN appAppConfigEvent Expect NavigateToRegistration`() = runTest {

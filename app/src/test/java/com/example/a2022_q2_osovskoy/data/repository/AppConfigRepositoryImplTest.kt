@@ -12,7 +12,7 @@ import org.mockito.kotlin.whenever
 
 class AppConfigRepositoryImplTest {
 
-    lateinit var appConfigDataSource: AppConfigDataSource
+    private lateinit var appConfigDataSource: AppConfigDataSource
 
     @Before
     fun setUp() {

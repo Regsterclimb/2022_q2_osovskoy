@@ -16,6 +16,7 @@ class ApiModule {
     private fun getMockAuthRetrofit(retrofit: Retrofit): AuthApi {
         val networkBehavior = NetworkBehavior.create()
         networkBehavior.setDelay(200L,TimeUnit.MILLISECONDS)
+        networkBehavior.setFailurePercent(0)
 
         val mockRetrofit = MockRetrofit.Builder(retrofit).networkBehavior(networkBehavior).build()
 
@@ -26,6 +27,7 @@ class ApiModule {
     private fun getMockLoansRetrofit(retrofit: Retrofit): LoansApi {
         val networkBehavior = NetworkBehavior.create()
         networkBehavior.setDelay(200L,TimeUnit.MILLISECONDS)
+        networkBehavior.setFailurePercent(0)
         val mockRetrofit = MockRetrofit.Builder(retrofit).networkBehavior(networkBehavior).build()
         val delegate = mockRetrofit.create(LoansApi::class.java)
         return LoansApiImpl(delegate)

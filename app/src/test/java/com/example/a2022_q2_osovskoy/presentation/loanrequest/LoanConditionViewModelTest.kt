@@ -27,12 +27,13 @@ import org.mockito.kotlin.whenever
 @ExperimentalCoroutinesApi
 class LoanConditionViewModelTest {
 
-    lateinit var getLoanConditionUseCase: GetLoanConditionUseCase
-    lateinit var updateAppConfigUseCase: UpdateAppConfigUseCase
+    private lateinit var getLoanConditionUseCase: GetLoanConditionUseCase
+    private lateinit var updateAppConfigUseCase: UpdateAppConfigUseCase
+    private lateinit var observer: Observer<LoanConditionState>
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
-    lateinit var observer: Observer<LoanConditionState>
+
 
     @Before
     fun setUp() {

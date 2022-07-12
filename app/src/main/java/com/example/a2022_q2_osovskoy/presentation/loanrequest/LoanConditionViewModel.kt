@@ -1,5 +1,6 @@
 package com.example.a2022_q2_osovskoy.presentation.loanrequest
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,10 +19,10 @@ class LoanConditionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _loanConditionState = MutableLiveData<LoanConditionState>()
-    val loanCondition = _loanConditionState
+    val loanCondition:LiveData<LoanConditionState>  = _loanConditionState
 
     private val _instructionState = MutableLiveData(Instruction(true))
-    val instructionState = _instructionState
+    val instructionState:LiveData<Instruction> = _instructionState
 
     private val handler = CoroutineExceptionHandler { _, throwable ->
         handleErrors(throwable)

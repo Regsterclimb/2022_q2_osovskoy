@@ -21,7 +21,7 @@ import org.mockito.kotlin.whenever
 @ExperimentalCoroutinesApi
 class LoansRemoteDataSourceImplTest {
 
-    lateinit var loansApi: LoansApi
+    private lateinit var loansApi: LoansApi
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()

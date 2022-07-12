@@ -11,7 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 class RetrofitModule {
 
-
     @Provides
     @AppScope
     fun provideRetrofit(

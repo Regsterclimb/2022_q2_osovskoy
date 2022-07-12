@@ -11,7 +11,7 @@
         android:label="auth_fragment"
         tools:layout="@layout/auth_fragment">
 
-        <deepLink app:uri="app://auth" />
+        <deepLink app:uri="http://www.example.com/auth" />
 
     </fragment>
 

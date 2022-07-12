@@ -8,4 +8,6 @@ interface LocalLoansRepository {
     suspend fun getAll() : List<Loan>
 
     suspend fun getById(loanId: Long) : LoanDetail
+
+    suspend fun deleteAll()
 }

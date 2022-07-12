@@ -11,7 +11,7 @@
         android:label="registration_fragment"
         tools:layout="@layout/registration_fragment">
         <deepLink
-            app:uri="app://registration" />
+            app:uri="http://www.example.com/registration" />
     </fragment>
 
 </navigation>

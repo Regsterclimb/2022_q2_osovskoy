@@ -9,9 +9,11 @@
         android:id="@+id/loanDetailFragment"
         android:name="com.example.a2022_q2_osovskoy.ui.loandetail.LoanDetailFragment"
         android:label="loan_details_fragment"
-        tools:layout="@layout/loan_details_fragment" >
+        tools:layout="@layout/loan_details_fragment">
 
-        <deepLink app:uri="app://loanDetails/{id}" />
+        <deepLink
+            app:action="android.intent.action.MY_ACTION_ID"
+            app:uri="http://www.example.com/loanDetails/{id}" />
 
         <argument
             android:name="id"

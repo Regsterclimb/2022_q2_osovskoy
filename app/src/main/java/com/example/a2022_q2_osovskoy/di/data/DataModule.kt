@@ -26,10 +26,10 @@ interface DataModule {
 
         @Provides
         fun provideDispatcherIo(): CoroutineDispatcher = Dispatchers.IO
-
-        @Provides
-        fun provideContext(app: App): Context = app.applicationContext
     }
+
+    @Binds
+    fun provideContext(app:App) : Context
 
     @Binds
     @AppScope

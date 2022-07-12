@@ -22,4 +22,8 @@ class LocalLoansRepositoryImpl @Inject constructor(
     override suspend fun getById(loanId: Long): LoanDetail = dispatcher.execute {
         localDataSource.getById(loanId).toLoanDetails()
     }
+
+    override suspend fun deleteAll() {
+        localDataSource.deleteAll()
+    }
 }

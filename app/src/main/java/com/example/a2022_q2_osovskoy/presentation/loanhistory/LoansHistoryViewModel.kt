@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2022_q2_osovskoy.domain.entity.AppConfig
+import com.example.a2022_q2_osovskoy.domain.usecase.DeleteLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.GetLocalLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.GetRemoteLoansUseCase
 import com.example.a2022_q2_osovskoy.domain.usecase.UpdateAppConfigUseCase
@@ -18,6 +19,7 @@ class LoansHistoryViewModel @Inject constructor(
     private val getRemoteLoansUseCase: GetRemoteLoansUseCase,
     private val updateAppConfigUseCase: UpdateAppConfigUseCase,
     private val getLocalLoansUseCase: GetLocalLoansUseCase,
+    private val deleteLoansUseCase: DeleteLoansUseCase,
 ) : ViewModel() {
 
     private val _loansState = MutableLiveData<LoansState>()
@@ -70,9 +72,16 @@ class LoansHistoryViewModel @Inject constructor(
 
     fun updateAppConfig(appConfig: AppConfig) {
         updateAppConfigUseCase(appConfig)
+        deleteAllLoans()
     }
 
     private fun setLoading() {
         _loansState.value = LoansState.Loading
+    }
+
+    private fun deleteAllLoans() {
+        viewModelScope.launch {
+            deleteLoansUseCase()
+        }
     }
 }

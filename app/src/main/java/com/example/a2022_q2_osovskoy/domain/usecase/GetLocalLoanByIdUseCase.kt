@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class GetLocalLoanByIdUseCase @Inject constructor(private val localLoansRepository: LocalLoansRepository) {
 
-    suspend operator fun invoke(loanId:Long):LoanDetail = localLoansRepository.getById(loanId)
+    suspend operator fun invoke(loanId: Long): LoanDetail = localLoansRepository.getById(loanId)
 
 }

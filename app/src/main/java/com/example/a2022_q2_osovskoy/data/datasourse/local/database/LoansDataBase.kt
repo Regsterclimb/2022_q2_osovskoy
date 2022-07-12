@@ -7,5 +7,5 @@ import com.example.a2022_q2_osovskoy.data.datasourse.local.database.model.LoanEn
 @Database(entities = [LoanEntity::class], version = 1)
 abstract class LoansDataBase : RoomDatabase() {
 
-    abstract fun LoansDao(): LoansDao
+    abstract fun getLoansDao(): LoansDao
 }

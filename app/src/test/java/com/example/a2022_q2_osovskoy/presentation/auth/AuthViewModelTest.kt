@@ -24,7 +24,7 @@ import org.mockito.kotlin.whenever
 @ExperimentalCoroutinesApi
 class AuthViewModelTest {
 
-    lateinit var loginUseCase: LoginUseCase
+    private lateinit var loginUseCase: LoginUseCase
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()

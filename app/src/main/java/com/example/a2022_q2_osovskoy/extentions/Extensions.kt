@@ -77,16 +77,20 @@ suspend fun <T> CoroutineDispatcher.execute(block: suspend () -> T) = withContex
     } catch (e: IOException) {
         throw e
     } catch (e: HttpException) {
-        when (e.code()) {
-            400 -> throw BadRequestException()
-            401 -> throw UnauthorizedException()
-            403 -> throw ForbiddenException()
-            404 -> throw NotFoundException()
-            in 500..599 -> throw ServerIsNotRespondingException()
-            else -> throw e
-        }
+        parseError(e)
     } catch (e: Throwable) {
         throw e
+    }
+}
+
+fun parseError(e: HttpException): Nothing {
+    when (e.code()) {
+        400 -> throw BadRequestException()
+        401 -> throw UnauthorizedException()
+        403 -> throw ForbiddenException()
+        404 -> throw NotFoundException()
+        in 500..599 -> throw ServerIsNotRespondingException()
+        else -> throw e
     }
 }
 

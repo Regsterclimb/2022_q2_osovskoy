@@ -12,7 +12,7 @@
         tools:layout="@layout/loan_history_fragment" >
 
         <deepLink
-            app:uri="app://loansHistory" />
+            app:uri="http://www.example.com/loansHistory" />
     </fragment>
 
 </navigation>

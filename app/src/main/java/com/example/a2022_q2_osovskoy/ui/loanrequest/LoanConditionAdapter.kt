@@ -52,11 +52,9 @@ class LoanConditionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
 
 class LoanConditionListCallBack : DiffUtil.ItemCallback<LoanCondition>() {
 
-    override fun areItemsTheSame(oldItem: LoanCondition, newItem: LoanCondition): Boolean {
-        return oldItem.maxAmount == newItem.maxAmount
-    }
+    override fun areItemsTheSame(oldItem: LoanCondition, newItem: LoanCondition): Boolean =
+        oldItem.maxAmount == newItem.maxAmount
 
-    override fun areContentsTheSame(oldItem: LoanCondition, newItem: LoanCondition): Boolean {
-        return oldItem == newItem
-    }
+    override fun areContentsTheSame(oldItem: LoanCondition, newItem: LoanCondition): Boolean =
+        oldItem == newItem
 }

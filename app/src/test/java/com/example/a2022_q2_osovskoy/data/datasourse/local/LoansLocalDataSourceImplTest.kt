@@ -2,7 +2,6 @@ package com.example.a2022_q2_osovskoy.data.datasourse.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.a2022_q2_osovskoy.data.datasourse.local.database.LoansDao
-import com.example.a2022_q2_osovskoy.data.datasourse.local.database.LoansDataBase
 import com.example.a2022_q2_osovskoy.data.datasourse.local.database.model.LoanEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,7 +21,7 @@ import org.mockito.kotlin.whenever
 @ExperimentalCoroutinesApi
 class LoansLocalDataSourceImplTest {
 
-    private lateinit var loansDataBase: LoansDataBase
+    private lateinit var loansDao: LoansDao
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -30,12 +29,11 @@ class LoansLocalDataSourceImplTest {
     @Before
     fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        loansDataBase = mock()
+        loansDao = mock()
     }
 
     @Test
     fun `WHEN getAll Expect correct Result`() = runTest {
-        val loansDao: LoansDao = mock()
 
         val loansList = listOf(
             LoanEntity(
@@ -52,9 +50,8 @@ class LoansLocalDataSourceImplTest {
         )
 
         whenever(loansDao.getAll()).thenReturn(loansList)
-        whenever(loansDataBase.LoansDao()).thenReturn(loansDao)
 
-        val localData = LoansLocalDataSourceImpl(loansDataBase)
+        val localData = LoansLocalDataSourceImpl(loansDao)
 
         val expected = listOf(
             LoanEntity(
@@ -90,9 +87,8 @@ class LoansLocalDataSourceImplTest {
         )
 
         whenever(loansDao.getById(145)).thenReturn(loanEntity)
-        whenever(loansDataBase.LoansDao()).thenReturn(loansDao)
 
-        val localData = LoansLocalDataSourceImpl(loansDataBase)
+        val localData = LoansLocalDataSourceImpl(loansDao)
 
         val expected = LoanEntity(135,
             "24.5.1992",
@@ -111,7 +107,6 @@ class LoansLocalDataSourceImplTest {
 
     @Test
     fun `WHEN insertAll Expect correct Result`() = runTest {
-        val loansDao: LoansDao = mock()
 
         val loansList = listOf(
             LoanEntity(
@@ -127,9 +122,7 @@ class LoansLocalDataSourceImplTest {
             )
         )
 
-        whenever(loansDataBase.LoansDao()).thenReturn(loansDao)
-
-        val localData = LoansLocalDataSourceImpl(loansDataBase)
+        val localData = LoansLocalDataSourceImpl(loansDao)
 
         localData.insertAll(loansList)
 
@@ -145,12 +138,11 @@ class LoansLocalDataSourceImplTest {
                 "APPROVED",
                 8.5
             ))
-        verify(loansDataBase.LoansDao(), Mockito.times(1)).insertAll(expected)
+        verify(loansDao, Mockito.times(1)).insertAll(expected)
     }
 
     @Test
     fun `WHEN insertLoan Expect correct Result`() = runTest {
-        val loansDao: LoansDao = mock()
 
         val loanEntity = LoanEntity(
             135,
@@ -164,9 +156,7 @@ class LoansLocalDataSourceImplTest {
             8.5
         )
 
-        whenever(loansDataBase.LoansDao()).thenReturn(loansDao)
-
-        val localData = LoansLocalDataSourceImpl(loansDataBase)
+        val localData = LoansLocalDataSourceImpl(loansDao)
 
         localData.insertLoan(loanEntity)
 
@@ -181,6 +171,6 @@ class LoansLocalDataSourceImplTest {
             8.5
         )
 
-        verify(loansDataBase.LoansDao(), Mockito.times(1)).insertLoan(expected)
+        verify(loansDao, Mockito.times(1)).insertLoan(expected)
     }
 }

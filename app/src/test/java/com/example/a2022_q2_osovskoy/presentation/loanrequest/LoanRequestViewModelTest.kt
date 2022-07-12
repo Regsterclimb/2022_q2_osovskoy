@@ -26,7 +26,7 @@ class LoanRequestViewModelTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    lateinit var requestLoanUseCase: RequestLoanUseCase
+    private lateinit var requestLoanUseCase: RequestLoanUseCase
 
     @Before
     fun setUp() {

@@ -4,6 +4,8 @@ import com.example.a2022_q2_osovskoy.data.datasourse.local.database.model.LoanEn
 
 interface LoansLocalDataSource {
 
+    suspend fun deleteAll()
+
     suspend fun insertLoan(loanEntity: LoanEntity)
 
     suspend fun insertAll(loansList: List<LoanEntity>)
